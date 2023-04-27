@@ -4,12 +4,13 @@ import MainMenu from "../platform/MainMenu";
 import DetailMenu from "../platform/DetailMenu";
 import Footer from "../platform/Footer";
 
-const Frame = ({children}) => {
+
+const Frame = ({children, isLogin, setIsLogin}) => {
 
     return (
         <>
             <Reset />
-            <SubMenu />
+            <SubMenu isLogin={isLogin} setIsLogin={setIsLogin} />
             <MainMenu />
             <DetailMenu />
                 {children}
