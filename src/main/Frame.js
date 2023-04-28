@@ -12,7 +12,7 @@ const Frame = ({children, isLogin, setIsLogin}) => {
             <Reset />
             <SubMenu isLogin={isLogin} setIsLogin={setIsLogin} />
             <MainMenu />
-            <DetailMenu />
+            {/* <DetailMenu /> */}
                 {children}
             <Footer />
         </>

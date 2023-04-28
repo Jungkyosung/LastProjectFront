@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 const DetailMenu = () => {
     return (
         <>
-            <div></div>
+            {/* <div></div>
             <div>
                 <ul>
                     <li><Button variant="text">음식</Button></li>
@@ -27,7 +27,7 @@ const DetailMenu = () => {
                     <li><Button variant="text">이상과현실</Button></li>
                     <li><Button variant="text">물가체험</Button></li>
                 </ul>
-            </div>
+            </div> */}
         </>
     )
 }

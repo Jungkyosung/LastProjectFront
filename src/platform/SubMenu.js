@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import styles from './SubMenu.module.css';
 
 const SubMenu = ({isLogin, setIsLogin}) => {
     const [user, setUser] = useState({});
@@ -35,9 +36,9 @@ const SubMenu = ({isLogin, setIsLogin}) => {
 
     return (
         <>
-            <ul>
-                <li>NOTICE</li>
-                <li>HELP</li>
+            <ul className={styles.SubNav}>
+                <li><Link to="/">NOTICE</Link></li>
+                <li><Link to="/">HELP</Link></li>
             </ul>
             <ul className="navbar-login">
                             {
