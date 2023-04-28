@@ -31,10 +31,10 @@
     transform: translateX(-50%);
     height: 70px;
     margin: auto;
-
   }
   .nav .navContainer .active {
     color: white;
+    z-index: 999;
   }
   
   .nav .navContainer .none {

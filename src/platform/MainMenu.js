@@ -1,81 +1,135 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material"; //추가
-import styles from './Menu.module.css';
+import styles from './MainMenu.module.css';
 import LanguageIcon from '@mui/icons-material/Language';    //추가
 import SearchIcon from '@mui/icons-material/Search';    //추가
+import $ from 'jquery';
 
 const MainMenu = () => {
-    const menuLst = [ "ABOUT US", "지금 한국은", "여행정보", "커뮤니티" ];
-    const [hide, setHide] = useState({
-        ABOUT_US : false,
-        지금_한국은 : false,
-        여행정보 : false,
-        커뮤니티 : false 
-    });
 
-    const mouseEvent = (menuName, bool) => {
-        const change = {...hide};
-        change[menuName] = bool;
-        setHide(change);
-    };
+    useEffect(() => {
+        $(document).ready(function () {
+            var gnb = $('.gnb');
+
+            // 마우스 over 시
+            gnb.mouseenter(function () {
+                $('.inner_menu').show();
+                // menu bg
+                var menuHeight = $('.header').outerHeight();
+                var inmeHegiht = $('.inner_menu').outerHeight();
+                $('.hd_bg').css({
+                    'top': menuHeight + 'px',
+                    height: inmeHegiht + 'px'
+                });
+            });
+
+            // 마우스  leave 시
+            gnb.mouseleave(function () {
+                $('.inner_menu').hide();
+                $('.hd_bg').css('height', '0')
+
+            });
+
+            //dept2 hover시 dept1 active
+            $('.dept1').mouseenter(function () {
+                $(this).children().addClass('active');
+                $(this).siblings().children().removeClass('active')
+            });
+            $('.dept1').mouseleave(function () {
+                $(this).children().removeClass('active');
+            });
+
+
+        });
+    }, []);
+
+
+
     return (
-        <nav className={styles.nav}>
-            <div className={styles.logo}>
-                <Link to="/">
-                <img src="https://via.placeholder.com/220x60" alt="샘플이미지"></img>
-                </Link>
-            </div>
-            <ul className={styles.navContainer}>
-                {menuLst.map((v, index) => (
-                    <li
-                        kye={index}
-                        className={hide[v] ? "active" : "none"}
-                        onMouseEnter={() => mouseEvent(v, true)}
-                        onMouseLeave={() => mouseEvent(v, false)}
-                    >
-                        <Link to="">{v}</Link>
-                    </li>
-                ))}
-            </ul>
-            <div className={styles.detailMenu}>
-                    <ul
-                        onMouseEnter={() => mouseEvent(true)}
-                        onMouseLeave={() => mouseEvent(false)}
-                        className={styles.detailUl}
-                    >
-                        <li className={styles.detailLi} ></li>
-                        <li className={styles.detailLi}>
-                            <ul>
-                                <li><Button variant="text">음식</Button></li>
-                                <li><Button variant="text">패션</Button></li>
-                                <li><Button variant="text">문화</Button></li>
-                            </ul>
+        <div className={styles.header}>
+            <h1 className={styles.logo}>
+                <Link to="/">LOGO</Link>
+            </h1>
+            <ul className={styles.gnb}>
+                <li className={styles.dept1}>
+                    <Link to="/">메뉴</Link>
+                    <ul className={styles.inner_menu}>
+                        <li className={styles.dept2}>
+                            <Link to="/">메뉴2</Link>
                         </li>
-                        <li className={styles.detailLi}>
-                            <ul>
-                                <li><Button variant="text">날씨</Button></li>
-                                <li><Button variant="text">여행코스</Button></li>
-                                <li><Button variant="text">카드뉴스</Button></li>
-                            </ul>
+                        <li className={styles.dept2}>
+                           <Link to="/">메뉴2</Link>
                         </li>
-                        <li className={styles.detailLi}>
-                            <ul>
-                                <li><Button variant="text">글로벌채팅</Button></li>
-                                <li><Button variant="text">웹만화</Button></li>
-                                <li><Button variant="text">어디까지</Button></li>
-                                <li><Button variant="text">여행친구</Button></li>
-                                <li><Button variant="text">이상과현실</Button></li>
-                                <li><Button variant="text">물가체험</Button></li>
-                            </ul>
+                        <li className={styles.dept2}>
+                           <Link to="/">메뉴2</Link>
+                        </li>
+                        <li className={styles.dept2}>
+                           <Link to="/">메뉴2</Link>
                         </li>
                     </ul>
-            </div>
-            <div className={styles.serchBox}>
-                <span><LanguageIcon style={{fontSize:"25px", marginRight:30}}  /></span>
-                <span><SearchIcon style={{fontSize:"25px"}}  /></span>
-            </div>
-        </nav>
+                </li>
+                <li className={styles.dept1}>
+                    <Link to="/">메뉴</Link>
+                    <ul className={styles.innermenu}>
+                        <li className={styles.dept2}>
+                           <Link to="/">메뉴2</Link>
+                        </li>
+                        <li className={styles.dept2}>
+                           <Link to="/">메뉴2</Link>
+                        </li>
+                        <li className={styles.dept2}>
+                           <Link to="/">메뉴2</Link>
+                        </li>
+                        <li className={styles.dept2}>
+                           <Link to="/">메뉴2</Link>
+                        </li>
+                    </ul>
+                </li>
+                <li className={styles.dept1}>
+                    <Link to="/">메뉴</Link>
+                    <ul className={styles.innermenu}>
+                        <li className={styles.dept2}>
+                           <Link to="/">메뉴2</Link>
+                        </li>
+                        <li className={styles.dept2}>
+                           <Link to="/">메뉴2</Link>
+                        </li>
+                        <li className={styles.dept2}>
+                           <Link to="/">메뉴2</Link>
+                        </li>
+                    </ul>
+                </li>
+                <li className={styles.dept1}>
+                    <Link to="/">메뉴</Link>
+                    <ul className={styles.innermenu}>
+                        <li className={styles.dept2}>
+                           <Link to="/">메뉴2</Link>
+                        </li>
+                        <li className={styles.dept2}>
+                           <Link to="/">메뉴2</Link>
+                        </li>
+                        <li className={styles.dept2}>
+                           <Link to="/">메뉴2</Link>
+                        </li>
+                    </ul>
+                </li>
+                <li className={styles.dept1}>
+                    <Link to="/">메뉴</Link>
+                    <ul className={styles.innermenu}>
+                        <li className={styles.dept2}>
+                           <Link to="/">메뉴2</Link>
+                        </li>
+                        <li className={styles.dept2}>
+                           <Link to="/">메뉴2</Link>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div className={styles.hd_bg}></div>
+
+        </div>
     )
 }
 

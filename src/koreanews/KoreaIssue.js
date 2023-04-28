@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Frame from "../main/Frame";
 
 
 // const URL = "/api/B551024/openArirangNewsApi/news";
@@ -41,7 +42,7 @@ const KoreaIssue = () => {
 
 
     return (
-        <>
+        <Frame>
             <h2>한국 이슈</h2>
             <ul> {
                 responseData.map((apiData, index) => (
@@ -63,7 +64,7 @@ const KoreaIssue = () => {
                 ))
             }
             </ul>
-        </>
+        </Frame>
     ); 
 }
 
