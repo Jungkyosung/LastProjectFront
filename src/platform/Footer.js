@@ -1,8 +1,10 @@
+import styles from './Footer.module.css';
+
 const Footer = () => {
     return (
         <>
-            <div>
-                <ul>
+            <div className={styles.footer}>
+                <ul className={styles.footerContainer}>
                     <li>개인정보처리방침</li>
                     <li>찾아오시는길</li>
                     <li>사이트맵</li>

@@ -1,6 +1,6 @@
   .nav {
     position:relative;
-    height: 80px;
+    height: 72px;
     overflow: hidden;
     transition: 0.25s ease-in-out;
     border-top: 2px solid #5E8FCA;
@@ -29,9 +29,9 @@
     position: absolute;
     left:50%;
     transform: translateX(-50%);
-    height: 100px;
+    height: 70px;
     margin: auto;
-    padding: 0;
+
   }
   .nav .navContainer .active {
     color: white;
@@ -44,7 +44,6 @@
   .nav .navContainer li {
     width: 150px;
     height: 70px;
-    list-style-type: none;
     font-size: 16px;
     font-weight: 600;
     float:left;
@@ -63,7 +62,7 @@
     position: absolute;
     left:50%;
     transform: translateX(-50%);
-    top:80px;
+    top:75px;
     margin: auto;
   }
   
@@ -87,7 +86,7 @@
 
   .nav .serchBox {
     position: absolute;
-    top:20px;
+    top:25px;
     right:380px;
     color: #333;
   }

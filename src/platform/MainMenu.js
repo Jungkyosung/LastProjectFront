@@ -72,8 +72,8 @@ const MainMenu = () => {
                     </ul>
             </div>
             <div className={styles.serchBox}>
-                <span><LanguageIcon style={{fontSize:"30px", marginRight:30}}  /></span>
-                <span><SearchIcon style={{fontSize:"30px"}}  /></span>
+                <span><LanguageIcon style={{fontSize:"25px", marginRight:30}}  /></span>
+                <span><SearchIcon style={{fontSize:"25px"}}  /></span>
             </div>
         </nav>
     )
