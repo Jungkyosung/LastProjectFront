@@ -5,6 +5,7 @@ import NotFound from './not_found/NotFound';
 import Main from './main/Frame';
 import LoginPage from './login/LoginPage';
 import RegistGoogle from './regist/RegistGoogle';
+import Parent from './chat/Parent';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/regist" Component={Regist} exact={true}/>
         <Route path="/regist/social/google" Component={RegistGoogle} exact={true}/>
         <Route path="/*" Component={NotFound}/>
+        <Route path="/chat" Component={Parent}/>
       </Routes>
     </>
   );
