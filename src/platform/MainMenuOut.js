@@ -38,7 +38,7 @@ const MainMenu = () => {
                     </li>
                 ))}
             </ul>
-            <div className={styles.detailMenu} style={{zIndex:99}}>
+            <div className={styles.detailMenu} >
                     <ul
                         onMouseEnter={() => mouseEvent(true)}
                         onMouseLeave={() => mouseEvent(false)}
