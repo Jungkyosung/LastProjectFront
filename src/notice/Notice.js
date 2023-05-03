@@ -9,27 +9,25 @@ const Notice = ()=> {
     return(
         <Frame>
             <h2>공지사항</h2>
-            <div>
-                <span>LOGO</span>
-            </div>
-            <div>
-                <div></div>
-            </div>
-            <Button variant="contained">LOGIN</Button>
-            <div>
-                <span>계정이 없으신가요?</span>
-                <span>회원가입하기</span>
-            </div>
-            <div>
-                <span>SNS 계정으로 로그인하기</span>
                 <div>
-                    <FcGoogle/>
-                    <BsApple/>
-                    <SiNaver/>
-                    <RiKakaoTalkFill/>
-                </div>
-            </div>
-        
+                    <ul>
+                        <li>
+                            <em>공지</em>
+                            <h3>공지이이제목</h3>
+                            <span>2023-05-01</span>
+                        </li>
+                        <li>
+                            <em>공지</em>
+                            <h3>공지이이제목</h3>
+                            <span>2023-05-01</span>
+                        </li>
+                        <li>
+                            <em>공지</em>
+                            <h3>공지이이제목</h3>
+                            <span>2023-05-01</span>
+                        </li>
+                    </ul>
+                </div>      
         </Frame>
     )
 }

@@ -1,0 +1,23 @@
+import Frame from "../main/Frame"
+
+const NoticeDetail = () => {
+    return(
+        <Frame>
+            <h2>공지사항</h2>
+            <div>
+                <em>공지</em>
+                <h3>공지사항 제목입니다</h3>
+                <span>2023-05-01</span>
+                <p>내용 입력</p>
+                <strong>첨부파일</strong>
+                <div>첨부파일1</div>
+                <div>첨부파일2</div>
+            </div>
+            <div>
+                <button>목록보기</button>
+            </div>
+        </Frame>
+    )
+}
+
+export default NoticeDetail;
