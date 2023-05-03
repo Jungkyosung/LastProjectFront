@@ -1,24 +1,28 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
+import { useState } from "react";
 
 
 const Footer = () => {
 
-    //[번역핸들러]
-    const handlerTranslate = ()=> {
-        const token = sessionStorage.getItem('token');
-        const tempText = 'hello, I like kimchi, hi 승요';
+    const [tempText, setTempText] = useState('');
+    const [translateText, setTranslateText] = useState('');
 
-        axios.get(`http://localhost:8080/translate/${tempText}`,
+    //[번역핸들러]
+    const handlerTranslate = () => {
+        const token = sessionStorage.getItem('token');
+       
+        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/translate/${tempText}`,
             {
-                headers : { 'Authorization' : `Bearer ${token}`}
+                headers: { 'Authorization': `Bearer ${token}` }
             })
-        .then((response)=> {
-            console.log(response);
-        })
-        .catch((error)=> {
-            console.log(error);
-        })
+            .then((response) => {
+                console.log(response);
+                setTranslateText(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     };
 
     return (
@@ -31,7 +35,14 @@ const Footer = () => {
                 </ul>
                 <div>서울 종로구 인사동길 12 대일빌딩 7층, 15층 Tel 02-723-0008</div>
                 <div>COPYRIGHT@ 프로젝트.ALL RIGHTS RESERVED</div>
+                <input value={tempText} onChange={(e) => setTempText(e.target.value)}></input>
                 <button type="button" onClick={handlerTranslate}>번역버튼</button>
+                {
+                    translateText != null ?
+                        <p>{translateText}</p>
+                        :
+                        ""
+                }
             </div>
         </>
     )

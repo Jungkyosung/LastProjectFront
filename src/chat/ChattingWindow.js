@@ -12,11 +12,17 @@ function ChattingWindow(props) {
     const userId = props.userId;
     const header = props.header;
     const nickName = props.nickName;
+    const chatHistory = props.chatHistory;
+    const setChatHistory = props.setChatHistory;
+    const onMessageReceived = props.onMessageReceived;
 
     //상태변수 지정
     const [isJoin, setIsJoin] = useState(false);  //참가여부는 여기선 의미 없음.
-    const [chatHistory, setChatHistory] = useState([]);
     const [message, setMessage] = useState('');
+    const [translateText, setTranslateText] = useState([{}]);
+
+
+
 
     //ref지정(요소 컨트롤)
     const refDialogDiv = useRef();
@@ -42,14 +48,14 @@ function ChattingWindow(props) {
         if (isAccompany) {
             let 채팅방UUID = '';
 
-            axios.get(`http://localhost:8080/chatroom/${동행글Idx}`, { headers: header })
+            axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/chatroom/${동행글Idx}`, { headers: header })
                 .then((response) => {
                     // console.log(response.data);
                     채팅방UUID = response.data;
                     // console.log("sender" + sender);
                     if (props.stompClient) {
                         props.stompClient.current.send(`/app/chat.sendMessage/${채팅방UUID}`, {},
-                            JSON.stringify({ chatroomId : 채팅방UUID ,userId, message, type: 'CHAT' }));  //sender : sender, message : message, type : 'CHAT'       
+                            JSON.stringify({ chatroomId: 채팅방UUID, userId, message, type: 'CHAT' }));  //sender : sender, message : message, type : 'CHAT'       
                     }
 
                     //메시지 보냈으면 초기화 해주고, 다시 인풋 태그 가리킴.
@@ -64,11 +70,30 @@ function ChattingWindow(props) {
     }, [message]);
 
     //{핸들러: 연결끊기}
-    const handlerDisconnect = ()=>{
-        props.stompClient.current.disconnect(function(){
+    const handlerDisconnect = () => {
+        props.stompClient.current.disconnect(function () {
             alert("see you");
         });
     }
+
+    //{핸들러: 번역}
+    const handlerTranslate = (msg, idx) => {
+        //텍스트 div를 누르면 채팅 내역의 idx 번호를 기준으로 
+        chatHistory.map((msg,idx) => { })
+        setTranslateText()
+        const token = sessionStorage.getItem('token');
+        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/translate/${msg}`,
+            {
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
+            .then((response) => {
+                console.log(response);
+                setTranslateText[idx](response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    };
 
     //채팅 내역이 바뀌면, 스크롤을 내려줌.
     useEffect(() => {
@@ -85,13 +110,20 @@ function ChattingWindow(props) {
                     <div id="dialog" ref={refDialogDiv}>
                         <div className="dialog-board">
                             채팅내역
-                            {chatHistory.map((item, idx) => (
+                            { chatHistory ?
+                            chatHistory.map((item, idx) => (
                                 <div key={idx} className={item.userId === userId ? "me" : "other"}>
                                     <span><b>{item.userId}</b></span>
                                     <span className="date">{item.createdDt}</span><br />
                                     <span>{item.message}</span>
+                                    {/* {
+                                        translateText[idx] != null ?
+                                            <p key={idx}>{translateText[idx]}</p>
+                                            :
+                                            ""
+                                    } */}
                                 </div>
-                            ))}
+                            )) : ""}
                         </div>
                     </div>
 

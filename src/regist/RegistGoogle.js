@@ -34,7 +34,7 @@ const RegistGoogle = () => {
   //[제출 핸들러]
   const handlerSubmit = (e) => {
     e.preventDefault();
-    axios.post(`http://localhost:8080/api/regist`,
+    axios.post(`http://${process.env.REACT_APP_JKS_IP}:8080/api/regist`,
       {
         "userId": email,
         "userPw": tempPwKey,

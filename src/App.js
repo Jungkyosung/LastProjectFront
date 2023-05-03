@@ -2,21 +2,38 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Regist from './regist/Regist';
 import NotFound from './not_found/NotFound';
-import Main from './main/Frame';
+import Frame from './main/Frame';
 import LoginPage from './login/LoginPage';
 import RegistGoogle from './regist/RegistGoogle';
 import Parent from './chat/Parent';
+import Notice from './notice/Notice';
+import Tried from './tried/Tried';
+import Accompany from './accompany/Accompany';
+import Weather from './weather/Weather';
+import News from './news/News';
+import Webcartoon from './webcartoon/Webcartoon';
+import Admin from './admin/Admin';
+import Mypage from './mypage/Mypage';
+
 
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" Component={Main} />
-        <Route path="/login" Component={LoginPage} exact={true} />
-        <Route path="/regist" Component={Regist} exact={true}/>
-        <Route path="/regist/social/google" Component={RegistGoogle} exact={true}/>
-        <Route path="/*" Component={NotFound}/>
-        <Route path="/chat" Component={Parent}/>
+        <Route path="/" element={<Frame/>} exact={true} />
+        <Route path="/login" element={<LoginPage/>} />
+        <Route path="/regist" element={<Regist/>} />
+        <Route path="/regist/social/google" element={<RegistGoogle/>} />
+        <Route path="/notice" element={<Notice/>} />
+        <Route path="/chat" element={<Parent/>}/>
+        <Route path="/weather" element={<Weather/>} />
+        <Route path="/news" element={<News/>} />
+        <Route path="/webcartoon" element={<Webcartoon/>} />
+        <Route path="/tried" element={<Tried/>} />
+        <Route path="/accompany" element={<Accompany/>} />
+        <Route path="/adminpage" element={<Admin/>} />
+        <Route path="/mypage" element={<Mypage/>} />
+        <Route path="/*" element={<NotFound/>}/>
       </Routes>
     </>
   );

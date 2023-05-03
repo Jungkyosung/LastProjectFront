@@ -6,11 +6,11 @@ import { RiKakaoTalkFill } from 'react-icons/ri';
 import Frame from "../main/Frame";
 import GoogleLoginButton from './GoogleLoginButton';
 
-const googleAuthUrl = 'https://oauth2.googleapis.com';
-const googleLoginUrl = 'https://accounts.google.com';
-const googleRedirectUrl = 'http://localhost:8080/google/login/redirect';
-const GOOGLECLIENTID = '248755996027-vfjb4igodn9qj0mjn5us426g2e9ma1o5.apps.googleusercontent.com';
-const GOOGLEAUTHPW = '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';
+// const googleAuthUrl = 'https://oauth2.googleapis.com';
+// const googleLoginUrl = 'https://accounts.google.com';
+// const googleRedirectUrl = 'http://localhost:8080/google/login/redirect';
+// const GOOGLECLIENTID = '248755996027-vfjb4igodn9qj0mjn5us426g2e9ma1o5.apps.googleusercontent.com';
+// const GOOGLEAUTHPW = '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';
 
 
 const LoginPage = ()=> {

@@ -1,4 +1,5 @@
 import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const DetailMenu = () => {
     return (
@@ -13,14 +14,14 @@ const DetailMenu = () => {
             </div>
             <div>
                 <ul>
-                    <li><Button variant="text">날씨</Button></li>
+                    <li><Link to="/weather"><Button variant="text">날씨</Button></Link></li>
                     <li><Button variant="text">여행코스</Button></li>
                     <li><Button variant="text">카드뉴스</Button></li>
                 </ul>
             </div>
             <div>
                 <ul>
-                    <li><Button variant="text">글로벌채팅</Button></li>
+                    <li><Link to="/chat"><Button variant="text">글로벌채팅</Button></Link></li>
                     <li><Button variant="text">웹만화</Button></li>
                     <li><Button variant="text">어디까지</Button></li>
                     <li><Button variant="text">여행친구</Button></li>
