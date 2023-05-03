@@ -2,16 +2,20 @@ import { useState } from "react";
 
 function LNButton() {
 
-    const [sortType, setSortType] = useState('star');
+    const [sortType, setSortType] = useState('Thumb');
+    const [date, setDate] = useState('')
+    const [like, setLike] = useState('')
 
     const handlerLike = () => {
-        setSortType('star');
+        setSortType('Thumb');
     }
 
     const handlerDate = () => {
         setSortType('opening');
 
     }
+
+    // const orderedDate = idealreal.sort((a, b) =>{;return(new Date(a.opening) - new Date(b.opening))})
 
     return (
 
