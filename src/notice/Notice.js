@@ -1,33 +1,40 @@
-import { Button, TextField } from "@mui/material";
-import { FcGoogle } from 'react-icons/fc';
-import { BsApple } from 'react-icons/bs';
-import { SiNaver } from 'react-icons/si';
-import { RiKakaoTalkFill } from 'react-icons/ri';
 import Frame from "../main/Frame";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
-const Notice = ()=> {
-    return(
+const Notice = () => {
+
+    const [datas, setDatas] = useState([]);
+
+    useEffect(() => {
+        axios.get(`http://localhost:8080/api/noticeList`)
+            .then(response => {
+                console.log(response.data)
+                setDatas(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }, [])
+
+    return (
         <Frame>
             <h2>공지사항</h2>
-                <div>
-                    <ul>
-                        <li>
-                            <em>공지</em>
-                            <h3>공지이이제목</h3>
-                            <span>2023-05-01</span>
-                        </li>
-                        <li>
-                            <em>공지</em>
-                            <h3>공지이이제목</h3>
-                            <span>2023-05-01</span>
-                        </li>
-                        <li>
-                            <em>공지</em>
-                            <h3>공지이이제목</h3>
-                            <span>2023-05-01</span>
-                        </li>
-                    </ul>
-                </div>      
+            <div>
+                <ul>
+                    {
+                        datas.map((list, index) => (
+                            <li key={index}>
+                                <Link to=
+                                    {`/notice/${list.noticeIdx}`}
+                                >
+                                    <em>공지</em><h3>{list.noticeTitle}</h3><span>{list.noticeCreatedTime}</span></Link></li>
+
+                        ))
+                    }
+                </ul>
+            </div>
         </Frame>
     )
 }

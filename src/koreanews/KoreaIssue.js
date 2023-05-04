@@ -48,7 +48,7 @@ const KoreaIssue = () => {
                 responseData.map((apiData, index) => (
                     <li key={index}>
                         <Link to=
-                        {`/koreaissue/detail/${apiData.index}`} 
+                        {`/koreaissue/${apiData.index}`} 
                             state={
                                 { 
                                 title : apiData.title,
