@@ -9,10 +9,10 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" Component={Main} />
-        <Route path="/login" Component={LoginPage} exact={true} />
-        <Route path="/regist" Component={Regist} exact={true}/>
-        <Route path="/*" Component={NotFound}/>
+        <Route path="/" element={<Main/>} />
+        <Route path="/login" element={<LoginPage/>} />
+        <Route path="/regist" element={<Regist/>}/>
+        <Route path="/*" element={<NotFound/>}/>
       </Routes>
     </>
   );

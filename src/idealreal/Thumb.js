@@ -4,25 +4,67 @@ import { FaOdnoklassniki } from "react-icons/fa";
 
 
 function Thumb() {
-    const [count, setCount] = useState(0);
-    const [ idealreal, setIdealreal ] = useState([])
-    // const [like, setLike] = useState(0)
-    const like = () => setCount(count + 1);
+  const [likeUpdate, setLikeUpdate] = useState(false)
+  const [idealrealRcmd, setIdealrealRcmd] = useState(0) 
+  const [userId, setUserId] = useState('');
 
-    useEffect(() => {
-      axios.get(`http://localhost:8080/api/listidealreal`)
-        .then(response => {
-          setIdealreal(response.data.listIdealreal)
-        })
-        .catch(erorr => console.log(erorr))
-    }, [])
+  useEffect(() => {
+      // const token = sessionStorage.getItem('token');
+      // const decodedToken = jwt_decode(token);
+      // console.log(decodedToken);
+      // setUserNickname(decodedToken.userNickname);
 
+      axios.get(`http://localhost:8080/api/listidealreal/${idealrealIdx}/getlike`)
+          .then(response => {
+              console.log(response);
+              setIdealrealRcmd(response.data.idealrealRcmd);
+          })
+          .catch(error => console.log(error));
+  }, []);
 
-    return (
+  const likeUpdateHandler = () => {
+      setLikeUpdate(!likeUpdate)
+    }
+
+  const LikeCountHandler = () => {
+      likeUpdateHandler()
+      
+  if (!likeUpdate) {
+      setIdealrealRcmd(idealrealRcmd +1)
+      axios.put(`http://localhost:8080/api/listidealreal/${idealrealIdx}/like`, 
+      {idealrealIdx})
+      .then(response => {                           
+          console.log(response);
+      })
+      .catch(error => {
+          console.log(error);
+          return;
+      });
+  } else if (likeUpdate) {
+      setIdealrealRcmd(idealrealRcmd -1)
+      axios.put(`http://localhost:8080/api/listidealreal/{rcmdIdx}/unlike`, 
+      {idealrealIdx})
+      .then(response => {                           
+          console.log(response);
+      })
+      .catch(error => {
+          console.log(error);
+          return;
+      });
+  }} 
+
+  return(
       <>
-        <button style={{ FaOdnoklassniki }} onClick={like}>좋NI {count}</button>
+      <div>
+       <h1> Likes  {idealrealRcmd} </h1>
+       <br/>
+      {likeUpdate ?
+        <button onClick={LikeCountHandler}></button>:
+        <button onClick={LikeCountHandler}></button>
+      }
+      </div>
       </>
-    );
-  }
+  );
+}
   
     export default Thumb;
