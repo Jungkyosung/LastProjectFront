@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import TriedHeader from "./TriedHeader";
 
+
 const TriedList = () => {
 
     const [data, setData] = useState([]);

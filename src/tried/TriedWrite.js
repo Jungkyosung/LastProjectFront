@@ -8,14 +8,8 @@ const TriedWrite = () => {
 
     const [triedTitle, setTriedTitle] = useState('');
     const [triedContent, setTriedContent] = useState('');
-
-    //추가
-    const [categoryIdx, setCategoryIdx] = useState('');
-
-    // const [triedImg, setTriedImg] = useState({
-    //     image_file: "",
-    //     preview_URL: "image/*"
-    // });
+    const [categoryIdx, setCategoryIdx] = useState('');     //추가됨
+    const [triedImg, setTriedImg] = useState('');
 
     const handlerChangeTitle = e => setTriedTitle(e.target.value);
     const handlerChangeContent = e => setTriedContent(e.target.value);
@@ -23,21 +17,25 @@ const TriedWrite = () => {
     const handlerSubmit = e => {
         e.preventDefault();
 
-        axios.post(
-            `http://localhost:8080/api/tried/write/${categoryIdx}/`,
-            // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
-            { triedTitle, triedContent }        // 요청 본문 값 단축 속성명 정의
-        )
-            .then(response => {
-                alert('등록 완료');
-                console.log(response.data);
-                navigate('/tried');
-            })
-            .catch(error => {
-                console.log(error);
-                alert(`동륵 실패 (${error.message})`);
-                return;
-            });
+        if (window.confirm('글을 등록하시겠습니까?')) {
+            axios.post(
+                `http://localhost:8080/api/tried/write/${categoryIdx}/`,
+                // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
+                { triedTitle, triedContent }        // 요청 본문 값 단축 속성명 정의
+            )
+                .then(response => {
+                    if (response.data.count === 1) {
+                        alert(`등록 완료 (게시판 번호: ${response.data.triedIdx})`);
+                        console.log(response.data.categoryIdx);
+                        navigate('/tried');
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert(`등록 실패 (${error.message})`);
+                    return;
+                });
+        }
     };
 
     return (
@@ -54,18 +52,17 @@ const TriedWrite = () => {
                                 />
                             </div>
                         </div>
+                        <div> 사진 넣는 자리
+                                    <TriedUpload
+                                        image={setTriedImg} />
+                                </div>
                         <div>
                             <div colSpan="2">
                                 <textarea id="content" name="content" value={triedContent}
-                                    onChange={handlerChangeContent}
-                                />
+                                    onChange={handlerChangeContent} />
                             </div>
                         </div>
                     </div>
-                    {/* <div>
-                        <TriedUpload
-                            image={setTriedImg} />
-                    </div> */}
                     <input type="submit" id="submit" value="글쓰기" className="btn" />
                 </form>
             </div>
