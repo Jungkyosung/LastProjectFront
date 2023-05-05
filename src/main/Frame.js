@@ -3,8 +3,28 @@ import SubMenu from "../platform/SubMenu";
 import MainMenu from "../platform/MainMenu";
 import DetailMenu from "../platform/DetailMenu";
 import Footer from "../platform/Footer";
+import ChatPort from "../chat/ChatPort";
+import { useState } from "react";
+import ChatParent from "../chat/ChatParent";
 
-const Frame = ({children}) => {
+const Frame = ({ children }) => {
+
+    const [isChatModal, setIsChatIsModal] = useState(true);
+
+    let isLogin = false;
+
+    if (sessionStorage.getItem('token') != null) {
+        isLogin = true;
+    }
+
+    const handlerChatModal = () => {
+        if (isChatModal) {
+            setIsChatIsModal(false);
+            console.log(isChatModal);
+        } else {
+            setIsChatIsModal(true);
+        };
+    };
 
     return (
         <>
@@ -12,7 +32,15 @@ const Frame = ({children}) => {
             <SubMenu />
             <MainMenu />
             <DetailMenu />
-                {children}
+            {children}
+            {isLogin && isChatModal &&
+                <div onClick={handlerChatModal}>
+                    <ChatPort handlerChatModal={handlerChatModal}/>
+                </div>
+            }
+            {isLogin && !isChatModal &&
+                <ChatParent handlerChatModal={handlerChatModal}/>
+            }
             <Footer />
         </>
     )

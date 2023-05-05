@@ -7,26 +7,26 @@ const DetailMenu = () => {
             <div></div>
             <div>
                 <ul>
-                    <li><Button variant="text">음식</Button></li>
-                    <li><Button variant="text">패션</Button></li>
-                    <li><Button variant="text">문화</Button></li>
+                    <li><Link to=""><Button variant="text">음식</Button></Link></li>
+                    <li><Link to=""><Button variant="text">패션</Button></Link></li>
+                    <li><Link to=""><Button variant="text">문화</Button></Link></li>
                 </ul>
             </div>
             <div>
                 <ul>
                     <li><Link to="/weather"><Button variant="text">날씨</Button></Link></li>
-                    <li><Button variant="text">여행코스</Button></li>
-                    <li><Button variant="text">카드뉴스</Button></li>
+                    <li><Link to="/course"><Button variant="text">여행코스</Button></Link></li>
+                    <li><Link to=""><Button variant="text">카드뉴스</Button></Link></li>
                 </ul>
             </div>
             <div>
                 <ul>
                     <li><Link to="/chat"><Button variant="text">글로벌채팅</Button></Link></li>
-                    <li><Button variant="text">웹만화</Button></li>
-                    <li><Button variant="text">어디까지</Button></li>
-                    <li><Button variant="text">여행친구</Button></li>
-                    <li><Button variant="text">이상과현실</Button></li>
-                    <li><Button variant="text">물가체험</Button></li>
+                    <li><Link to=""><Button variant="text">웹만화</Button></Link></li>
+                    <li><Link to=""><Button variant="text">어디까지</Button></Link></li>
+                    <li><Link to=""><Button variant="text">여행친구</Button></Link></li>
+                    <li><Link to=""><Button variant="text">이상과현실</Button></Link></li>
+                    <li><Link to=""><Button variant="text">물가체험</Button></Link></li>
                 </ul>
             </div>
         </>

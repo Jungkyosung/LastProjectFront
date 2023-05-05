@@ -2,8 +2,11 @@ import { useRef, useState } from "react";
 import Chatroom from "./Chatroom";
 import ChattingWindow from "./ChattingWindow";
 import jwt_decode from 'jwt-decode';
+import "./Chat.css";
+import CloseIcon from '@mui/icons-material/Close';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-function Parent() {
+function ChatParent(props) {
 
     let nickName = null;
     let jwtToken = null;
@@ -17,6 +20,9 @@ function Parent() {
         'Content-Type': 'application/json'
     };
 
+    const handlerChatModal = props.handlerChatModal;
+
+    const [isChatroom, setIsChatroom] = useState(true);
 
     //상위컴포넌트에 올려서 버튼 누르면 true로 바꿔줘야됨.
     const [isGlobal, setIsGlobal] = useState(true);          //글로벌 채팅이면 true
@@ -63,6 +69,10 @@ function Parent() {
         }
     };
 
+    //뒤로 가기
+    const handlerArrowBack =()=>{
+        setIsChatroom(true);
+    }
 
 
     const handler동행글Idx = (e) => {
@@ -72,33 +82,47 @@ function Parent() {
 
     return (
         <>
-            <button type="button" onClick={handlerGlobalChat}>글로벌채팅방</button>
-            <button type="button" onClick={handlerAccompanyChat}>동행채팅방</button>
-            <Chatroom
-                stompClient={stompClient}
-                userId={userId}
-                isGlobal={isGlobal}
-                isAccompany={isAccompany}
-                header={header}
-                nickName={nickName}
-                동행글Idx={동행글Idx}
-                handler동행글Idx={handler동행글Idx}
-                chatHistory={chatHistory}
-                setChatHistory={setChatHistory}
-                onMessageReceived={onMessageReceived} />
-            <ChattingWindow
-                stompClient={stompClient}
-                userId={userId}
-                isGlobal={isGlobal}
-                isAccompany={isAccompany}
-                header={header}
-                nickName={nickName}
-                동행글Idx={동행글Idx}
-                handler동행글Idx={handler동행글Idx}
-                chatHistory={chatHistory}
-                setChatHistory={setChatHistory}
-                onMessageReceived={onMessageReceived} />
+            <div className="chatParent">
+                
+                <div id="chatParentTitle">
+                    {!(isChatroom) ? <ArrowBackIcon id="ArrowBackIcon" onClick={handlerArrowBack} /> :
+                    <span id="ArrowBackIconTemp"></span>}
+                    <em>Chat Room</em>
+                    <CloseIcon id="CloseIcon" onClick={handlerChatModal}/>
+                </div>
+
+                <button type="button" onClick={handlerGlobalChat}>글로벌채팅방</button>
+                <button type="button" onClick={handlerAccompanyChat}>동행채팅방</button>
+                {isChatroom ? <Chatroom
+                    stompClient={stompClient}
+                    userId={userId}
+                    isGlobal={isGlobal}
+                    isAccompany={isAccompany}
+                    header={header}
+                    nickName={nickName}
+                    동행글Idx={동행글Idx}
+                    handler동행글Idx={handler동행글Idx}
+                    chatHistory={chatHistory}
+                    setChatHistory={setChatHistory}
+                    onMessageReceived={onMessageReceived}
+                    isChatroom={isChatroom}
+                    setIsChatroom={setIsChatroom} />
+                    : <ChattingWindow
+                        stompClient={stompClient}
+                        userId={userId}
+                        isGlobal={isGlobal}
+                        isAccompany={isAccompany}
+                        header={header}
+                        nickName={nickName}
+                        동행글Idx={동행글Idx}
+                        handler동행글Idx={handler동행글Idx}
+                        chatHistory={chatHistory}
+                        setChatHistory={setChatHistory}
+                        onMessageReceived={onMessageReceived}
+                        isChatroom={isChatroom}
+                        setIsChatroom={setIsChatroom} />}
+            </div>
         </>
     )
 }
-export default Parent;
+export default ChatParent;

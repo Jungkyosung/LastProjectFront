@@ -3,6 +3,7 @@ import axios from "axios";
 import { useCallback, useEffect } from "react";
 import { useRef, useState } from "react";
 import SockJS from "sockjs-client";
+import "./Chat.css";
 
 //채팅룸
 //채팅룸 창 내부에서 채팅방 누르면 해당 방의 방번호? 찾아서 연결해주면서 모달로 채팅 띄워줌.
@@ -31,6 +32,8 @@ function Chatroom(props) {
     const chatHistory = props.chatHistory;
     const setChatHistory = props.setChatHistory;
     const onMessageReceived = props.onMessageReceived;
+    const isChatroom = props.isChatroom;
+    const setIsChatroom = props.setIsChatroom;
 
 
     const nickName = props.nickName;
@@ -144,6 +147,8 @@ function Chatroom(props) {
                     console.log(error);
                 })
         }
+
+        setIsChatroom(false);
     };
 
 
@@ -192,12 +197,13 @@ function Chatroom(props) {
             <div id="chat-wrap">
                 <div id="chat">
                     <div id="chatroomlist">
+                        <div className="chatroomList">글로벌 채팅방</div>
                         {chatroomList.map((chatroom, idx) => (
-                            <>
+                            <div className="chatroomList">
                                 <span key={idx}>{chatroom.chatroomId}</span>
                                 <span > 안읽은 메시지 </span>
                                 <button onClick={()=>handlerLeaveChatroom(chatroom.chatroomId)}>채팅방 퇴장</button><br></br>
-                            </>
+                            </div>
                         ))}
                     </div>
 
@@ -214,15 +220,3 @@ function Chatroom(props) {
 };
 
 export default Chatroom;
-
-{/* <div id="dialog" ref={refDialogDiv}>
-                        <div className="dialog-board">
-                            {chatHistory.map((item, idx) => (
-                                <div key={idx} className={item.userId === userId ? "me" : "other"}>
-                                    <span><b>{item.userId}</b></span>
-                                    <span className="date">{item.createdDt}</span><br />
-                                    <span>{item.message}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </div> */}

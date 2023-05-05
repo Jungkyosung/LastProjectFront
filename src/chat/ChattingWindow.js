@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useCallback, useEffect } from "react";
 import { useRef, useState } from "react";
+import './Chat.css';
 
 function ChattingWindow(props) {
 
@@ -15,6 +16,8 @@ function ChattingWindow(props) {
     const chatHistory = props.chatHistory;
     const setChatHistory = props.setChatHistory;
     const onMessageReceived = props.onMessageReceived;
+    const isChatroom = props.isChatroom;
+    const setIsChatroom = props.setIsChatroom;
 
     //상태변수 지정
     const [isJoin, setIsJoin] = useState(false);  //참가여부는 여기선 의미 없음.
@@ -73,6 +76,7 @@ function ChattingWindow(props) {
     const handlerDisconnect = () => {
         props.stompClient.current.disconnect(function () {
             alert("see you");
+            setIsChatroom(true);
         });
     }
 
