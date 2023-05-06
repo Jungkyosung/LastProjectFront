@@ -6,28 +6,13 @@ import TriedHeader from "./TriedHeader";
 const TriedList = () => {
 
     const [data, setData] = useState([]);
-    // const [triedIdx, setTriedIdx] = useState([]);
-    // const [userId, setUserId] = useState([]);
-    // const [triedCreatedTime, setTriedCreatedTime] = useState([]);
-    // const [triedTitle, setTriedTitle] = useState([]);
-    // const [triedImg, setTriedImg] = useState([]);
-    // const [triedCnt, setTriedCnt] = useState([]);
-    // const [triedRcmd, setTriedRcmd] = useState([]);
-    // const [triedContent, setTriedContent] = useState([]);
+
 
     useEffect(() => {
         axios.get(`http://localhost:8080/api/tried`)
             .then(response => {
                 console.log(response.data);
                 setData(response.data);
-                // setUserId(response.data.userId);
-                // setTriedIdx(response.data.triedIdx);
-                // setTriedCreatedTime(response.data.triedCreatedTime);
-                // setTriedTitle(response.date.triedTitle);
-                // setTriedImg(response.data.triedImg);
-                // setTriedContent(response.data.triedContent);
-                // setTriedCnt(response.data.triedCnt);
-                // setTriedRcmd(response.data.triedRcmd);
             })
             .catch(error => console.log(error));
     }, []);

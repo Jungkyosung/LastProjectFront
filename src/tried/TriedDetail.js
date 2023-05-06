@@ -7,11 +7,6 @@ const TriedDetail = () => {
     const navigate = useNavigate();     // useNavigate hook 사용
 
     const [tried, setTried] = useState({});
-    // const [triedTitle, setTriedTitle] = useState('');
-    // const [triedContent, setTriedContent] = useState('');
-
-    // const handlerChangeTitle = e => setTriedTitle(e.target.value);
-    // const handlerChangeContent = e => setTriedContent(e.target.value);
 
     useEffect(() => {
         axios.get(
@@ -20,8 +15,6 @@ const TriedDetail = () => {
             .then(response => {
                 console.log(response.data);
                 setTried(response.data);
-                // setTriedTitle(response.data.riedTitle);
-                // setTriedContent(response.data.riedContent);
             })
             .catch(error =>
                 console.log(error)
