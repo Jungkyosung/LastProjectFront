@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 
 const TriedDetail = () => {
     const { triedIdx } = useParams();
@@ -27,10 +27,10 @@ const TriedDetail = () => {
         navigate('/tried');
     };
 
-    const handlerClickEdit = () => {
-        console.log(navigate);
-        navigate(`/tried/detail/${triedIdx}/edit`);
-    };
+    // const handlerClickUpdate = () => {
+    //     console.log(navigate);
+    //     navigate(`/tried/detail/${triedIdx}/update`);
+    // };
 
     // 삭제
     const handlerClickDelete = () => {
@@ -39,11 +39,11 @@ const TriedDetail = () => {
                 // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
                 .then(response => {
                     console.log(response);
-                    navigate('/tried/edit/${triedIdx}');
+                    navigate('/tried');
                 })
                 .catch(error => {
                     console.log(error);
-                    alert('삭제 실패: (${error.message})');
+                    alert(`삭제 실패: (${error.message})`);
                 });
         }
     }
@@ -72,12 +72,11 @@ const TriedDetail = () => {
                     </div>
 
                 </form>
-                <input type="button" id="list" className="btn" value="목록"
-                    onClick={handlerClickList} />
-                <input type="button" id="edit" className="btn" value="수정"
-                    onClick={handlerClickEdit} />
-                <input type="button" id="delete" className="btn" value="삭제"
-                    onClick={handlerClickDelete} />
+                <button onClick={handlerClickList}>목록</button>
+                <Link to={`/tried/detail/${triedIdx}/update`}>
+                    <button>수정</button>
+                </Link>
+                <button onClick={handlerClickDelete}>삭제</button>
             </div>
         </>
     );

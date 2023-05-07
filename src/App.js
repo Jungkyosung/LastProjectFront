@@ -7,7 +7,7 @@ import LoginPage from './login/LoginPage';
 import TriedList from './tried/TriedList';
 import TriedWrite from './tried/TriedWrite';
 import TriedDetail from './tried/TriedDetail';
-import TiredEdit from './tried/TiredEdit';
+import TriedUpdate from './tried/TriedUpdate.js';
 
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
         <Route path="/tried" element={<TriedList/>} />
         <Route path="/tried/write" element={<TriedWrite/>} />
         <Route path="/tried/detail/:triedIdx" element={<TriedDetail/>} />
-        <Route path="/tried/detail/:triedIdx/edit" element={<TiredEdit/>} />
+        <Route path="/tried/detail/:triedIdx/update" element={<TriedUpdate/>} />
         <Route path="/tried/*" element={<Outlet />} />
       </Routes>
     </>

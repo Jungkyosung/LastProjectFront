@@ -20,15 +20,15 @@ const TriedWrite = () => {
 
         if (window.confirm('글을 등록하시겠습니까?')) {
             axios.post(
-                `http://localhost:8080/api/tried/write/${triedIdx}`,
+                `http://localhost:8080/api/tried/write`,
                 // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
                 { triedTitle, triedContent }        // 요청 본문 값 단축 속성명 정의
             )
                 .then(response => {
                     if (response.data.count === 1) {
-                        alert(`등록 완료 (게시판 번호: ${response.data.triedIdx})`);
+                        alert('등록 완료');
                         console.log(response.data.categoryIdx);
-                        navigate('/tried/detail/${triedIdx}');
+                        navigate(`/tried/detail/${response.data.triedIdx}`);
                     }
                 })
                 .catch(error => {
