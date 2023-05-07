@@ -10,15 +10,17 @@ import earlySummer from './img/005.jpg';
 import beginSummer from './img/006.jpg';
 import summer from './img/007.jpg';
 import Frame from "../main/Frame";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Weather = () => {
-  
+
   const [weatherResult, setWeatherResult] = useState({});
   const [cities, setCities] = useState([]);
   const [temperature, setTemperature] = useState(0);
   const [units, setUnits] = useState('metric');
   const [clothesImg, setClothesImg] = useState(null);
 
+  const [loading, setLoading] = useState(true);
 
   // 현재 날짜
   const today = new Date();
@@ -63,6 +65,7 @@ const Weather = () => {
   //#3
   // 현재 위치 날씨
   const getWeatherByCurrentLocation = async (lat, lon) => {
+    setLoading(true);
     try {
       const { data } = await axios({
         method: 'get',
@@ -71,7 +74,7 @@ const Weather = () => {
       });
       data.main.temp = Math.floor(data.main.temp, 1);
       setWeatherResult(data);
-
+      setLoading(false);
     } catch (error) {
       console.log(`Error: ${error}`);
     }
@@ -192,8 +195,12 @@ const Weather = () => {
   return (
     <Frame>
       <div className="AppWrap">
+        {loading ? <CircularProgress color="secondary" /> : null}
         <div className="AppContentsWrap">
-          <div> {month + "월 " + date + "일 " + day} </div>
+          <div id="title">
+            <p>Weather</p>
+          </div>
+          <div id="date"> {month + "월 " + date + "일 " + day} </div>
           {
             Object.keys(weatherResult).length !== 0 && (
               <div className="resultWrap">
@@ -226,7 +233,7 @@ const Weather = () => {
           }
           <div className="cityButtons">
             {cities.map((city) => (
-              <button key={city} onClick={() => searchWeather(city)}>
+              <button className="cityBtn" key={city} onClick={() => searchWeather(city)}>
                 {city}
               </button>
             ))}

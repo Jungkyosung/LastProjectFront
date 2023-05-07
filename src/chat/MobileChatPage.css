@@ -1,0 +1,19 @@
+/* #chatport-mobile{
+    display: none;
+} */
+
+#chatTitle{
+    display: flex;
+    justify-content: center;
+}
+
+#mobilechat-wrap{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.dialog-board{
+    height : 80%;
+    max-height: 800px;
+    overflow: auto;
+  }

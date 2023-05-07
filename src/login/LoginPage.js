@@ -5,6 +5,10 @@ import { SiNaver } from 'react-icons/si';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 import Frame from "../main/Frame";
 import GoogleLoginButton from './GoogleLoginButton';
+import './LoginPage.css';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import GoogleLoginWindow from "./GoogleLoginWindow";
 
 // const googleAuthUrl = 'https://oauth2.googleapis.com';
 // const googleLoginUrl = 'https://accounts.google.com';
@@ -13,29 +17,47 @@ import GoogleLoginButton from './GoogleLoginButton';
 // const GOOGLEAUTHPW = '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';
 
 
-const LoginPage = ()=> {
-    return(
+const LoginPage = () => {
+
+    const [googleLoginModal, setGoogleLoginModal] = useState(false);
+
+    const handlerOpenGoogle = () => {
+        setGoogleLoginModal(true);
+    }
+
+
+    return (
         <Frame>
-            <h2>로그인</h2>
-            <div>
-                <span>LOGO</span>
-            </div>
-            <div>
-                <TextField label={'Email(ID)'} variant="standard"/>
-                <TextField label={'Password'} variant="standard"/>
-            </div>
-            <Button variant="contained">LOGIN</Button>
-            <div>
-                <span>계정이 없으신가요?</span>
-                <span>회원가입하기</span>
-            </div>
-            <div>
-                <span>SNS 계정으로 로그인하기</span>
+            <div id="login-wrap">
+                <h2 id="login-title">LOGIN</h2>
+                <div id="logo-box">
+                    <Link to="/"><span>LOGO</span></Link>
+                </div>
+                <div id="login-input" >
+                    <TextField label={'Email(ID)'} variant="standard" />
+                    <TextField label={'Password'} variant="standard" />
+                    <span id="login-btn">
+                        <Button variant="contained">LOGIN</Button>
+                    </span>
+                </div>
+
                 <div>
-                    <FcGoogle/><GoogleLoginButton/>
-                    <BsApple/>
-                    <SiNaver/>
-                    <RiKakaoTalkFill/>
+                    <span>계정이 없으신가요?</span>
+                </div>
+                <div id="link-regist">
+                    <Link to="/regist"> <span>회원가입하기</span></Link>
+                </div>
+                <div id="login-sns">
+                    <span>SNS 계정으로 로그인하기</span>
+                    <div id="login-google-logo">
+                        <FcGoogle onClick={handlerOpenGoogle} />
+                        {googleLoginModal &&
+                            <GoogleLoginWindow googleLoginModal={googleLoginModal}
+                                setGoogleLoginModal={setGoogleLoginModal} />}
+                        {/* <BsApple />
+                        <SiNaver />
+                        <RiKakaoTalkFill /> */}
+                    </div>
                 </div>
             </div>
         </Frame>

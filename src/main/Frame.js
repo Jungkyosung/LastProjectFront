@@ -6,10 +6,13 @@ import Footer from "../platform/Footer";
 import ChatPort from "../chat/ChatPort";
 import { useState } from "react";
 import ChatParent from "../chat/ChatParent";
+import "./Frame.css";
+import { useNavigate } from 'react-router-dom';
 
 const Frame = ({ children }) => {
 
     const [isChatModal, setIsChatIsModal] = useState(true);
+    const navigate = useNavigate();
 
     let isLogin = false;
 
@@ -26,20 +29,30 @@ const Frame = ({ children }) => {
         };
     };
 
+    const handlerChatPage = () => {
+        navigate('/mobilechat');
+    }
+
     return (
         <>
             <Reset />
             <SubMenu />
-            <MainMenu />
-            <DetailMenu />
+            <div id="mainmenu">
+                <MainMenu />
+            </div>
             {children}
             {isLogin && isChatModal &&
-                <div onClick={handlerChatModal}>
-                    <ChatPort handlerChatModal={handlerChatModal}/>
-                </div>
+                <>
+                    <div id="chatport-web" onClick={handlerChatModal}>
+                        <ChatPort />
+                    </div>
+                    <div id="chatport-mobile" onClick={handlerChatPage}>
+                        <ChatPort />
+                    </div>
+                </>
             }
             {isLogin && !isChatModal &&
-                <ChatParent handlerChatModal={handlerChatModal}/>
+                <ChatParent handlerChatModal={handlerChatModal} />
             }
             <Footer />
         </>

@@ -1,0 +1,22 @@
+#mainmenu {
+    display: none;
+}
+
+#chatport-web{
+    display: none;
+}
+
+@media (min-width: 800px) {
+    #mainmenu {
+        display: block;
+    }
+    
+    #chatport-web{
+        display: block;
+    }
+
+    #chatport-mobile{
+        display: none;
+    }
+
+}
