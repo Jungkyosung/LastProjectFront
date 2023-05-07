@@ -58,12 +58,36 @@ const MobileMypage = () => {
                 <span className='cursor'><ArrowBackIcon onClick={handlerGoback} /></span>
                 <span className='cursor'><LogoutIcon onClick={handlerLogout} /></span>
             </div>
-            <div id="profile">
+            <div id="mobile-profile-title">
+                MY PROFILE
+            </div>
+            <div id="mobile-profile">
                 <img src="https://i.pinimg.com/564x/38/eb/7a/38eb7a74270f3e480224ffe26cb9d7d3.jpg"></img>
 
                 <span className="modifier" onClick={modal1Open}><FlipCameraIosIcon />프로필 사진 변경</span>
                 <p>nickName</p>
                 <span className="modifier" onClick={modal2Open}><EditNoteIcon />닉네임 변경</span>
+            </div>
+            <div>
+                <div>현재 작성한 글이 없습니다.</div>
+                <div>1번 글 어쩌구 저쩌구</div>
+                <div>2번 글 어쩌구 저쩌구</div>
+                <div>3번 글 어쩌구 저쩌구</div>
+                <div>4번 글 어쩌구 저쩌구</div>
+            </div>
+            <div>
+                <div>현재 작성한 글이 없습니다.</div>
+                <div>1번 글 어쩌구 저쩌구</div>
+                <div>2번 글 어쩌구 저쩌구</div>
+                <div>3번 글 어쩌구 저쩌구</div>
+                <div>4번 글 어쩌구 저쩌구</div>
+            </div>
+            <div>
+                <div>현재 작성한 글이 없습니다.</div>
+                <div>1번 글 어쩌구 저쩌구</div>
+                <div>2번 글 어쩌구 저쩌구</div>
+                <div>3번 글 어쩌구 저쩌구</div>
+                <div>4번 글 어쩌구 저쩌구</div>
             </div>
             {modal1 && <ProfileModifier modal1={modal1} setModal1={setModal1}/>}
             {modal2 && <NicknameModifier modal2={modal2} setModal2={setModal2}/>}

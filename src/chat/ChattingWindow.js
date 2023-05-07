@@ -2,6 +2,7 @@ import axios from "axios";
 import { useCallback, useEffect } from "react";
 import { useRef, useState } from "react";
 import './Chat.css';
+import ChatMessageBox from "./ChatroomBox";
 
 function ChattingWindow(props) {
 
@@ -128,6 +129,7 @@ function ChattingWindow(props) {
                                     } */}
                                 </div>
                             )) : ""}
+                            
                         </div>
                     </div>
 

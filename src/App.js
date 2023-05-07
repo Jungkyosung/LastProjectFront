@@ -24,6 +24,8 @@ import KoreaIssueDetail from './koreanews/KoreaIssueDetail';
 import MainPage from './main/MainPage';
 import MobileMypage from './mypage/MobileMypage';
 import MobileChatPage from './chat/MobileChatPage';
+import AccompanyDetail from './accompany/AccompanyDetail';
+import AccompanyWrite from './accompany/AccompanyWrite';
 
 
 function App() {
@@ -47,6 +49,8 @@ function App() {
         <Route path="/webcartoon"                     element={<Webcartoon/>}      />
         <Route path="/tried"                          element={<Tried/>}           />
         <Route path="/accompany"                      element={<Accompany/>}       />
+        <Route path="/accompany/detail/:accompanyIdx" element={<AccompanyDetail/>} />
+        <Route path="/accompany/write"                element={<AccompanyWrite/>}  />
         <Route path="/adminpage"                      element={<Admin/>}           />
         <Route path="/mypage"                         element={<Mypage/>}          />
         <Route path="/mobilemypage"                   element={<MobileMypage/>}    />

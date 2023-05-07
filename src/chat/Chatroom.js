@@ -4,6 +4,7 @@ import { useCallback, useEffect } from "react";
 import { useRef, useState } from "react";
 import SockJS from "sockjs-client";
 import "./Chat.css";
+import ChatroomBox from "./ChatroomBox";
 
 //채팅룸
 //채팅룸 창 내부에서 채팅방 누르면 해당 방의 방번호? 찾아서 연결해주면서 모달로 채팅 띄워줌.
@@ -174,21 +175,21 @@ function Chatroom(props) {
     //     }
     // };
 
-    const handlerLeaveChatroom = (chatroomId)=> {
+    const handlerLeaveChatroom = (chatroomId) => {
 
-        let tempUserId = userId.replace(".","-");
+        let tempUserId = userId.replace(".", "-");
 
-        axios.delete(`http://${process.env.REACT_APP_JKS_IP}:8080/chatroom/delete/${chatroomId}/${tempUserId}`, 
-        { headers: header })
-        .then((response)=>{
-            console.log(response.data);
-            const tempChatroomList = chatroomList.filter( prevList => 
-                prevList.chatroomId !== response.data
-             )
-            setChatroomList(tempChatroomList);
-        }).catch((error)=>{
-            console.log(error);
-        })
+        axios.delete(`http://${process.env.REACT_APP_JKS_IP}:8080/chatroom/delete/${chatroomId}/${tempUserId}`,
+            { headers: header })
+            .then((response) => {
+                console.log(response.data);
+                const tempChatroomList = chatroomList.filter(prevList =>
+                    prevList.chatroomId !== response.data
+                )
+                setChatroomList(tempChatroomList);
+            }).catch((error) => {
+                console.log(error);
+            })
 
     }
 
@@ -202,9 +203,20 @@ function Chatroom(props) {
                             <div className="chatroomList">
                                 <span key={idx}>{chatroom.chatroomId}</span>
                                 <span > 안읽은 메시지 </span>
-                                <button onClick={()=>handlerLeaveChatroom(chatroom.chatroomId)}>채팅방 퇴장</button><br></br>
+                                <button onClick={() => handlerLeaveChatroom(chatroom.chatroomId)}>채팅방 퇴장</button><br></br>
+
                             </div>
+
                         ))}
+                        <div className="chatroombox">
+                            <ChatroomBox />
+                        </div>
+                        <div className="chatroombox">
+                            <ChatroomBox />
+                        </div>
+                        <div className="chatroombox">
+                            <ChatroomBox />
+                        </div>
                     </div>
 
                     <div id="divSender">
