@@ -1,8 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
-import IdealButton from './IdealButton';
-import RealButton from './RealButton';
+import React, { useEffect, useState, useRef, useNavigate } from 'react';
 import axios from 'axios';
-import IdealButton2 from './IdealButton2';
 
 function IdealrealWrite({ onSubmit, history }) {
   const [data, setData] = useState([])
@@ -12,6 +9,7 @@ function IdealrealWrite({ onSubmit, history }) {
   const [idealrealIdx, setIdealrealIdx] = useState([])
   const [real, setReal] = useState([])
   const [ideal, setIdeal] = useState([])
+  const navigate = useNavigate();
 
 
 
@@ -82,7 +80,7 @@ function IdealrealWrite({ onSubmit, history }) {
         console.log("xxxxxxxxxxxxx")
         console.log(response)
         alert(`${response.data}\n글썻어?`)
-        history.push('/listidealreal')
+        navigate('/listidealreal')
       })
       .catch(error => {
         console.log(error)

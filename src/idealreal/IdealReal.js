@@ -7,6 +7,7 @@ import Thumb from "./Thumb";
 function Idealreal() {
     const [idealreal, setIdealreal] = useState("")
     const [data, setData] = useState([])
+    const [idealrealCnt, setIdealrealCnt] = useState([])
     const [idealrealIdealImg, setIdealrealIdealImg] = useState([]);
     const [idealrealRealImg, setIdealrealRealImg] = useState([]);
 
@@ -29,16 +30,26 @@ function Idealreal() {
         wrapper: {
 
             flexDirection: 'row',
-            border: '1px solid gray',
+            border: '1px solid aqua',
             borderRadius: 16,
             padding: 8,
             margin: 8,
-            width: 'auto',
+            width: 1180,
+            height: 'auto'
+        },
+        wrapper1: {
+
+            flexDirection: 'row',
+            border: '1px solid purple',
+            borderRadius: 16,
+            padding: 8,
+            margin: 8,
+            width: '40%',
             height: 'auto'
         },
         image: {
-            width: 300,
-            height: 400,
+            width: 200,
+            height: 300,
             borderRadius: 10
         },
         contentContainer: {
@@ -57,16 +68,16 @@ function Idealreal() {
 
     const a = {
         buttonContainer: {
-            marginLeft: '800px',
+            marginLeft: '900px',
             width: '100px',
             height: '30px',
-            fontSize: '16px',
-            border: '1px solid gray',
+            background: '#8f86bb',
+            color: 'snow',
+            fontSize: '17px',
             borderRadius: '10px',
             marginTop: '50px',
             textAlign: 'center',
-            lineHeight: '30px',
-            color: 'blue'
+            lineHeight: '30px'
         }
     };
 
@@ -75,7 +86,9 @@ function Idealreal() {
         flexDirection: 'comlum',
         width: '1180px',
         margin: '0 auto',
-        position: 'relative'
+        position: 'relative',
+        marginLeft: '5',
+
     }
 
 
@@ -95,24 +108,40 @@ function Idealreal() {
                         {/* 작성한 사람의 이름과 내용 */}
                         <div style={styles.nameText}>이상과 현실</div>
                     </div>
-                    <div style={styles.wrapper}>
-                        {data && data.map((idealreal => (
-                            <tr key={idealreal.idealrealIdx}>
-                                <td>{idealreal.idealrealIdx}</td>
-                                <td className="idealrealTitle">
-                                    {console.log(idealreal.idealrealIdealImg)}
-                                    <Link to={`/listidealreal/detail/${idealreal.idealrealIdx}`}>{idealreal.idealrealTitle}</Link></td>
-                                <img style={styles.image} src={`http://localhost:8080/api/getimage/${idealreal.idealrealIdealImg}`} />
-                                <img style={styles.image} src={`http://localhost:8080/api/getimage/${idealreal.idealrealRealImg}`} />
-                                <td>{idealreal.updatecnt}</td>
-                                <td>{idealreal.idealrealCreatedTime}</td>
+                    <div >
+                        {data &&
+                            data.map((idealreal) => (
+                                <div key={idealreal.idealrealIdx}>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>{idealreal.idealrealIdx}</td>
+                                                <td className="idealrealTitle" style={styles.wrapper1}>
+                                                    {console.log(idealreal.idealrealIdealImg)}
+                                                    <Link
+                                                        to={`/listidealreal/detail/${idealreal.idealrealIdx}`}
+                                                    >
+                                                        {idealreal.idealrealTitle}
+                                                        <img
+                                                            style={styles.image}
+                                                            src={`http://localhost:8080/api/getimage/${idealreal.idealrealIdealImg}`}
+                                                        />
+                                                        <img
+                                                            style={styles.image}
+                                                            src={`http://localhost:8080/api/getimage/${idealreal.idealrealRealImg}`}
+                                                        />
+                                                    </Link>
+                                                </td>
 
-                            </tr>
-                        )))}
+                                                <td>{idealreal.idealrealCnt}</td>
+                                                <td>{idealreal.idealrealCreatedTime}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <Thumb />
+                                </div>
+                            ))}
                     </div>
-
-                    <Thumb />
-
                 </div>
             </div>
 

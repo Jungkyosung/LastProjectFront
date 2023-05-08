@@ -5,8 +5,9 @@ import { FaOdnoklassniki } from "react-icons/fa";
 
 function Thumb() {
   const [likeUpdate, setLikeUpdate] = useState(false)
-  const [idealrealRcmd, setIdealrealRcmd] = useState(0) 
+  const [idealrealIdx, setIdealrealIdx] = useState(0) 
   const [userId, setUserId] = useState('');
+  const [likeCount, setLikeCount] = useState(0)
 
   useEffect(() => {
       // const token = sessionStorage.getItem('token');
@@ -14,10 +15,10 @@ function Thumb() {
       // console.log(decodedToken);
       // setUserNickname(decodedToken.userNickname);
 
-      axios.get(`http://localhost:8080/api/listidealreal/${idealrealIdx}/getlike`)
+      axios.get(`http://localhost:8080/api/${idealrealIdx}/getlike`)
           .then(response => {
               console.log(response);
-              setIdealrealRcmd(response.data.idealrealRcmd);
+              setIdealrealIdx(response.data.idealrealIdx);
           })
           .catch(error => console.log(error));
   }, []);
@@ -30,8 +31,8 @@ function Thumb() {
       likeUpdateHandler()
       
   if (!likeUpdate) {
-      setIdealrealRcmd(idealrealRcmd +1)
-      axios.put(`http://localhost:8080/api/listidealreal/${idealrealIdx}/like`, 
+    setIdealrealIdx(prev => prev + 1)
+      axios.post(`http://localhost:8080/api/${idealrealIdx}/like`, 
       {idealrealIdx})
       .then(response => {                           
           console.log(response);
@@ -41,8 +42,8 @@ function Thumb() {
           return;
       });
   } else if (likeUpdate) {
-      setIdealrealRcmd(idealrealRcmd -1)
-      axios.put(`http://localhost:8080/api/listidealreal/{rcmdIdx}/unlike`, 
+    setIdealrealIdx(prev => prev - 1)
+      axios.delete(`http://localhost:8080/api/${idealrealIdx}/unlike`, 
       {idealrealIdx})
       .then(response => {                           
           console.log(response);
@@ -56,7 +57,7 @@ function Thumb() {
   return(
       <>
       <div>
-       <h1> Likes  {idealrealRcmd} </h1>
+       <h1>Joasis{idealrealIdx} </h1>
        <br/>
       {likeUpdate ?
         <button onClick={LikeCountHandler}></button>:

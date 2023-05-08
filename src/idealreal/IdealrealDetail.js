@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useNavigate } from "react";
 import axios from "axios";
 import Thumb from "./Thumb";
 
@@ -18,6 +18,7 @@ function IdealrealDetail({ match, history }) {
     const handlerChangeContent = e => setIdealrealContent(e.target.value)
 
     const { idealrealIdx } = match.params;
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -45,8 +46,8 @@ function IdealrealDetail({ match, history }) {
     }, []);
 
     //목록 수정 삭제 버튼 클릭시 이동
-    const hanlderClickList = () => history.push('/listidealreal')
-    const handlerClickRetouch = () => history.push(`/idealrealretouch/${idealrealIdx}`)
+    const hanlderClickList = () => navigate('/listidealreal')
+    const handlerClickRetouch = () => navigate(`/idealrealretouch/${idealrealIdx}`)
     const handlerClickDelete = () => {
         axios.delete(`http://localhost:8080/api/listidealreal/${idealrealIdx}`,
             // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
@@ -54,7 +55,7 @@ function IdealrealDetail({ match, history }) {
             .then(response => {
                 console.log(response)
                 alert('헤어진 다음날 전화기를 켜보니')
-                history.push('/listidealreal');
+                navigate('/listidealreal');
             })
             .catch(erorr => {
                 console.log('안되나용')
