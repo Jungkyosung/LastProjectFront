@@ -1,8 +1,6 @@
 import { Reset } from "styled-reset";
 import SubMenu from "../platform/SubMenu";
 import MainMenu from "../platform/MainMenu";
-import MainMenuOut from "../platform/MainMenuOut";
-import DetailMenu from "../platform/DetailMenu";
 import Footer from "../platform/Footer";
 
 

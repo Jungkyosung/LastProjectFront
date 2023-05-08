@@ -4,109 +4,57 @@ import { Button } from "@mui/material"; //추가
 import styles from './MainMenu.module.css';
 import LanguageIcon from '@mui/icons-material/Language';    //추가
 import SearchIcon from '@mui/icons-material/Search';    //추가
+import DetailMenu1 from "./DetailMenu1";
+import DetailMenu2 from "./DetailMenu2";
+import DetailMenu3 from "./DetailMenu3";
 
 const MainMenu = () => {
 
-    const [ isHovering, setIsHovering ] = useState(0);
-
     return (
-        <>
-        {/*  header */}
-        <nav className={styles.nav}>
+        <div className={styles.header}>
+            <div></div>
             <div className={styles.logo}>
                 <Link to="/">
-                <img src="https://via.placeholder.com/220x60" alt="샘플이미지"></img>
+                    <img src="https://via.placeholder.com/220x60" alt="샘플이미지"></img>
                 </Link>
             </div>
-        	<ul className={styles.navContainer}>
-            	<li 
-                    className={styles.mainLi}
-                    onMouseOver={ () => setIsHovering(1) }
-                	onMouseOut={ () => setIsHovering(0) }
-                >
-                	<Link to="/">ABOUT_US</Link>
-                    {
-                    	isHovering ? (
-                            <div className={styles.box}>
-                                <ul className={styles.detailUl}>
-                                    <li></li>
-                                </ul>
-                            </div>
-                        ) : (
-                      		""
-                        )
-                 	}
-               	</li>
-                <li 
-                    className={styles.mainLi}
-                    onMouseOver={ () => setIsHovering(1) }
-                	onMouseOut={ () => setIsHovering(0) }
-                >
-                	<Link to="/">지금 한국은</Link>
-                    {
-                    	isHovering ? (
-                            <div className={styles.box}>
-                                <ul className={styles.detailUl}>
-                                    <li><Link to="/"><Button variant="text">음식</Button></Link></li>
-                                    <li><Link to="/"><Button variant="text">패션</Button></Link></li>
-                                    <li><Link to="/"><Button variant="text">문화</Button></Link></li>
-                                </ul>
-                            </div>
-                        ) : (
-                      		""
-                        )
-                 	}
-               	</li>
-                <li 
-                    className={styles.mainLi}
-                    onMouseOver={ () => setIsHovering(1) }
-                	onMouseOut={ () => setIsHovering(0) }
-                >
-                	<Link to="/">여행정보</Link>
-                    {
-                    	isHovering ? (
-                            <div className={styles.box}>
-                                <ul className={styles.detailUl}>
-                                    <li><Link to="/"><Button variant="text">날씨</Button></Link></li>
-                                    <li><Link to="/"><Button variant="text">여행코스</Button></Link></li>
-                                    <li><Link to="/"><Button variant="text">카드뉴스</Button></Link></li>
-                                </ul>
-                            </div>
-                        ) : (
-                      		""
-                        )
-                 	}
-               	</li>
-                <li 
-                    className={styles.mainLi}
-                    onMouseOver={ () => setIsHovering(1) }
-                	onMouseOut={ () => setIsHovering(0) }
-                >
-                	<Link to="/">커뮤니티</Link>
-                    {
-                    	isHovering ? (
-                            <div className={styles.box}>
-                                <ul className={styles.detailUl}>
-                                    <li><Link to="/"><Button variant="text">글로벌채팅</Button></Link></li>
-                                    <li><Link to="/"><Button variant="text">웹만화</Button></Link></li>
-                                    <li><Link to="/"><Button variant="text">어디까지</Button></Link></li>
-                                    <li><Link to="/"><Button variant="text">여행친구</Button></Link></li>
-                                    <li><Link to="/"><Button variant="text">이상과현실</Button></Link></li>
-                                    <li><Link to="/"><Button variant="text">물가체험</Button></Link></li>
-                                </ul>
-                            </div>
-                        ) : (
-                      		""
-                        )
-                 	}
-               	</li>
-         	</ul>
-            <div className={styles.serchBox}>
-                <span><LanguageIcon style={{fontSize:"25px", marginRight:30}}  /></span>
-                <span><SearchIcon style={{fontSize:"25px"}}  /></span>
+            <nav className={styles.dropmenu}>
+                <ul>
+                    <li ><Link to="/" className={styles.main}>ABOUT_US</Link></li>
+                    <li ><Link to="/" className={styles.main}>지금 한국은</Link>
+                        <ul>
+                            <li className={styles.sub}><DetailMenu1 /></li>
+                            {/* <li ><Link to="/" className={styles.sub}>패션</Link></li>
+                            {/* <li ><Link to="/" className={styles.sub}>음식</Link></li>
+                            <li ><Link to="/" className={styles.sub}>문화</Link></li> */}
+                        </ul>
+                    </li>
+                    <li ><Link to="/" className={styles.main}>여행정보</Link>
+                        <ul>
+                            <li className={styles.sub}><DetailMenu2 /></li>
+                            {/* <li ><Link to="/" className={styles.sub}>날씨</Link></li>
+                            <li ><Link to="/" className={styles.sub}>여행코스</Link></li>
+                            <li ><Link to="/" className={styles.sub}>카드뉴스</Link></li> */}
+                        </ul>
+                    </li>
+                    <li ><Link to="/" className={styles.main}>커뮤니티</Link>
+                        <ul>
+                            <li className={styles.sub}><DetailMenu3 /></li>
+                            {/* <li ><Link to="/" className={styles.sub}>글로벌 채팅</Link></li>
+                            <li ><Link to="/" className={styles.sub}>웹 만화</Link></li>
+                            <li ><Link to="/" className={styles.sub}>어디까지</Link></li>
+                            <li ><Link to="/" className={styles.sub}>여행 친구</Link></li>
+                            <li ><Link to="/" className={styles.sub}>이상과 현실</Link></li>
+                            <li><Link to="/"  className={styles.sub}>물가 체험</Link></li> */}
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <div className={styles.language}>
+                <LanguageIcon style={{fontSize:"30px"}} />
             </div>
-      	</nav>
-        </>
+            <div></div>
+        </div>
     )
 }
 

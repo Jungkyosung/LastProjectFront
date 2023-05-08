@@ -6,6 +6,7 @@
     "@emotion/react": "^11.10.8",
     "@emotion/styled": "^11.10.8",
     "@fontsource/roboto": "^4.5.8",
+    "@grapecity/wijmo.all": "^5.20222.877",
     "@mui/icons-material": "^5.11.16",
     "@mui/joy": "^5.0.0-alpha.77",
     "@mui/material": "^5.12.1",
