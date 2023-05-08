@@ -7,9 +7,22 @@ import SearchIcon from '@mui/icons-material/Search';    //추가
 import DetailMenu1 from "./DetailMenu1";
 import DetailMenu2 from "./DetailMenu2";
 import DetailMenu3 from "./DetailMenu3";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
+ 
+
 
 const MainMenu = () => {
 
+    const [lang, setLang] = useState('');
+    
+    const handleChange = (event) => {
+      setLang(event.target.value);
+    };
+    
     return (
         <div className={styles.header}>
             <div></div>
@@ -51,7 +64,24 @@ const MainMenu = () => {
                 </ul>
             </nav>
             <div className={styles.language}>
-                <LanguageIcon style={{fontSize:"30px"}} />
+                <LanguageIcon style={{ fontSize: "30px" }} />
+                <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                    {/* <InputLabel id="demo-simple-select-standard-label">Korea</InputLabel> */}
+                    <Select
+                        labelId="demo-simple-select-standard-label"
+                        id="demo-simple-select-standard"
+                        value={lang}
+                        onChange={handleChange}
+                        label="lang"
+                    >
+                        <MenuItem value="">
+                            <em>Kor</em>
+                        </MenuItem>
+                        <MenuItem value={10}>Eng</MenuItem>
+                        <MenuItem value={20}>Jap</MenuItem>
+                        {/* <MenuItem value={30}></MenuItem> */}
+                    </Select>
+                </FormControl>
             </div>
             <div></div>
         </div>
