@@ -22,13 +22,14 @@ const TriedWrite = () => {
             axios.post(
                 `http://localhost:8080/api/tried/write`,
                 // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
-                { triedTitle, triedContent }        // 요청 본문 값 단축 속성명 정의
+                { triedTitle, triedContent, }        // 요청 본문 값 단축 속성명
             )
                 .then(response => {
                     if (response.data.count === 1) {
                         alert('등록 완료');
                         console.log(response.data.categoryIdx);
-                        navigate(`/tried/detail/${response.data.triedIdx}`);
+                        setTriedIdx(response.data.triedIdx);
+                        navigate(`/tried`);
                     }
                 })
                 .catch(error => {
@@ -54,7 +55,7 @@ const TriedWrite = () => {
                             </div>
                             <div>
                                 <select value={categoryIdx}
-                                onChange={handlerChangeCategory}>
+                                    onChange={handlerChangeCategory}>
                                     <option value="">카테고리 선택</option>
                                     <option value="1">음식</option>
                                     <option value="2">장소</option>
@@ -70,7 +71,7 @@ const TriedWrite = () => {
                             </div>
                         </div>
                     </div>
-                    <input type="submit" id="submit" value="글쓰기" className="btn" />
+                    <input type="submit" id="submit" value="완료" className="btn" />
                 </form>
             </div>
         </>
