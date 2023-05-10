@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 
 const TriedUpdate = () => {
     const navigate = useNavigate();     // useNavigate hook 사용
-   
+
     const { triedIdx } = useParams();
 
     const [tried, setTried] = useState({});
@@ -14,12 +14,13 @@ const TriedUpdate = () => {
     const [triedImg, settriedImg] = useState('');
 
     useEffect(() => {
-        axios.get(
-            `http://localhost:8080/api/tried/${triedIdx}`)
+        axios
+            .get(
+                `http://localhost:8080/api/tried/${triedIdx}`)
             // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
             .then(response => {
                 console.log(response.data);
-                 // 초기값 설정
+                // 초기값 설정
                 setTried(response.data);
                 setUserId(response.data.userId);
                 setTriedTitle(response.data.triedTitle);
@@ -48,10 +49,11 @@ const TriedUpdate = () => {
     // 수정
     const handlerClickUpdate = () => {
         if (window.confirm('수정하시겠습니까?')) {
-            axios.put(`http://localhost:8080/api/tried/${triedIdx}`,
-                // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
-                // 요청 URL
-                { "triedTitle": triedTitle, "triedContent": triedContent })
+            axios
+                .put(`http://localhost:8080/api/tried/${triedIdx}`,
+                    // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
+                    // 요청 URL
+                    { "triedTitle": triedTitle, "triedContent": triedContent })
                 // 수정 후 detail 페이지로 이동
                 .then(response => {
                     console.log(response);
@@ -63,14 +65,13 @@ const TriedUpdate = () => {
                         return;
                     }
                 })
-                .catch(error => { 
+                .catch(error => {
                     console.log(error);
                     alert(`수정 실패 : (${error.message})`);
                     return;
                 });
         };
     };
-
 
     return (
         <>
@@ -80,12 +81,12 @@ const TriedUpdate = () => {
                     <div value={tried.userId}>작성자: </div>
                     <div> 제목 :
                         <input type="text" name="triedTitle" value={triedTitle || ''}
-                        onChange={handlerTitleChange} />
+                            onChange={handlerTitleChange} />
                     </div>
                     <div>이미지 자리: </div>
                     <div>
                         <input type="text" name="triedContent" value={triedContent || ''}
-                        onChange={handlerContentChange} />
+                            onChange={handlerContentChange} />
                     </div>
                 </form>
                 <input type="button" id="list" className="btn" value="목록"

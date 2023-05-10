@@ -45,23 +45,6 @@ const TriedUpload = ({ triedImg, setTriedImg }) => {
             new Blob([JSON.stringify(datas)], { type: 'application/json' })
         );
         Object.values(imageFiles).forEach(file => formData.append('files', file));
-
-        const handlerUploadDataWithFile = () => {
-            axios({
-                method: 'POST',
-                url: `http://localhost:8080/api/tried`,
-                headers: { 'Content-Type': 'multipart/form-data;' },
-                data: formData
-            })
-                .then(response => {
-                    console.log(response.data);
-                    alert(`${response.data}\n정상적으로 업로드했습니다.`);
-                })
-                .catch(error => {
-                    console.log(error);
-                    alert(`업로드 중 오류가 발생했습니다.`);
-                });
-        };
     }
 
     return (

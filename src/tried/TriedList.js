@@ -1,44 +1,46 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import TriedHeader from "./TriedHeader";
-import TriedCategory from "./TriedCategory";
+import { useEffect } from "react";
+import TriedItem from "./TriedItem";
 
-const TriedList = () => {
-    const [data, setData] = useState([]);
-    const { categoryIdx } = useParams();
+const TriedList = ({ data, triedCategoryIdx, order, year }) => {
+// const triedCategoryIdx = 1;
+// const order = "recent";
+// const year = "2023;"
+
+    let filteredData = [];
+    if (Array.isArray(data)) {
+        filteredData = data.filter((tried) => tried.triedCategoryIdx === triedCategoryIdx);
+    }
+
+    // const filteredData = data.filter((tried) => {
+    //     return tried.triedCategoryIdx === triedCategoryIdx;
+    // });
+
+    const sortedData = filteredData.sort((a, b) => {
+        if (order === "recent") {
+            // 최신순 정렬
+            return new Date(b.triedCreatedTime) - new Date(a.triedCreatedTime);
+        } else if (order === "rcmd") {
+            // 추천순 정렬
+            return b.triedRcmd - a.triedRcmd
+        } else {
+            return 0;
+        }
+    })
+
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/tried`)
-            .then(response => {
-                console.log(response.data);
-                setData(response.data);
-            })
-            .catch(error => console.log(error));
-    }, [categoryIdx]);
+        console.log("Data updated");
+    }, [data, order]);
 
     return (
         <>
-            <TriedHeader />
             <div className="triedList-container">
-                <div className="triedList-category">
-                    <TriedCategory 
-                    categoryIdx={categoryIdx}
-                    data={data} />
-                </div>
-                <a href="/tried/write" className="btn">글쓰기</a>
-                {data && data.map((tried) => (
-                    <div key={tried.triedIdx}>
-                        <div className="triedTitle">
-                            <Link to={`/tried/detail/${tried.triedIdx}`}>
-                                {tried.triedTitle}
-                            </Link>
-                            <div>글번호: {tried.triedIdx}</div>
-                            <div>작성자: {tried.userId}</div>
-                            <div>작성일: {tried.triedCreatedTime}</div>
-                            <div>이미지: {tried.triedImg}</div>
-                            <div>내용:   {tried.triedContent}</div>
-                            <div>조회수: {tried.triedCnt}</div>
-                        </div>
+
+                {sortedData.map((tried) => (
+                    <div
+                        key={tried.triedIdx}>
+                        <TriedItem
+                            key={tried.triedIdx}
+                            tried={tried} />
                     </div>
                 ))}
             </div >

@@ -8,7 +8,6 @@ const TriedWrite = () => {
     const [triedTitle, setTriedTitle] = useState('');
     const [triedContent, setTriedContent] = useState('');
     const [categoryIdx, setCategoryIdx] = useState('');     //추가됨
-    const [triedImg, setTriedImg] = useState('');
     const [triedIdx, setTriedIdx] = useState('');
 
     const handlerChangeTitle = e => setTriedTitle(e.target.value);
@@ -19,11 +18,12 @@ const TriedWrite = () => {
         e.preventDefault();
 
         if (window.confirm('글을 등록하시겠습니까?')) {
-            axios.post(
-                `http://localhost:8080/api/tried/write`,
-                // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
-                { triedTitle, triedContent, }        // 요청 본문 값 단축 속성명
-            )
+            axios
+                .post(
+                    `http://localhost:8080/api/tried/write`,
+                    // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
+                    { triedTitle, triedContent, }        // 요청 본문 값 단축 속성명
+                )
                 .then(response => {
                     if (response.data.count === 1) {
                         alert('등록 완료');

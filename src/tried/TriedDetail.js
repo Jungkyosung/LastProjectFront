@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 
 const TriedDetail = () => {
-    const navigate = useNavigate();     // useNavigate hook 사용
+    const navigate = useNavigate();
 
     const { triedIdx } = useParams();
 
@@ -31,7 +31,8 @@ const TriedDetail = () => {
     // Tried Detail 삭제
     const handlerClickDelete = () => {
         if (window.confirm('삭제하시겠습니까?')) {
-            axios.delete(`http://localhost:8080/api/tried/${triedIdx}`)
+            axios
+                .delete(`http://localhost:8080/api/tried/${triedIdx}`)
                 // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
                 .then(response => {
                     console.log(response);
@@ -43,7 +44,7 @@ const TriedDetail = () => {
                 });
         }
     }
-
+    
     return (
         <>
             <div className="triedDetail-container">
