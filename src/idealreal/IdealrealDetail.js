@@ -78,7 +78,7 @@ function IdealrealDetail({ match, history }) {
 
     return (
         <>
-            <div className="container" style={{ width: 1180, margin: '0 auto'}}>
+            <div className="container" style={{ width: 1000, margin: '0 auto', textAlign: 'center', border: '1px solid purple' }}>
                 <h2>이상과 현실</h2>
                 <form action="" method="POST" id="frm" name="frm">
 
@@ -87,9 +87,9 @@ function IdealrealDetail({ match, history }) {
                     <table className="idealreal_detail">
                         <colgroup>
                             <col width="15%" />
-                            <col width="35%" />
+                            <col width="5%" />
+                            <col width="70%" />
                             <col width="15%" />
-                            <col width="35%" />
                         </colgroup>
                         <tbody>
                             <tr>
@@ -105,7 +105,7 @@ function IdealrealDetail({ match, history }) {
                                 <th scope="row">작성일</th>
                                 <td>{idealrealCreatedTime}</td>
                             </tr>
-                            <tr>
+                            <tr style={{width: 400, height: 200}}>
                                 <th scope="row">제목</th>
                                 <td colSpan="3">
                                     {idealrealTitle}
@@ -114,14 +114,14 @@ function IdealrealDetail({ match, history }) {
                             <tr>
                                 <th scope="row"></th>
                                 <td colSpan="3">
-                                    <div style={{ display: 'flex', width: 300, height: 400}} >
+                                    <div style={{ display: 'flex', width: 300, height: 400 }} >
                                         <img src={idealImg} />
                                         <img src={realImg} />
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td colSpan="4" className="view_text">
+                                <td colSpan="4" className="view_text" style={{ width: 800, height: 300, border: '1px solid purple'}}>
                                     {idealrealContent}
                                 </td>
                             </tr>

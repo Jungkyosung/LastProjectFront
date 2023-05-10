@@ -67,9 +67,33 @@ function IdealrealRetouch({ match, history }) {
     const handlercontents = (e) => {
         setIdealrealContent(e.target.value)
     }
+    const sytles = {
+        // display: 'felx',
+        // flexDirection: 'row',
+        // border: '1px solid aqua',
+        // borderRadius: 16,
+        // padding: 8,
+        // margin: 8,
+        // width: 1200,
+        // height: 'auto',
+        // textAlign: 'center'
+
+        display: 'flex',
+        flexDirection: 'comlum',
+        width: '1200px',
+        margin: '0 auto',
+        position: 'relative',
+        marginLeft: '5',
+        border: '1px solid aqua',
+
+        
+
+    }
+
+
     return (
         <>
-            <div >
+            <div style={sytles}>
                 {/* <h2>리뷰 상세</h2> */}
                 <form action="" method="POST" id="frm" name="frm">
 
@@ -84,21 +108,17 @@ function IdealrealRetouch({ match, history }) {
                         </colgroup>
                         <tbody>
                             <tr >
-                                <th colSpan="6">제목</th>
-                                <td>{idealrealTitle}</td>
+                                <th colSpan="6">{idealrealTitle}</th>
+                                
                             </tr>
                             <tr>
                                 <td colSpan="6">
                                     <input type="text" value={idealrealTitle} onChange={handlerChange}></input>
                                 </td>
                             </tr>
+
                             <tr>
-                                <th colSpan="6">삥</th>
-                            </tr>
-                            <tr>
-                                <td colSpan="6">
-                                    뺑
-                                </td>
+
                             </tr>
                             <tr>
                                 <th >조회수</th>
@@ -116,9 +136,9 @@ function IdealrealRetouch({ match, history }) {
                             </tr>
                         </tbody>
                     </table>
-                <div>
-                    <input type="button" id="edit" value="확인" onClick={handlerClickUpdate} />
-                </div>
+                    <div>
+                        <input type="button" id="edit" value="확인" onClick={handlerClickUpdate} />
+                    </div>
                 </form>
 
 

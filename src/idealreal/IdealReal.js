@@ -7,7 +7,8 @@ import Thumb from "./Thumb";
 function Idealreal() {
     const [idealreal, setIdealreal] = useState("")
     const [data, setData] = useState([])
-    const [idealrealCnt, setIdealrealCnt] = useState([])
+    const [userId, setUserId] = useState('')
+    const [rcmdIdx, setRcmdIdx] = useState('')
     const [idealrealIdealImg, setIdealrealIdealImg] = useState([]);
     const [idealrealRealImg, setIdealrealRealImg] = useState([]);
 
@@ -16,6 +17,8 @@ function Idealreal() {
             .then(response => {
                 setIdealrealIdealImg(response.data.idealrealIdealImg);
                 setIdealrealRealImg(response.data.idealrealRealImg);
+                setUserId(response.data.userId)
+                setRcmdIdx(response.data.rcmdIdx)
                 console.log(response.data)
                 setData(response.data)
                 // setIdealreal(response.date.idealrealDto)
@@ -28,41 +31,48 @@ function Idealreal() {
 
     const styles = {
         wrapper: {
-
-            flexDirection: 'row',
+            display: "flex",
+            flexDirection: "column",
+            justifyContent : "center",
             border: '1px solid aqua',
             borderRadius: 16,
             padding: 8,
             margin: 8,
-            width: 1180,
-            height: 'auto'
+            width: 1200,
+            height: 'auto',
         },
         wrapper1: {
-
-            flexDirection: 'row',
             border: '1px solid purple',
             borderRadius: 16,
             padding: 8,
             margin: 8,
-            width: '40%',
-            height: 'auto'
+            width: "600px"
         },
         image: {
-            width: 200,
+            width: 'auto',
             height: 300,
             borderRadius: 10
         },
-        contentContainer: {
-            marginLeft: 10,
-            display: 'flex',
-            flexDirection: 'column'
-        },
+        
         nameText: {
+
             color: 'pink',
-            fontSize: 16,
+            fontSize: 25,
             fontWeight: 'bold',
             marginBottom: 5,
+            textAlign: 'center'
 
+        },
+        box1 : {
+            width: '100%',
+            overflow: 'hidden',
+            
+        },
+        box2 : {
+            // border: '1px solid pink',
+            width: '50%',
+            float: 'left',
+            textAlign: 'center',
         }
     };
 
@@ -84,7 +94,7 @@ function Idealreal() {
     const container = {
         display: 'flex',
         flexDirection: 'comlum',
-        width: '1180px',
+        width: '1200px',
         margin: '0 auto',
         position: 'relative',
         marginLeft: '5',
@@ -104,24 +114,26 @@ function Idealreal() {
             </div>
             <div style={container}>
                 <div style={styles.wrapper}>
-                    <div style={styles.contentContainer}>
+                    {/* <div style={styles.contentContainer}> */}
                         {/* 작성한 사람의 이름과 내용 */}
                         <div style={styles.nameText}>이상과 현실</div>
-                    </div>
-                    <div >
+                    {/* </div> */}
+                    <div style={styles.box1}>
                         {data &&
-                            data.map((idealreal) => (
-                                <div key={idealreal.idealrealIdx}>
+                            data.map((idealreal, rcmd) => (
+                                <div key={idealreal.idealrealIdx} style={styles.box2}>
                                     <table>
                                         <tbody>
                                             <tr>
-                                                <td>{idealreal.idealrealIdx}</td>
-                                                <td className="idealrealTitle" style={styles.wrapper1}>
+                                                <td className="idealrealTitle" >
+                                                    <td style={styles.wrapper1}>{idealreal.idealrealIdx}
                                                     {console.log(idealreal.idealrealIdealImg)}
                                                     <Link
                                                         to={`/listidealreal/detail/${idealreal.idealrealIdx}`}
                                                     >
-                                                        {idealreal.idealrealTitle}
+                                                        {idealreal.idealrealTitle}{userId}
+                                                <td>{rcmd.rcmdIdx}</td>
+                                                <div><td></td></div>
                                                         <img
                                                             style={styles.image}
                                                             src={`http://localhost:8080/api/getimage/${idealreal.idealrealIdealImg}`}
@@ -132,13 +144,13 @@ function Idealreal() {
                                                         />
                                                     </Link>
                                                 </td>
+                                                </td>
+                                                {/* <Thumb /> */}
 
-                                                <td>{idealreal.idealrealCnt}</td>
-                                                <td>{idealreal.idealrealCreatedTime}</td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <Thumb />
+                                    
                                 </div>
                             ))}
                     </div>

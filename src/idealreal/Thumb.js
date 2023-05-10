@@ -57,7 +57,7 @@ function Thumb() {
   return(
       <>
       <div>
-       <h1>Joasis{idealrealIdx} </h1>
+       <h3>Joasis{idealrealIdx} </h3>
        <br/>
       {likeUpdate ?
         <button onClick={LikeCountHandler}></button>:

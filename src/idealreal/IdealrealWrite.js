@@ -98,7 +98,9 @@ function IdealrealWrite({ onSubmit, history }) {
     flexDirection: 'comlum',
     width: '1180px',
     margin: '0 auto',
-    position: 'relative'
+    position: 'relative',
+    textAlign: 'center',
+    border: '1px solid green'
   }
 
   const changeImageFiles = (data, type) => {
@@ -121,7 +123,6 @@ function IdealrealWrite({ onSubmit, history }) {
     const name = e.target.name;
     const files = e.target.files;
 
-    // 이미지파일 올릴 갯수 지정
     if (e.target.name == 'idealrealIdealImg') {
       const imageArr = e.target.files;
       let imageURLs = [];
@@ -175,17 +176,17 @@ function IdealrealWrite({ onSubmit, history }) {
           name="name"
           value={name}
           onChange={handleChangeName}
-          style={{ width: '100px', height: '20px', padding: '12px' }}
+          style={{ width: '100px', height: '20px', padding: '12px', margin: 40 }}
         />
       </div >
-      <div style={{ display: 'flex' }} >
+      <div style={{ display: 'flex', flexDirection: 'row', margin: 200, width: '800px', border: '1px solid red'}} >
         {
           idealrealIdealImg.length !== 0
             ?
             <>
               {idealrealIdealImg.map((image, id) => (
                 <div key={id}>
-                  <img src={image} style={{ width: 300, height: 400 }} />
+                  <img src={image} style={{ width: 'auto', height: 400 }} />
                 </div>
               ))}
             </>
@@ -195,18 +196,19 @@ function IdealrealWrite({ onSubmit, history }) {
                 name='idealrealIdealImg'
                 ref={inputFiles1}
                 onChange={handlerChangeFile}
-                style={{ width: 300, height: 300, background: 'red' }}
+                style={{ width: '50%', height: 300, background: 'red' }}
               />
+              
             </>
         }
 
-{
+        {
           idealrealRealImg.length !== 0
             ?
             <>
               {idealrealRealImg.map((image, id) => (
                 <div key={id}>
-                  <img src={image} style={{ width: 300, height: 400 }} />
+                  <img src={image} style={{ width: 'auto', height: 400 }} />
                 </div>
               ))}
             </>
@@ -216,11 +218,11 @@ function IdealrealWrite({ onSubmit, history }) {
                 name='idealrealRealImg'
                 ref={inputFiles2}
                 onChange={handlerChangeFile}
-                style={{ width: 300, height: 300, background: 'aqua' }}
+                style={{ width: '50%', height: 300, background: 'aqua' }}
               />
             </>
         }
-        
+
       </div>
       <div>
         <label htmlFor="contents">내용:</label>
@@ -230,7 +232,7 @@ function IdealrealWrite({ onSubmit, history }) {
           name="contents"
           value={contents}
           onChange={handleChangeContents}
-          style={{ width: '300px', height: '100px', padding: '12px' }}
+          style={{ width: '50%', height: '300px', padding: '12px', margin: 50 }}
         />
       </div>
       <button type="submit">작성 완료</button>
