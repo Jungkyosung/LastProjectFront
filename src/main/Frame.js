@@ -4,10 +4,11 @@ import MainMenu from "../platform/MainMenu";
 import DetailMenu from "../platform/DetailMenu";
 import Footer from "../platform/Footer";
 import ChatPort from "../chat/ChatPort";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ChatParent from "../chat/ChatParent";
 import "./Frame.css";
 import { useNavigate } from 'react-router-dom';
+import VerticalAlignTopRoundedIcon from '@mui/icons-material/VerticalAlignTopRounded';
 
 const Frame = ({ children }) => {
 
@@ -31,11 +32,20 @@ const Frame = ({ children }) => {
 
     const handlerChatPage = () => {
         navigate('/mobilechat');
-    }
+    };
+
+    //스크롤 최상단으로 이동
+    const handlerTopMove = () => {
+        window.scroll({
+            top:0
+        });
+    };
 
     return (
         <>
             <Reset />
+            <div id="body">
+            </div>
             <SubMenu />
             <div id="mainmenu">
                 <MainMenu />
@@ -54,6 +64,9 @@ const Frame = ({ children }) => {
             {isLogin && !isChatModal &&
                 <ChatParent handlerChatModal={handlerChatModal} />
             }
+            <div id="top-arrow" onClick={handlerTopMove}>
+                <VerticalAlignTopRoundedIcon />
+            </div>
             <Footer />
         </>
     )

@@ -27,7 +27,7 @@ const MobileMypage = () => {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'confirm',
+            confirmButtonText: 'log out',
             cancelButtonText: 'cancel'
         })
             .then((result) => {

@@ -1,3 +1,4 @@
+import './MapObject.css';
 import { Button } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -5,8 +6,9 @@ import React, { useEffect, useState } from "react";
 
 function MapObject(props) {
 
-  const { lat, setLat, lng, setLng, placeName, setPlaceName, data, setDate } = props;
+ const { lat, setLat, lng, setLng, placeName, setPlaceName, data, setDate } = props;
 
+  
   //컴포넌트 마운트 됐을 때 실행하는 함수
   useEffect(() => {
     initMakeMarker();
@@ -143,9 +145,9 @@ function MapObject(props) {
   // axios.get(`http://localhost:8080/api/map/laction/id) 배열로 정보를 받아서 
   // 
   return (
-    <div>
+    <div id="map-wrap">
       <input id="pac-input" type="text" placeholder="Search Box" />
-      <div id="map" style={{ height: '500px' }}></div>
+      <div id="map"></div>
       <Button variant="contained" onClick={handlerSaveLocation}>장소저장</Button>
     </div>
   );

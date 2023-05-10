@@ -1,3 +1,4 @@
+import './MapWrite.css';
 import React, { useState } from "react";
 import { Add } from "@mui/icons-material";
 import { Button, Input } from "@mui/material";
@@ -6,6 +7,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import MapObject from "./MapObject";
+import Frame from "../main/Frame";
+import { DatePicker } from "@mui/x-date-pickers";
 
 
 const MapWrite = () => {
@@ -69,51 +72,57 @@ const MapWrite = () => {
 
 
   return (
-    <>
-      <div className="container">
+    <Frame>
+      <div id="map-write-wrap">
         <h1>여행코스등록</h1>
-        
+        <div id="course-date-duration">
+          <span className='course-date-duration-label'>START</span>
+          <span id="course-date-picker">
+            <DatePicker />
+          </span>
+          <span className='course-date-duration-label'>END</span>
+          <span id="course-date-picker">
+            <DatePicker />
+          </span>
+        </div>
+        <MapObject
+          lat={lat}
+          setLat={setLat}
+          lng={lng}
+          setLng={setLng}
+          placeName={placeName}
+          setPlaceName={setPlaceName}
+          date={date}
+          setDate={setDate} />
+        <form id='map-write-form' name='frm' onSubmit={handlerSubmit}>
+          <h2 id="map-write-title">제목</h2>
+          <div id="map-write-title-input">
+            <Input placeholder="Write title" name='title' value={title}
+              onChange={handlerChangeTitle} />
+          </div>
 
-          <MapObject
-            lat={lat}
-            setLat={setLat}
-            lng={lng}
-            setLng={setLng}
-            placeName={placeName}
-            setPlaceName={setPlaceName}
-            date={date}
-            setDate={setDate} />
+          <CourseWrite />
+          <div id="course-plus-btn">
+            <Button variant="contained" endIcon={<Add />}>
+              일정추가
+            </Button>
+          </div>
+          <p>이미지</p>
+          <Button variant="contained">
+            IMG UPLOAD
+          </Button>
+          <hr></hr>
+          <div id="map-write-bottom-btn">
+            <Button type='submit' id='submit' variant="contained">
+              등록
+            </Button>
+            <Button variant="contained" onClick={navigate}>
+              목록
+            </Button>
+          </div>
+        </form>
       </div>
-      <form id='frm' name='frm' onSubmit={handlerSubmit}>
-      <h3>제목</h3>
-      <Input placeholder="Write title" id='title' name='title' value={title}
-        onChange={handlerChangeTitle} />
-      <hr></hr>
-      <CourseWrite />
-
-      <Button variant="contained" endIcon={<Add />}>
-        일정추가
-      </Button>
-
-
-      <p>첨부파일</p>
-      <Button variant="contained">
-        파일등록
-      </Button>
-      <hr></hr>
-      <span colSpan='5'><textarea id='contents' name='contents' value={contents}
-        onChange={handlerChangeContents}></textarea></span>
-      <hr></hr>
-      <Button type='submit' id='submit' variant="contained">
-        등록
-      </Button>
-      <Button variant="contained" onClick={navigate}>
-        목록
-      </Button>
-      <input type='submit' id='submit' value='목록' className="btn" onClick={MapList} />
-      <Link to="/course" id='submit' className="btn">목록</Link>
-      </form>
-    </>
+    </Frame>
   );
 }
 

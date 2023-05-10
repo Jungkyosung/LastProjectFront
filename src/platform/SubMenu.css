@@ -1,6 +1,9 @@
 /* 모바일 화면 모바일 서브메뉴 */
 .mobile-submenu{
     display: flex;
+    /* position: fixed;
+    top:0;
+    left:0; */
     justify-content: space-around;
     margin-left:5%;
     margin-right:5%;
@@ -10,16 +13,21 @@
 /* 기본 서브메뉴 */
 .submenu-box {
     display: flex;
-    /* background-color: rgb(255, 255, 255); */
+    z-index: 4;
+    width: 100%;
+    background-color: white;
+    position: fixed;
+    top:0;
+    left:0;
     justify-content: space-between;
-    margin-top:15px;
-    margin-right: 5%;
+    padding-top:15px;
     height: 2rem;
+    border-bottom: 2px solid rgb(16, 167, 255);
 }
 
 #submenu-ul {
     display: none;
-
+    margin-right:5%;
 }
 
 .submenu-li{

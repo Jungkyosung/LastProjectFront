@@ -1,8 +1,13 @@
+import './MapList.css';
 import { useEffect, useState } from "react"
 import axios from "axios";
-import { Link } from "react-router-dom";
 import jwt_decode from 'jwt-decode';
 import Frame from "../main/Frame";
+import MapEach from "./MapEach";
+import Button from '@mui/material/Button';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import MapDetail from './MapDetail';
+
 
 const MapList = () => {
 
@@ -18,6 +23,13 @@ const MapList = () => {
         'Content-Type': 'application/json'
     };
 
+    //배열로 변경해야 함.
+    const [modal, setModal] = useState(false);
+
+    const modalOpen = () => {
+        setModal(true);
+    }
+
     const [datas, setDatas] = useState([]);
 
     useEffect(() => {
@@ -30,44 +42,48 @@ const MapList = () => {
 
     return (
         <Frame>
-            <div className='container'>
-                <h2>지도 목록</h2>
-                <table className='map_list'>
-                    <colgroup>
-                        <col width="15%" />
-                        <col width="*" />
-                        <col width="15%" />
-                        <col width="15%" />
-                    </colgroup>
-                    <thead>
-                        <tr>
-                            <th scope="col">글번호</th>
-                            <th scope="col">제목</th>
-                            <th scope="col">조회수</th>
-                            <th scope="col">작성일</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            datas.length === 0 && (
-                                <tr>
-                                    <td colSpan='4'>일치하는 지도가 없다.</td>
-                                </tr>
-                            )
-                        }
-                        {
-                            datas && datas.map(course => (
-                                <tr key={course.travelcourseIdx}>
-                                    <td>{course.travelcourseIdx}</td>
-                                    <td className="title">
-                                        <Link to={`/course/detail/${course.travelcourseIdx}`}>{course.travelcourseTitle}</Link></td>
-                                    <td>{course.travelcourseCnt}</td>
-                                    <td>{course.travelcourseCreatedtime}</td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </table>
+            <div id="travelcourse-list-img">
+                <img src="https://hearthookhome.com/wp-content/uploads/2018/08/How-to-make-a-travel-map-with-pins-1024x683.jpg" />
+            </div>
+            <div id='travelcourse-list-wrap'>
+                <div id="travelcourse-list-title">여행코스</div>
+                <div id="travelcourse-list-write">
+                    <Link to="/course/mapwrite">
+                        <Button variant="contained">WRITE</Button>
+                    </Link>
+                </div>
+                <div id="travelcourse-list-lists">
+                    <MapEach modalOpen={modalOpen} />
+                    <MapEach />
+                    <MapEach />
+                    <MapEach />
+                    <MapEach />
+                    <MapEach />
+                    <MapEach />
+                </div>
+                {modal &&
+                    <MapDetail modal={modal} setModal={setModal} />
+                }
+                {
+                    datas.length === 0 && (
+                        <div>
+                            <span>일치하는 지도가 없다.</span>
+                        </div>
+                    )
+                }
+                {
+                    datas && datas.map(course => (
+                        <div key={course.travelcourseIdx}>
+                            <span>{course.travelcourseIdx}</span>
+                            <span className="title">
+                                <Link to={`/course/detail/${course.travelcourseIdx}`}>{course.travelcourseTitle}</Link></span>
+                            <span>{course.travelcourseCnt}</span>
+                            <span>{course.travelcourseCreatedtime}</span>
+                        </div>
+                    ))
+                }
+
+
                 <Link to="/course/mapwrite" className="btn">글쓰기</Link>
             </div>
         </Frame>

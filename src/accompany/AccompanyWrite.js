@@ -11,7 +11,7 @@ const AccompanyWrite = () => {
 
     return (
         <Frame>
-            <div id="accompany-main-img">
+            <div id="accompany-main-write-img">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Bukchon_Hanok_Village_%EB%B6%81%EC%B4%8C_%ED%95%9C%EC%98%A5%EB%A7%88%EC%9D%84_October_1_2020_15.jpg/1280px-Bukchon_Hanok_Village_%EB%B6%81%EC%B4%8C_%ED%95%9C%EC%98%A5%EB%A7%88%EC%9D%84_October_1_2020_15.jpg" />
             </div>
             <div id="accompany-write-wrap">
