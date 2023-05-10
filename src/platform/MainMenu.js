@@ -28,7 +28,7 @@ const MainMenu = () => {
             <div></div>
             <div className={styles.logo}>
                 <Link to="/">
-                    <img src="https://via.placeholder.com/220x60" alt="샘플이미지"></img>
+                    <img src="https://via.placeholder.com/150x60" alt="샘플이미지"></img>
                 </Link>
             </div>
             <nav className={styles.dropmenu}>

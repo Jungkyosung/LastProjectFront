@@ -21,6 +21,7 @@
     color: snow;
     float: left;
     font-weight: 600;
+    list-style: none;
 }
 .footer .footerContainer li:first-child {
     color:#5E8FCA;

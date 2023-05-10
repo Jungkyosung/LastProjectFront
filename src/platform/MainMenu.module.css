@@ -81,3 +81,15 @@
     display:flex;
     align-items: center;
    }
+
+
+   @media (max-width:900px) {
+    .dropmenu li{
+        width:100px;
+        font-size: 14px;
+       }
+
+    .language{
+        font-size:10px;
+    }
+   }

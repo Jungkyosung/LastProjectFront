@@ -5,6 +5,9 @@ import Frame from "../main/Frame";
 import Button from '@mui/joy/Button';
 import Input from '@mui/joy/Input';
 import Textarea from '@mui/joy/Textarea';
+import styles from "./NoticeUpdate.module.css";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 
 const NoticeUpdate = () => {
@@ -29,15 +32,15 @@ const NoticeUpdate = () => {
     const handlerClickUpdate = () => {
         axios.put(`http://localhost:8080/api/notice/update/${noticeIdx}`,
             { "noticeTitle": title, "noticeContent": content })
-                .then(response => {
-                    console.log(response)
-                    alert("정상처리 되었습니다");
-                    navigate('/noticeList')
-                })
-                .catch(error => {
-                    console.log(error);
-                    alert(`요기서 에러 ${error.message}`);
-                })
+            .then(response => {
+                console.log(response)
+                alert("정상처리 되었습니다");
+                navigate('/noticeList')
+            })
+            .catch(error => {
+                console.log(error);
+                alert(`요기서 에러 ${error.message}`);
+            })
 
     };
 
@@ -51,16 +54,39 @@ const NoticeUpdate = () => {
 
     return (
         <Frame>
-            <h2>공지사항</h2>
-            <h3>공지사항 제목</h3>
-            <Input placeholder="제목을 적어주세요" id="title" name="title" value={title} onChange={handleChangeTitle} style={{ border: "none", borderBottom: "1px solid #5E8FCA", borderRadius: 0, width: "1180px" }} />
-            <h3>공지사항 내용</h3>
-            <Textarea id="content" name="content" value={content} placeholder="내용을 적어주세요" onChange={handleChangeConnent} variant="plain" style={{ borderBottom: "1px solid rgba(94, 143, 202, 0.2)", borderTop: "1px solid #5E8FCA", borderRadius: 0, width: "1180px", height: "363px" }} />
-            <div style={{ borderBottom: "1px solid #5e8fca" }}>
-                <strong>첨부파일</strong>
-                <Button>파일등록</Button>
+            <div className={styles.contentsWrap}>
+                <h2 className={styles.noticeTitle}>공지사항</h2>
+                <h3 className={styles.subTitle}>공지사항 제목</h3>
+                <Input placeholder="제목을 적어주세요" id="title" name="title" value={title} onChange={handleChangeTitle} style={{ border: "none", borderBottom: "1px solid #5E8FCA", borderRadius: 0, width: "60%" }} />
+                <h3 className={styles.subTitle}>공지사항 내용</h3>
+                {/* <Textarea id="comment" name="comment" value={content} placeholder="내용을 적어주세요" onChange={handleChangeComment} variant="plain" style={{ borderBottom: "1px solid rgba(94, 143, 202, 0.2)", borderTop: "1px solid #5E8FCA", borderRadius: 0, width: "1180px", height: "363px" }} /> */}
+                <div className={styles.editor}>
+                    <CKEditor
+                        editor={ClassicEditor}
+                        data="</br></br></br></br></br></br></br></br></br></br></br></br>"
+                        onReady={editor => {
+                            // You can store the "editor" and use when it is needed.
+                            console.log('Editor is ready to use!', editor);
+                        }}
+                        onChange={(event, editor) => {
+                            const data = editor.getData();
+                            console.log({ event, editor, data });
+                            setContent(data);
+                        }}
+                    // onBlur={ ( event, editor ) => {
+                    //     console.log( 'Blur.', editor );
+                    // } }
+                    // onFocus={ ( event, editor ) => {
+                    //     console.log( 'Focus.', editor );
+                    // } }
+                    />
+                </div>
+                <div className={styles.file} style={{ borderBottom: "1px solid #5e8fca" }}>
+                    <strong>첨부파일</strong>
+                    <Button>파일등록</Button>
+                </div>
+                <Button type="button" onClick={handlerClickUpdate}>수정하기</Button>
             </div>
-            <Button type="button" onClick={handlerClickUpdate}>수정하기</Button>
         </Frame>
     )
 }
