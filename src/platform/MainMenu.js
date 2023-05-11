@@ -66,7 +66,7 @@ const MainMenu = () => {
             <div className={styles.language}>
                 <LanguageIcon style={{ fontSize: "30px" }} />
                 <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                    {/* <InputLabel id="demo-simple-select-standard-label">Korea</InputLabel> */}
+                    <InputLabel id="demo-simple-select-standard-label">Korea</InputLabel>
                     <Select
                         labelId="demo-simple-select-standard-label"
                         id="demo-simple-select-standard"
@@ -74,7 +74,7 @@ const MainMenu = () => {
                         onChange={handleChange}
                         label="lang"
                     >
-                        <MenuItem value="">
+                        <MenuItem value={15}>
                             <em>Kor</em>
                         </MenuItem>
                         <MenuItem value={10}>Eng</MenuItem>

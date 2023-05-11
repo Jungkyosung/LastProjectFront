@@ -12,6 +12,10 @@ import Notice from './notice/Notice';
 import NoticeWrite from './notice/NoticeWrite';
 import NoticeDetail from './notice/NoticeDetail';
 import NoticeUpdate from './notice/NoticeUpdate';
+import QnaList from './qna/QnaList';
+import QnaDetail from './qna/QnaDetail';
+import QnaWrite from './qna/QnaWrite';
+import QnaUpdate from './qna/QnaUpdate';
 
 
 function App() {
@@ -31,6 +35,12 @@ function App() {
         <Route path="/notice/:noticeIdx" Component={NoticeDetail} exact={true} />
         <Route path="/notice/write" Component={NoticeWrite} exact={true} />
         <Route path="/notice/update/:noticeIdx" Component={NoticeUpdate} exact={true} />
+        <Route path="/qnalist" Component={QnaList} exact={true} />
+        <Route path="/qna/:qnaIdx" Component={QnaDetail} exact={true} />
+        {/* <Route path="/qna/1" Component={QnaDetail} exact={true} /> */}
+        <Route path="/qna/write" Component={QnaWrite} exact={true} />
+        {/* <Route path="/qna/Update/:qnaIdx" Component={QnaUpdate} exact={true} /> */}
+        <Route path="/qna/Update/1" Component={QnaUpdate} exact={true} />
       </Routes>
     </>
   );
