@@ -16,6 +16,9 @@ const QnaList = () => {
     const [pageCount, setPageCount] = useState(0);
     const navigate = useNavigate();
 
+    const lengthDifference = 10 - datas.length;
+
+
     useEffect(() => {
         //1페이지 리스트 조회
         axios.get(`http://localhost:8080/api/qnalistbypage/${pages}`)
@@ -59,6 +62,10 @@ const QnaList = () => {
         setPages(value);
     }
 
+    const handlernn = () => {
+        navigate(`/qna/write`);
+    }
+
 
     return (
         <Frame>
@@ -94,20 +101,26 @@ const QnaList = () => {
                                     )
                                 }
                                 {
+                                    datas.length < 10 ? 
+                                    (
+                                        <tr>
+                                          <td colSpan="4">{lengthDifference} less than 10 items</td>
+                                        </tr>
+                                    ) 
+                                    :
+                                    (
                                     datas && datas.sort((a, b) => (b.qnaIdx - a.qnaIdx))
                                         .map((n, index) => (
                                             <tr key={index} className={styles.qnaData}>
-                                                <td >{n.qnaIdx}</td>
-
+                                                <td >{n.qnaIdx}</td>       
                                                 <td >
                                                     <Link to={`/qna/${n.qnaIdx}`} style={{ color: "black" }}>{n.qnaTitle}</Link>
                                                 </td>
                                                 <td style={{ color: "black" }}>{n.qnaCreatedTime}</td>
                                                 <td style={{ color: "black" }}>{n.userId}</td>
-
                                             </tr>
-
                                         ))
+                                    )
                                 }
                             </tbody>
                         </table>
@@ -115,7 +128,7 @@ const QnaList = () => {
                 </div>
                 <Pagination count={pageCount} color="primary" page={pages} onChange={handlerChange} />
                 <div className={styles.write}>
-                    <Button>글쓰기</Button>
+                    <Button onClick={handlernn}>글쓰기</Button>
                 </div>
             </div>
         </Frame>
