@@ -12,13 +12,31 @@ import Stack from '@mui/material/Stack';
 const QnaList = () => {
 
     const [datas, setDatas] = useState([]);
+    const [pages, setPages] = useState(1);
+    const [pageCount, setPageCount] = useState(0);
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/qnalist`)
+        //1페이지 리스트 조회
+        axios.get(`http://localhost:8080/api/qnalistbypage/${pages}`)
             .then(response => {
                 console.log(response.data)
                 setDatas(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+
+        //페이지수 조회
+        axios.get(`http://localhost:8080/api/qnapagecount`)
+            .then(response => {
+                console.log(response.data)
+                // let pageCount = response.data;
+                // if( pageCount > 1){
+                //     pageCount = 10;
+                // }
+                // setPageCount(pageCount);
+                setPageCount(response.data);
             })
             .catch(error => {
                 console.log(error);
@@ -26,7 +44,7 @@ const QnaList = () => {
     }, [])
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/qnalist`)
+        axios.get(`http://localhost:8080/api/qnalistbypage/${pages}`)
             .then(response => {
                 console.log(response.data)
                 setDatas(response.data);
@@ -34,7 +52,13 @@ const QnaList = () => {
             .catch(error => {
                 console.log(error);
             })
-    }, [])
+    }, [pages])
+
+    const handlerChange = (event, value) => {
+        console.log(event, value);
+        setPages(value);
+    }
+
 
     return (
         <Frame>
@@ -89,7 +113,7 @@ const QnaList = () => {
                         </table>
                     </div>
                 </div>
-                <Pagination count={10} color="primary" />
+                <Pagination count={pageCount} color="primary" page={pages} onChange={handlerChange} />
                 <div className={styles.write}>
                     <Button>글쓰기</Button>
                 </div>
