@@ -84,7 +84,7 @@ function ChattingWindow(props) {
     //{핸들러: 번역}
     const handlerTranslate = (msg, idx) => {
         //텍스트 div를 누르면 채팅 내역의 idx 번호를 기준으로 
-        chatHistory.map((msg,idx) => { })
+        chatHistory.map((msg, idx) => { })
         setTranslateText()
         const token = sessionStorage.getItem('token');
         axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/translate/${msg}`,
@@ -114,22 +114,32 @@ function ChattingWindow(props) {
                 <div id="chat">
                     <div id="dialog" ref={refDialogDiv}>
                         <div className="dialog-board">
-                            채팅내역
-                            { chatHistory ?
-                            chatHistory.map((item, idx) => (
-                                <div key={idx} className={item.userId === userId ? "me" : "other"}>
-                                    <span><b>{item.userId}</b></span>
-                                    <span className="date">{item.createdDt}</span><br />
-                                    <span>{item.message}</span>
-                                    {/* {
+                            {chatHistory ?
+                                chatHistory.map((item, idx) => (
+                                    <>
+                                        <div key={idx} className={item.userId === userId ? "dialog-me" : "dialog-other"}>
+                                            <div id="dialog-box">
+                                                <img id="dialog-profile-img" src="https://i.pinimg.com/564x/38/eb/7a/38eb7a74270f3e480224ffe26cb9d7d3.jpg" />
+                                                <div id="dialog-message-box">
+                                                    <span id="dialog-profile-nickname">닉네임</span>
+                                                    {/* <span><b>{item.userId}</b></span> */}
+                                                    <div id="dialog-message">{item.message}</div>
+                                                    {/* 번역되면 메시지 아래에 번역문 보이도록 */}
+                                                    <div id="dialog-message-translate"></div>
+
+                                                </div>
+                                            </div>
+                                            <span className="dialog-date">{item.createdDt}</span>
+                                            {/* {
                                         translateText[idx] != null ?
                                             <p key={idx}>{translateText[idx]}</p>
                                             :
                                             ""
                                     } */}
-                                </div>
-                            )) : ""}
-                            
+                                        </div>
+                                    </>
+                                )) : ""}
+
                         </div>
                     </div>
 

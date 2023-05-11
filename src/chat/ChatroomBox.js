@@ -4,9 +4,9 @@ const ChatroomBox = () => {
     return (
         <>
             <div>
-                <div>
+                <div id="chatroombox-wrap">
                     <span id="chatroombox-title">
-                        동행방 제목 근데 괜찮아 얼굴이 예뻐서
+                        동행방 제목으로 챗방 제목
                     </span>
                     <span id="chatroombox-no-reading">
                         3

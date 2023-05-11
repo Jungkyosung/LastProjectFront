@@ -53,15 +53,15 @@ const SubMenu = (props) => {
             })
     }
 
-    const handlerMobileMypage = ()=>{
+    const handlerMobileMypage = () => {
         navigate("/mobilemypage");
     }
 
-    const handlerMypage = ()=>{
+    const handlerMypage = () => {
         navigate("/mypage");
     }
 
-    const handlerLoginpage= ()=>{
+    const handlerLoginpage = () => {
         navigate("/login");
     }
 
@@ -70,22 +70,25 @@ const SubMenu = (props) => {
         <>
             <div className="submenu-box">
                 <div className="mobile-submenu">
-                    <MenuIcon onClick={toggleDrawer('left', true)}/>
+                    <MenuIcon onClick={toggleDrawer('left', true)} />
                     <Drawer
                         anchor='left'
                         open={state.left}
                         onClose={toggleDrawer('left', false)}
                     >
-                        <MobileMainMenu/>
+                        <MobileMainMenu />
                     </Drawer>
                 </div>
+                <Link to="/">
+                    <img id="submenu-logo" src="https://via.placeholder.com/150x60" />
+                </Link>
                 <div className="mobile-submenu">
-                    
-                    { nickName == null ?
-                    <AccountCircleRoundedIcon onClick={handlerLoginpage}/>
-                    :
-                    <AccountCircleRoundedIcon onClick={handlerMobileMypage}/>
-                    }   
+
+                    {nickName == null ?
+                        <AccountCircleRoundedIcon onClick={handlerLoginpage} />
+                        :
+                        <AccountCircleRoundedIcon onClick={handlerMobileMypage} />
+                    }
                 </div>
                 <span id="blank-submenu"></span>
                 <ul id="submenu-ul">
@@ -104,7 +107,7 @@ const SubMenu = (props) => {
                             :
                             <>
                                 <p onClick={handlerMypage}>Hello {nickName}</p>
-                                <LogoutIcon id="logout-icon" onClick={handlerLogout}/>
+                                <LogoutIcon id="logout-icon" onClick={handlerLogout} />
                             </>
                     }
                 </ul>

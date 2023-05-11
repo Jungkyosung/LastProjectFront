@@ -26,6 +26,10 @@ import MobileMypage from './mypage/MobileMypage';
 import MobileChatPage from './chat/MobileChatPage';
 import AccompanyDetail from './accompany/AccompanyDetail';
 import AccompanyWrite from './accompany/AccompanyWrite';
+import Idealreal from './idealreal/Idealreal';
+import IdealrealDetail from './idealreal/IdealrealDetail';
+import IdealrealWrite from './idealreal/IdealrealWrite';
+import IdealrealRetouch from './idealreal/IdealrealRetouch';
 
 
 function App() {
@@ -57,6 +61,10 @@ function App() {
         <Route path="/course"                         element={<MapList />}        />
         <Route path="/course/mapwrite"                element={<MapWrite />}       />
         <Route path="/course/detail/:travelcourseIdx" element={<MapDetail />}      />
+        <Route path="/listidealreal"                  element={<Idealreal />}      />
+        <Route path="/listidealreal/detail/:idealrealIdx"element={<IdealrealDetail />}/>
+        <Route path="/listidealreal/write"            element={<IdealrealWrite />} />
+        <Route path="/idealrealretouch/:idealrealIdx" element={<IdealrealRetouch/>}/>
         <Route path="/*"                              element={<NotFound/>}        />
       </Routes>
     </>

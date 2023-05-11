@@ -19,7 +19,7 @@
 #mapdetail-edit-btn{
   position: absolute;
   top:10px;
-  left:680px;
+  right:80px;
   color:rgb(0, 0, 0);
   cursor: pointer;
 }
@@ -27,7 +27,7 @@
 #mapdetail-delete-btn{
   position: absolute;
   top:10px;
-  left:720px;
+  right: 46px;
   color:rgb(0, 0, 0);
   cursor: pointer;
 }
@@ -77,7 +77,7 @@
 
 #mapdetail-img-list{
   width: 60%;
-  height: 400px;
+  height: 40vw;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -100,6 +100,8 @@
 #mapdetail-course-list-wrap{
   margin-top: 20px;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 95%;
 }
 
@@ -107,8 +109,8 @@
   display: flex;
   justify-content: center;
   align-content: center;
-  width: 40%;
-  height: 250px;
+  width: 250px;
+  height: 150px;
   color: aliceblue;
   background-color:cadetblue;
   border-radius: 20px;
@@ -116,20 +118,20 @@
 }
 
 #mapdetail-course-list{
-  margin-left:20px;
-  width : 60%;
-  height: 250px;
+
+  width : 90%;
+  height: 200px;
   overflow-y: scroll;
 }
 
 #mapdetail-course-list::-webkit-scrollbar{
   width: 5px;
-  background-color: rgb(197, 197, 197);
+  background-color: rgb(230, 230, 230);
 }
 
 #mapdetail-course-list::-webkit-scrollbar-thumb{
   width: 5px;
-  background-color: rgb(230, 230, 230);
+  background-color: rgb(197, 197, 197);
 }
 
 #mapdetail-course-list > div{
@@ -172,4 +174,52 @@
   color:rgb(0, 0, 0);
   font-size:0.8rem;
   font-family: 'Gowun Dodum', sans-serif;
+}
+
+@media (min-width: 1000px) {
+  #mapdetail-img-list{
+    height: 400px;
+  }
+
+  #mapdetail-edit-btn{
+    top:10px;
+    left:680px;
+
+
+  }
+  
+  #mapdetail-delete-btn{
+    top:10px;
+    left:720px;
+
+  }
+
+  #mapdetail-userid{
+    position: absolute;
+    top: 70px;
+    left:220px;
+    color:aliceblue;
+    /* font-weight: bold; */
+    font-family: 'Gowun Dodum', sans-serif;
+  }
+
+  #mapdetail-course-list-wrap{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    width: 95%;
+  }
+
+  #mapdetail-map{
+    width: 40%;
+    height: 250px;
+  }
+  
+  #mapdetail-course-list{
+    margin-left: 20px;
+    width : 60%;
+    height: 250px;
+
+  }
+
 }

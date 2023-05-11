@@ -7,6 +7,7 @@ import ListIcon from '@mui/icons-material/List';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import MessageIcon from '@mui/icons-material/Message';
+import { Link, useNavigate } from "react-router-dom";
 
 const 임시내용 = "4월 26일(수)~28(금) 2박3일간 부산(해운대)여행에 함께 하실 30~40대 여성분을 찾습니다.\
 제가 40대 남자여서 부산여행을 같이 하실 분도 40대 여성이면 더 편할것 같은데, 나이는 크게 중요하지 않습니다.^^ (50대도 신청 가능)\
@@ -22,12 +23,18 @@ const AccompanyDetail = () => {
     let jwtToken = null;
     const writer = "jksin1992@gmail.com";
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         if (sessionStorage.getItem('token') != null) {
             jwtToken = sessionStorage.getItem('token');
             setUserId(jwt_decode(jwtToken).sub);
         }
     }, []);
+
+    const handlerToList = () => {
+        navigate(`/accompany`);
+    };
 
 
     return (
@@ -58,13 +65,13 @@ const AccompanyDetail = () => {
                     {임시내용}
                 </div>
                 <div id="accomapny-detail-btn">
-                    <Button variant="contained"><ListIcon/><span>LIST</span></Button>
+                    <Button variant="contained" onClick={handlerToList}><ListIcon /><span>LIST</span></Button>
                     {!(writer == userId) ?
-                        <Button variant="contained"><MessageIcon/><span>채팅연결</span></Button>
+                        <Button variant="contained"><MessageIcon /><span>채팅연결</span></Button>
                         :
                         <>
-                            <Button variant="contained"><EditIcon/><span>수정하기</span></Button>
-                            <Button variant="contained"><DeleteForeverIcon/><span>삭제하기</span></Button>
+                            <Button variant="contained"><EditIcon /><span>수정하기</span></Button>
+                            <Button variant="contained"><DeleteForeverIcon /><span>삭제하기</span></Button>
                         </>
                     }
                 </div>
