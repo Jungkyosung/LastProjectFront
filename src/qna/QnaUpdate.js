@@ -5,24 +5,24 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@mui/joy";
 
 const QnaUpdate = () => {
 
-    // const { noticeIdx } = useParams();
+    const { qnaIdx } = useParams();
 
     const navigate = useNavigate();
 
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [notice, setNotice] = useState({});
+    const [qna, setQna] = useState({});
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/notice/`)
+        axios.get(`http://localhost:8080/api/qna/${qnaIdx}`)
             .then(response => {
                 console.log(response.data);
-                setNotice(response.data);
+                setQna(response.data);
             })
             .catch(error => {
                 console.log(error);
@@ -30,16 +30,16 @@ const QnaUpdate = () => {
     }, [])
 
     const handlerClickUpdate = () => {
-        axios.put(`http://localhost:8080/api/notice/update/`,
-            { "noticeTitle": title, "noticeContent": content })
+        axios.put(`http://localhost:8080/api/qna/update/${qnaIdx}`,
+            { "qnaTitle": title, "qnaContent": content })
             .then(response => {
                 console.log(response)
                 alert("정상처리 되었습니다");
-                navigate('/noticeList')
+                navigate('/qnalist')
             })
             .catch(error => {
                 console.log(error);
-                alert(`요기서 에러 ${error.message}`);
+                alert(`${error.message}`);
             })
 
     };
@@ -76,11 +76,7 @@ const QnaUpdate = () => {
                     // } }
                     />
                 </div>
-                <div className={styles.file} style={{ borderBottom: "1px solid #5e8fca" }}>
-                    <strong>첨부파일</strong>
-                    <Button>파일등록</Button>
-                </div>
-                <Button type="button" onClick={handlerClickUpdate}>수정하기</Button>
+                <Button style={{ marginTop:"30px"}} type="button" sx={{  color: "white", background:"#5E8FCA", ":hover": { background: "#2d6ebd"}}} onClick={handlerClickUpdate}>수정하기</Button>
             </div>
         </Frame>
     )

@@ -44,7 +44,7 @@ const QnaList = () => {
             .catch(error => {
                 console.log(error);
             })
-    }, [])
+    }, [pages])
 
     useEffect(() => {
         axios.get(`http://localhost:8080/api/qnalistbypage/${pages}`)
@@ -62,8 +62,19 @@ const QnaList = () => {
         setPages(value);
     }
 
-    const handlernn = () => {
+    const handlerWrite = () => {
         navigate(`/qna/write`);
+    }
+    const handlerDetail = (qnaIdx) => {
+        navigate(`/qna/${qnaIdx}`);
+    }
+
+    const addEmptyRows = () =>{
+        const result = [];
+            for (let i = 0 ; i < lengthDifference ; i ++ ){
+                result.push(<tr style={{borderTop:"1px solid rgba(94, 143, 202, 0.2)", height:"60px"}}><td colSpan="4"></td></tr>);
+            }    
+        return result;
     }
 
 
@@ -101,18 +112,10 @@ const QnaList = () => {
                                     )
                                 }
                                 {
-                                    datas.length < 10 ? 
-                                    (
-                                        <tr>
-                                          <td colSpan="4">{lengthDifference} less than 10 items</td>
-                                        </tr>
-                                    ) 
-                                    :
-                                    (
                                     datas && datas.sort((a, b) => (b.qnaIdx - a.qnaIdx))
                                         .map((n, index) => (
-                                            <tr key={index} className={styles.qnaData}>
-                                                <td >{n.qnaIdx}</td>       
+                                            <tr key={index} className={styles.qnaData} onClick={() => handlerDetail(n.qnaIdx)} >
+                                                <td >{n.qnaIdx}</td>
                                                 <td >
                                                     <Link to={`/qna/${n.qnaIdx}`} style={{ color: "black" }}>{n.qnaTitle}</Link>
                                                 </td>
@@ -120,15 +123,15 @@ const QnaList = () => {
                                                 <td style={{ color: "black" }}>{n.userId}</td>
                                             </tr>
                                         ))
-                                    )
                                 }
+                                { addEmptyRows() }
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <Pagination count={pageCount} color="primary" page={pages} onChange={handlerChange} />
                 <div className={styles.write}>
-                    <Button onClick={handlernn}>글쓰기</Button>
+                    <Button onClick={handlerWrite}>글쓰기</Button>
                 </div>
             </div>
         </Frame>

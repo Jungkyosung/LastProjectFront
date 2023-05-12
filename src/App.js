@@ -37,10 +37,9 @@ function App() {
         <Route path="/notice/update/:noticeIdx" Component={NoticeUpdate} exact={true} />
         <Route path="/qnalist" Component={QnaList} exact={true} />
         <Route path="/qna/:qnaIdx" Component={QnaDetail} exact={true} />
-        {/* <Route path="/qna/1" Component={QnaDetail} exact={true} /> */}
         <Route path="/qna/write" Component={QnaWrite} exact={true} />
-        {/* <Route path="/qna/Update/:qnaIdx" Component={QnaUpdate} exact={true} /> */}
-        <Route path="/qna/Update/1" Component={QnaUpdate} exact={true} />
+        <Route path="/qna/Update/:qnaIdx" Component={QnaUpdate} exact={true} />
+
       </Routes>
     </>
   );

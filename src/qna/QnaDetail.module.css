@@ -85,3 +85,85 @@
 .commentList p {
     padding-left:20px;
 } 
+
+/* CSS default */
+
+.contentsWrap .editor h2 {
+    display: block; font-size: 1.5em; margin-top: 0.83em; margin-bottom: 0.83em; margin-left: 0; margin-right: 0; font-weight: bold;
+}
+
+.contentsWrap .editor h3 {
+    display: block; font-size: 1.17em; margin-top: 1em; margin-bottom: 1em; margin-left: 0; margin-right: 0; font-weight: bold;
+}
+
+.contentsWrap .editor h4 {
+    display: block; font-size: 1em; margin-top: 1.33em; margin-bottom: 1.33em; margin-left: 0; margin-right: 0; font-weight: bold;
+}
+
+.contentsWrap .editor strong {
+    font-weight: bold;
+}
+
+.contentsWrap .editor i {
+    font-style: italic;
+}
+
+.contentsWrap .editor p {
+    display: block; margin-top: 1em; margin-bottom: 1em; margin-left: 0; margin-right: 0;
+}
+
+.contentsWrap .editor a:link, a:visited {
+    color: (internal value); text-decoration: underline; cursor: auto;
+}
+
+.contentsWrap .editor a:link:active, a:visited:active {
+    color: (internal value); 
+}
+
+.contentsWrap .editor ul {
+    display: block; list-style-type: disc; margin-top: 1em; margin-bottom: 1 em; margin-left: 0; margin-right: 0; padding-left: 40px;
+}
+
+.contentsWrap .editor ol {
+    display: block; list-style-type: decimal; margin-top: 1em; margin-bottom: 1em; margin-left: 0; margin-right: 0; padding-left: 40px;
+}
+
+.contentsWrap .editor li {
+    display: list-item;
+}
+
+.contentsWrap .editor blockquote {
+    display: block; margin-top: 1em; margin-bottom: 1em; margin-left: 40px; margin-right: 40px;
+}
+
+.contentsWrap .editor figure {
+    display: block; margin-top: 1em; margin-bottom: 1em; margin-left: 40px; margin-right: 40px;
+}
+
+.contentsWrap .editor table {
+    display: table; border-collapse: separate; border-spacing: 2px; border-color: gray;
+}
+
+.contentsWrap .editor tbody {
+    display: table-row-group; vertical-align: middle; border-color: inherit;
+}
+
+.contentsWrap .editor td {
+    display: table-cell; vertical-align: inherit;
+}
+
+.contentsWrap .editor tfoot {
+    display: table-footer-group; vertical-align: middle; border-color: inherit;
+}
+
+.contentsWrap .editor th {
+    display: table-cell; vertical-align: inherit; font-weight: bold; text-align: center;
+}
+
+.contentsWrap .editor thead {
+    display: table-header-group; vertical-align: middle; border-color: inherit;
+}
+
+.contentsWrap .editor tr {
+  display: table-row; vertical-align: inherit; border-color: inherit;
+}

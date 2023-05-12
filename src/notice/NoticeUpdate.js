@@ -41,7 +41,7 @@ const NoticeUpdate = () => {
             })
             .catch(error => {
                 console.log(error);
-                alert(`요기서 에러 ${error.message}`);
+                alert(`${error.message}`);
             })
 
     };

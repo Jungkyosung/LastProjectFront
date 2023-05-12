@@ -58,6 +58,10 @@
     margin-top: 20px;
 }
 
+.contentsWrap .table table .qnaData {
+    cursor: pointer;
+}
+
 .contentsWrap .table table .qnaData td {
     text-align: center;
     height:60px;
