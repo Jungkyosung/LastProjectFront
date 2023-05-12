@@ -11,7 +11,6 @@ const TriedUpdate = () => {
     const [triedTitle, setTriedTitle] = useState('');
     const [triedContent, setTriedContent] = useState('');
     const [userId, setUserId] = useState('');
-    const [triedImg, settriedImg] = useState('');
 
     useEffect(() => {
         axios
@@ -49,12 +48,9 @@ const TriedUpdate = () => {
     // 수정
     const handlerClickUpdate = () => {
         if (window.confirm('수정하시겠습니까?')) {
-            axios
-                .put(`http://localhost:8080/api/tried/${triedIdx}`,
-                    // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
-                    // 요청 URL
-                    { "triedTitle": triedTitle, "triedContent": triedContent })
-                // 수정 후 detail 페이지로 이동
+            axios.put(`http://localhost:8080/api/tried/${triedIdx}`,
+                // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
+                { "triedTitle": triedTitle, "triedContent": triedContent })
                 .then(response => {
                     console.log(response);
                     if (response.data === 1) {
@@ -83,7 +79,8 @@ const TriedUpdate = () => {
                         <input type="text" name="triedTitle" value={triedTitle || ''}
                             onChange={handlerTitleChange} />
                     </div>
-                    <div>이미지 자리: </div>
+                    <div className="update-img">이미지 자리: </div>
+
                     <div>
                         <input type="text" name="triedContent" value={triedContent || ''}
                             onChange={handlerContentChange} />
