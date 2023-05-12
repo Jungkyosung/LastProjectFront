@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-function IdealrealRetouch({ match, history }) {
+import { useNavigate, useParams } from "react-router-dom";
+
+function IdealrealRetouch() {
 
     const [data, setData] = useState([]);
     const [idealrealTitle, setIdealrealTitle] = useState('');
@@ -11,13 +13,14 @@ function IdealrealRetouch({ match, history }) {
     const [idealrealIdealImg, setIdealrealIdealImg] = useState('');
     const [idealrealRealImg, setIdealrealRealImg] = useState('');
 
-    const { idealrealIdx } = match.params;
+    const { idealrealIdx } = useParams();
+    const navigate = useNavigate();
 
 
     useEffect(() => {
         axios.get(`http://localhost:8080/api/listidealreal/detail/${idealrealIdx}`,
             // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
-            )
+        )
             .then(response => {
                 setIdealrealTitle(response.data.idealrealTitle);
                 setIdealrealContent(response.data.idealrealContent);
@@ -30,7 +33,7 @@ function IdealrealRetouch({ match, history }) {
 
                 if (response.data.idealrealDto.userId != response.data.selectIdealRealList.userId && response.data.idealrealDto.userId != "test") {
                     alert('잘못된 접근 입니다.');
-                    history.push('/listidealreal')
+                    navigate('/listidealreal')
                     return;
                 }
                 // const token = sessionStorage.getItem('token')
@@ -38,7 +41,7 @@ function IdealrealRetouch({ match, history }) {
 
                 // if (decode.sub != response.data.movieTitle.writerId || decode.sub != "test") {
                 //   alert('잘못된 접근 입니다.');
-                //   history.push('/')
+                //   navigate('/')
                 // }
             })
             .catch(error => console.log(error));
@@ -53,7 +56,7 @@ function IdealrealRetouch({ match, history }) {
             .then(response => {                                         // 200번대 응답코드가 반환되는 경우
                 console.log(response);
                 alert("오 수정")
-                history.push('/listidealreal')
+                navigate('/listidealreal')
             })
             .catch(error => {                                           // 200번대를 제외한 응답코드가 반환되는 경우
                 console.log(error);
@@ -86,7 +89,7 @@ function IdealrealRetouch({ match, history }) {
         marginLeft: '5',
         border: '1px solid aqua',
 
-        
+
 
     }
 
@@ -109,7 +112,7 @@ function IdealrealRetouch({ match, history }) {
                         <tbody>
                             <tr >
                                 <th colSpan="6">{idealrealTitle}</th>
-                                
+
                             </tr>
                             <tr>
                                 <td colSpan="6">

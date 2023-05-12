@@ -3,6 +3,7 @@ import LNButton from "./LNButton";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Thumb from "./Thumb";
+import { useParams } from "react-router-dom";
 
 function Idealreal() {
     const [idealreal, setIdealreal] = useState("")
@@ -11,6 +12,7 @@ function Idealreal() {
     const [rcmdIdx, setRcmdIdx] = useState('')
     const [idealrealIdealImg, setIdealrealIdealImg] = useState([]);
     const [idealrealRealImg, setIdealrealRealImg] = useState([]);
+    const { idealrealIdx } = useParams();
 
     useEffect(() => {
         axios.get(`http://localhost:8080/api/listidealreal`)
@@ -33,7 +35,7 @@ function Idealreal() {
         wrapper: {
             display: "flex",
             flexDirection: "column",
-            justifyContent : "center",
+            justifyContent: "center",
             border: '1px solid aqua',
             borderRadius: 16,
             padding: 8,
@@ -46,14 +48,15 @@ function Idealreal() {
             borderRadius: 16,
             padding: 8,
             margin: 8,
-            width: "600px"
+            width: "550px",
+            height: 300
         },
         image: {
-            width: 'auto',
+            width: '50%',
             height: 300,
             borderRadius: 10
         },
-        
+
         nameText: {
 
             color: 'pink',
@@ -63,14 +66,14 @@ function Idealreal() {
             textAlign: 'center'
 
         },
-        box1 : {
+        box1: {
             width: '100%',
             overflow: 'hidden',
-            
+
         },
-        box2 : {
+        box2: {
             // border: '1px solid pink',
-            width: '50%',
+            width: 'auto',
             float: 'left',
             textAlign: 'center',
         }
@@ -101,6 +104,10 @@ function Idealreal() {
 
     }
 
+    //인기,최신 버튼? 시도중입니다
+    // const [posts, setPosts] = useState([]);
+    // const [sort, setSort] = useState("latest");
+
 
 
 
@@ -115,8 +122,8 @@ function Idealreal() {
             <div style={container}>
                 <div style={styles.wrapper}>
                     {/* <div style={styles.contentContainer}> */}
-                        {/* 작성한 사람의 이름과 내용 */}
-                        <div style={styles.nameText}>이상과 현실</div>
+                    {/* 작성한 사람의 이름과 내용 */}
+                    <div style={styles.nameText}>이상과 현실</div>
                     {/* </div> */}
                     <div style={styles.box1}>
                         {data &&
@@ -125,32 +132,33 @@ function Idealreal() {
                                     <table>
                                         <tbody>
                                             <tr>
-                                                <td className="idealrealTitle" >
-                                                    <td style={styles.wrapper1}>{idealreal.idealrealIdx}
-                                                    {console.log(idealreal.idealrealIdealImg)}
-                                                    <Link
-                                                        to={`/listidealreal/detail/${idealreal.idealrealIdx}`}
-                                                    >
-                                                        {idealreal.idealrealTitle}{userId}
-                                                <td>{rcmd.rcmdIdx}</td>
-                                                <div><td></td></div>
-                                                        <img
-                                                            style={styles.image}
-                                                            src={`http://localhost:8080/api/getimage/${idealreal.idealrealIdealImg}`}
-                                                        />
-                                                        <img
-                                                            style={styles.image}
-                                                            src={`http://localhost:8080/api/getimage/${idealreal.idealrealRealImg}`}
-                                                        />
-                                                    </Link>
-                                                </td>
-                                                </td>
+                                                <Link
+                                                    to={`/listidealreal/detail/${idealreal.idealrealIdx}`}
+                                                >
+                                                    <td className="idealrealTitle" >
+                                                        <td style={styles.wrapper1}>{idealreal.idealrealIdx}
+                                                            {console.log(idealreal.idealrealIdealImg)}
+                                                            {idealreal.idealrealTitle}
+                                                            {idealrealIdx}
+                                                            <td>{rcmd.rcmdIdx}</td>
+                                                            <div><td></td></div>
+                                                            <img
+                                                                style={styles.image}
+                                                                src={`http://localhost:8080/api/getimage/${idealreal.idealrealIdealImg}`}
+                                                            />
+                                                            <img
+                                                                style={styles.image}
+                                                                src={`http://localhost:8080/api/getimage/${idealreal.idealrealRealImg}`}
+                                                            />
+                                                        </td>
+                                                    </td>
+                                                </Link>
                                                 {/* <Thumb /> */}
 
                                             </tr>
                                         </tbody>
                                     </table>
-                                    
+
                                 </div>
                             ))}
                     </div>

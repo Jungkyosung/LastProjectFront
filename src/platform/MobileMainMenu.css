@@ -1,0 +1,39 @@
+#mobile-mainmenu-window{
+    width: 260px;
+    margin-top: 40px;
+}
+
+#mobile-mainmenu-window > p{
+    font-size: 1.1rem;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+#mobile-mainmenu-window > ul {
+    margin-top:20px;
+    font-size: 1.1rem;
+    margin-left: 20px;
+    
+}
+
+#mobile-mainmenu-window > ul > li {
+    padding-top:10px;
+    padding-bottom: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+#mobile-mainmenu-window > ul > li:hover {
+    
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    background-color: rgb(247, 247, 247);
+}
+
+
+@media ( min-width : 500px ){
+    #mobile-mainmenu-window{
+        width: 400px;
+    }
+}

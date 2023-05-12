@@ -1,0 +1,59 @@
+/* #chatport-mobile{
+    display: none;
+} */
+
+#chatTitle {
+    display: flex;
+    justify-content: center;
+}
+
+#mobilechat-wrap {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.dialog-board {
+    height: 80%;
+    max-height: 800px;
+    overflow: auto;
+}
+
+#chatroomlist {
+    width: 80%;
+    margin-left: calc(10% - 21px);
+    /* border-style: solid;
+    border-radius: 10px;
+    border-width: 3px;
+    border-color: rgb(179, 179, 179); */
+    padding: 10px 20px 10px 20px;
+}
+
+.chatroombox{
+    border-width: 4px;
+    border-color: rgb(180, 220, 255);
+    border-style: solid;
+    border-radius: 8px;
+    padding: 0 5px 0 5px;
+    margin-bottom: 10px;
+}
+
+.chatroombox:hover{
+    border-width: 4px;
+    border-color: rgb(236, 245, 255);
+    border-style: solid;
+    border-radius: 8px;
+    padding: 0 5px 0 5px;
+    margin-bottom: 10px;
+}
+
+.chatroombox > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    
+}
+
+#chatroombox-title{
+    margin-right: 20px;
+}

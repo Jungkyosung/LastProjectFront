@@ -1,7 +1,8 @@
-import React, { useEffect, useState, useRef, useNavigate } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-function IdealrealWrite({ onSubmit, history }) {
+function IdealrealWrite() {
   const [data, setData] = useState([])
   const [name, setName] = useState('');
   const [comment, setComment] = useState('');
@@ -179,7 +180,7 @@ function IdealrealWrite({ onSubmit, history }) {
           style={{ width: '100px', height: '20px', padding: '12px', margin: 40 }}
         />
       </div >
-      <div style={{ display: 'flex', flexDirection: 'row', margin: 200, width: '800px', border: '1px solid red'}} >
+      <div style={{ display: 'flex', flexDirection: 'row', margin: 200, width: '800px', border: '1px solid blue' }} >
         {
           idealrealIdealImg.length !== 0
             ?
@@ -198,7 +199,7 @@ function IdealrealWrite({ onSubmit, history }) {
                 onChange={handlerChangeFile}
                 style={{ width: '50%', height: 300, background: 'red' }}
               />
-              
+
             </>
         }
 

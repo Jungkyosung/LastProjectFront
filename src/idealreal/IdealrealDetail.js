@@ -1,9 +1,10 @@
-import { useState, useEffect, useNavigate } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Thumb from "./Thumb";
+import { useNavigate, useParams } from "react-router-dom";
 
 
-function IdealrealDetail({ match, history }) {
+function IdealrealDetail() {
     const [data, setData] = useState([]);
     const [idealrealTitle, setIdealrealTitle] = useState('');
     const [idealrealContent, setIdealrealContent] = useState('');
@@ -17,7 +18,7 @@ function IdealrealDetail({ match, history }) {
     const handlerChangeTitle = e => setIdealrealTitle(e.target.value)
     const handlerChangeContent = e => setIdealrealContent(e.target.value)
 
-    const { idealrealIdx } = match.params;
+    const { idealrealIdx } = useParams();
     const navigate = useNavigate();
 
 
@@ -78,26 +79,42 @@ function IdealrealDetail({ match, history }) {
 
     return (
         <>
-            <div className="container" style={{ width: 1000, margin: '0 auto', textAlign: 'center', border: '1px solid purple' }}>
+            <div className="container" style={{
+                maxWidth: '1000px',
+                width: '100%',
+                margin: '0 auto',
+                display: 'flex',
+                flexDirection: 'column',
+                flexWrap: 'wrap',
+                alignContent: 'center',
+                justifyContent: 'center',
+                alignItems: 'center',
+                textAlign: 'center'
+            }}>
                 <h2>이상과 현실</h2>
                 <form action="" method="POST" id="frm" name="frm">
 
                     <input type="hidden" name="idealrealIdx" />
 
-                    <table className="idealreal_detail">
+                    <table className="idealreal_detail" style={{
+                        width: '800px',
+                        margin: '0 auto',
+                        border: '1px solid yellow',
+                        borderCollapse: 'collapse'
+                    }}>
                         <colgroup>
+                            <col width="60px" />
+                            <col width="35%" />
                             <col width="15%" />
-                            <col width="5%" />
-                            <col width="70%" />
-                            <col width="15%" />
+                            <col width="35%" />
                         </colgroup>
                         <tbody>
-                            <tr>
+                            <tr style={{ width: '100%' }}>
                                 <th scope="row">글번호</th>
                                 <td>{idealrealIdx}</td>
                                 <th scope="row">조회수</th>
                                 <td>{idealrealCnt}</td>
-                                <th scope="row"><Thumb /></th>
+                                <th scope="row"><Thumb idealrealIdx={idealrealIdx}/> </th>
                             </tr>
                             <tr>
                                 <th scope="row">작성자</th>
@@ -105,34 +122,42 @@ function IdealrealDetail({ match, history }) {
                                 <th scope="row">작성일</th>
                                 <td>{idealrealCreatedTime}</td>
                             </tr>
-                            <tr style={{width: 400, height: 200}}>
+                            <tr>
                                 <th scope="row">제목</th>
-                                <td colSpan="3">
-                                    {idealrealTitle}
+                            
+                                <td colSpan="4">
+                                    <h2>{idealrealTitle}</h2>
                                 </td>
                             </tr>
+                            
                             <tr>
                                 <th scope="row"></th>
-                                <td colSpan="3">
-                                    <div style={{ display: 'flex', width: 300, height: 400 }} >
-                                        <img src={idealImg} />
-                                        <img src={realImg} />
+                                <td>
+                                    <div style={{
+                                        display: 'flex', flexDirection: 'row', alignContent: 'center',
+                                        height: '300px', border: '1px solid yellow'
+                                    }} >
+                                        <img src={idealImg} style={{ width: 'auto' }} />
+                                        <img src={realImg} style={{ width: 'auto' }} />
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td colSpan="4" className="view_text" style={{ width: 800, height: 300, border: '1px solid purple'}}>
+                                <td colSpan="4" className="view_text" style={{
+                                    width: 'calc(100% - 6px)',
+                                    height: '200px', border: '1px solid purple'
+                                }}>
                                     {idealrealContent}
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </form>
-
-                <input type="button" id="list" className="btn" value="목록으로" onClick={hanlderClickList} />
-                <input type="button" id="edit" className="btn" value="수정하기" onClick={handlerClickRetouch} />
-                <input type="button" id="delete" className="btn" value="삭제하기" onClick={handlerClickDelete} />
-
+                <div>
+                    <input type="button" id="list" className="btn" value="목록으로" onClick={hanlderClickList} />
+                    <input type="button" id="edit" className="btn" value="수정하기" onClick={handlerClickRetouch} />
+                    <input type="button" id="delete" className="btn" value="삭제하기" onClick={handlerClickDelete} />
+                </div>
             </div>
         </>
     );
