@@ -32,6 +32,11 @@ import IdealrealWrite from './idealreal/IdealrealWrite';
 import IdealrealRetouch from './idealreal/IdealrealRetouch';
 import WebcartoonWrite from './webcartoon/WebcartoonWrite';
 import Koreaprice from './koreaprice/Koreaprice';
+import { ProductionQuantityLimitsTwoTone } from '@mui/icons-material';
+import QnaList from './qna/QnaList';
+import QnaDetail from './qna/QnaDetail';
+import QnaWrite from './qna/QnaWrite';
+import QnaUpdate from './qna/QnaUpdate';
 
 
 function App() {
@@ -46,6 +51,10 @@ function App() {
         <Route path="/notice/write"                   element={<NoticeWrite/>}     />
         <Route path="/noticeList"                     element={<Notice/>}          />
         <Route path="/notice/update/:noticeIdx"       element={<NoticeUpdate/>}    />
+        <Route path="/qnalist"                       element={<QnaList/>}         />
+        <Route path="/qna/:qnaIdx"                    element={<QnaDetail/>}       />
+        <Route path="/qna/write"                      element={<QnaWrite/>}        />
+        <Route path="/qna/update/:qnaIdx"             element={<QnaUpdate/>}       />
         <Route path="/chat"                           element={<Parent/>}          />
         <Route path="/mobilechat"                     element={<MobileChatPage/>}  />
         <Route path="/weather"                        element={<Weather/>}         />

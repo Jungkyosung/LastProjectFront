@@ -71,9 +71,13 @@ const QnaList = () => {
 
     const addEmptyRows = () =>{
         const result = [];
+        if( !lengthDifference == 10 ){
+        
             for (let i = 0 ; i < lengthDifference ; i ++ ){
                 result.push(<tr style={{borderTop:"1px solid rgba(94, 143, 202, 0.2)", height:"60px"}}><td colSpan="4"></td></tr>);
             }    
+        }
+
         return result;
     }
 

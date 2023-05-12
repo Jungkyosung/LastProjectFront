@@ -33,7 +33,7 @@
 
 /* 장바구니 */
 #koreaprice-cart {
-  width: 48%;
+  width: 68%;
   /* border: 1px solid black; */
   border-radius: 10px;
   box-shadow: 0 0 10px 3px rgb(222, 237, 255);
@@ -103,7 +103,7 @@
 
 /* 환율 금액 창 */
 #koreaprice-exchange {
-  width: 48%;
+  width: 28%;
   /* border: 1px solid black; */
   border-radius: 10px;
   box-shadow: 0 0 10px 3px rgb(222, 237, 255);

@@ -93,7 +93,7 @@ const SubMenu = (props) => {
                 <span id="blank-submenu"></span>
                 <ul id="submenu-ul">
                     <Link to="/noticeList" ><li className="submenu-li">NOTICE</li></Link>
-                    <li className="submenu-li">HELP</li>
+                    <Link to="/qnalist"><li className="submenu-li">HELP</li></Link>
                     {
                         nickName == null ?
                             <>
