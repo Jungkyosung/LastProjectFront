@@ -52,7 +52,7 @@ const KoreaIssue = () => {
     return (
         <Frame>
             <div id="contents-wrap">
-                <h2 id="title">한국 이슈</h2>
+                <h2 id="issue-title">한국 이슈</h2>
                 {loading ? <CircularProgress color="secondary" /> : null}
                 <ul id="issue-lists"> {
                     responseData.map((apiData, index) => (
@@ -74,7 +74,7 @@ const KoreaIssue = () => {
                                 <br />
                                 <strong>{apiData.title}</strong>
                                 <br />
-                                <span className="issue-date">{apiData.broadcast_date}</span>
+                                <span className="issue-date">{apiData.broadcast_date.substr(0,10)}</span>
                             </Link></li>
 
                     ))

@@ -62,8 +62,8 @@ function Thumb() {
         <h3>Joasis{idealrealIdx} </h3>
         <br />
         {likeUpdate ?
-          <FavoriteBorderOutlinedIcon onClick={LikeCountHandler}/> :
-          <FavoriteOutlinedIcon onClick={LikeCountHandler}/>
+          <FavoriteOutlinedIcon onClick={LikeCountHandler}/> :
+          <FavoriteBorderOutlinedIcon onClick={LikeCountHandler}/>
         }
       </div>
     </>

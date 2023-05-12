@@ -30,6 +30,8 @@ import Idealreal from './idealreal/Idealreal';
 import IdealrealDetail from './idealreal/IdealrealDetail';
 import IdealrealWrite from './idealreal/IdealrealWrite';
 import IdealrealRetouch from './idealreal/IdealrealRetouch';
+import WebcartoonWrite from './webcartoon/WebcartoonWrite';
+import Koreaprice from './koreaprice/Koreaprice';
 
 
 function App() {
@@ -50,7 +52,9 @@ function App() {
         <Route path="/koreanews"                      element={<KoreaNews/>}       />
         <Route path="/koreaissue"                     element={<KoreaIssue/>}      />
         <Route path="/koreaissue/:index"              element={<KoreaIssueDetail/>}/>
+        <Route path="/koreaprice"                     element={<Koreaprice/>}      />
         <Route path="/webcartoon"                     element={<Webcartoon/>}      />
+        <Route path="/webcartoon/write"               element={<WebcartoonWrite/>} />
         <Route path="/tried"                          element={<Tried/>}           />
         <Route path="/accompany"                      element={<Accompany/>}       />
         <Route path="/accompany/detail/:accompanyIdx" element={<AccompanyDetail/>} />

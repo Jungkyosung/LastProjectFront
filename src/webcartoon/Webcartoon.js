@@ -15,7 +15,7 @@ const Webcartoon = () => {
       <div id="webcartoon-main-wrap">
         <div id="webcartoon-main-title">WEB CARTOON</div>
         <div id="webcartoon-main-list-write">
-          <Link to="/course/mapwrite">
+          <Link to="/webcartoon/write">
             <Button variant="contained">WRITE</Button>
           </Link>
         </div>
