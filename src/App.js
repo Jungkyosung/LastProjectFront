@@ -26,6 +26,7 @@ import MobileMypage from './mypage/MobileMypage';
 import MobileChatPage from './chat/MobileChatPage';
 import AccompanyDetail from './accompany/AccompanyDetail';
 import AccompanyWrite from './accompany/AccompanyWrite';
+import PriceExperiencePage from './PriceExperience/PriceExperiencePage';
 
 
 function App() {
@@ -54,10 +55,11 @@ function App() {
         <Route path="/adminpage"                      element={<Admin/>}           />
         <Route path="/mypage"                         element={<Mypage/>}          />
         <Route path="/mobilemypage"                   element={<MobileMypage/>}    />
-        <Route path="/course"                         element={<MapList />}        />
+        {/* <Route path="/course"                         element={<MapList />}        />
         <Route path="/course/mapwrite"                element={<MapWrite />}       />
-        <Route path="/course/detail/:travelcourseIdx" element={<MapDetail />}      />
+        <Route path="/course/detail/:travelcourseIdx" element={<MapDetail />}      /> */}
         <Route path="/*"                              element={<NotFound/>}        />
+        <Route path="/koreaprice"                 element={<PriceExperiencePage />} /> 
       </Routes>
     </>
   );

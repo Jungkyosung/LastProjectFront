@@ -1,0 +1,176 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+
+nav {
+  background-color: blue;
+  display: block;
+  grid-template-columns: auto auto;
+  justify-content: space-between;
+}
+
+footer {
+  bottom: 0;
+  background-color: blue;
+  display: block;
+}
+
+
+
+
+/* Container */
+
+.Experience__container {
+  order: 2;
+  display:flex;
+  justify-content: center;
+
+}
+
+.Experience__container2 {
+  order: 1;
+  display:flex;
+  
+}
+
+
+
+
+
+
+/* Product */
+
+.Experience__product {
+  width: 1100px;
+  height: 350px;
+  /* background-color: #999; */
+  border: 5px solid #333;
+  padding: 5px;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.Experience__product__image {
+  width: 150px;
+  height: 150px;
+  display: inline-block;
+  margin-top: 20px;
+  margin-left: 60px;
+}
+
+
+
+
+
+
+
+/* Info */
+
+
+.Experience__Info {
+  width: 550px;
+  height: 300px;
+  background-color: yellow;
+  border: 5px solid #333;
+  padding: 5px;
+  box-sizing: border-box;
+  margin-top: 150px;
+  margin-bottom: 50px;
+
+  word-spacing: 10px;
+}
+
+.Experience__Info__top {
+  display: -webkit-box;
+  margin-top: 25px;
+}
+
+.Experience__Info__top > ul {
+  margin: 0 60px 0 20px;
+}
+
+.Experience__Info__bottom {
+  justify-content: center;
+  margin: 30px 0px 0 10px;
+}
+
+.Experience__Info__bottom__button{
+  display: -webkit-box;
+  margin-right: 40px;
+}
+
+.Experience__Info__bottom > ul {
+  display: -webkit-box;
+  margin: 0 65px 0 20px;
+}
+
+
+
+
+
+/* Exchange */
+
+.Experience__ExchangeBox {
+  height: 500px;
+  display: inline-block;
+  position: relative;
+  margin-right: 550px;
+}
+
+.Experience__Input{
+  z-index: 1;
+  position: absolute;
+  margin-top: 170px;
+  margin-left: 360px;
+}
+
+.Experience__Input > select{
+  width: 150px;
+}
+
+
+
+/* ExchangeKR */
+
+.Experience__ExchangeKR {
+  width: 550px;
+  height: 150px;
+  background-color: green;
+  border: 5px solid #333;
+  padding: 5px;
+  box-sizing: border-box;
+
+  position: absolute;
+  top: 150px;
+}
+
+.Experience__ExchangeKR > p {
+  margin-top: 15px; 
+  margin-left: 30px; 
+}
+
+.Experience__ExchangeKR > ul {
+  margin-top: 15px; 
+  margin-left: 150px;
+}
+
+
+
+
+
+/* ExchangeOther */
+
+.Experience__ExchangeOther {
+  width: 550px;
+  height: 150px;
+  background-color: green;
+  border: 5px solid #333;
+  padding: 5px;
+  box-sizing: border-box;
+
+  position: absolute;
+  top: 300px;
+}

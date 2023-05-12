@@ -161,7 +161,7 @@ const Weather = () => {
     alt={`${weatherResult.weather && weatherResult.weather[0].description}`} />;
 
 
-  // 온도에 따른 옷차림
+  // 온도에 따른 옷차림0
   const selectClothes = (temperature) => {
 
     if (temperature <= 4) {
