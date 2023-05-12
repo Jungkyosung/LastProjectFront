@@ -13,14 +13,18 @@ const QnaDetail = () => {
 
     const { qnaIdx } = useParams();
 
-    const [qna, setQna] = useState({});
+    const [qna, setQna] = useState([]);
+    const [comment, setComment] = useState([]);
+
+    const [contents, setContents] = useState('');
 
     useEffect(() => {
         axios.get(`http://localhost:8080/api/qna/${qnaIdx}`)
             .then(response => {
-                console.log(response.data)
-                setQna(response.data);
-                let str = response.data.qnaContent;
+                // console.log(response.data)
+                setQna(response.data.selectQnaInfo);
+                setComment(response.data.selectCommentList);
+                let str = response.data.selectQnaInfo.qnaContent;
                 console.log(typeof str);
             })
             .catch(error => {
@@ -46,6 +50,26 @@ const QnaDetail = () => {
             });
     };
 
+    const handlerChangeContents = (e) => {
+        setContents(e.target.value);
+    }
+
+    const handlerSubmit = e => {
+        e.preventDefault();
+
+        axios.post(`http://localhost:8080/api/qna/comments/write/${qnaIdx}`, 
+            { "qnaCommentContent": contents })
+            .then(response => {
+                console.log(response);
+                alert('코맨트가 정상적으로 등록되었습니다');
+                window.location.replace(`/qna/${qnaIdx}`);
+            })
+            .catch(error => {
+                console.log(error);
+                alert(`오류가 발생했습니다 (${error.message})`);
+            });
+    };
+
     return (
         <Frame>
             <div className={styles.contentsWrap}>
@@ -61,28 +85,36 @@ const QnaDetail = () => {
                 </div>
                 <div className={styles.comment}>
                     <Textarea
-                        style={{borderRadius: "10px 0 0 10px", width:"90%"}}
-                        sx={{ color:"#333",}}
+                        style={{ borderRadius: "10px 0 0 10px", width: "90%" }}
+                        sx={{ color: "#333", }}
                         color="primary"
                         placeholder="Type in here…"
                         minRows={3}
-                        // maxRows={4}
+                    // maxRows={4}
+                        value={contents}
+                        onChange={handlerChangeContents}
                     />
-                    <Button  sx={{  color: "white", background:"#5E8FCA",":hover": { background: "#2d6ebd" }}} style={{borderRadius: "0 10px 10px 0", width:"10%"}}>등록</Button>
+                    <Button sx={{ color: "white", background: "#5E8FCA", ":hover": { background: "#2d6ebd" } }} style={{ borderRadius: "0 10px 10px 0", width: "10%" }} onClick={handlerSubmit} >등록</Button>
                 </div>
                 <div className={styles.commentList}>
-                    <div className={styles.name}>
-                        <strong>Admin</strong>
-                        <span>2022.04.11.17:51</span>
-                    </div>
-                    {/* <div className={styles.read}> */}
-                        <p>이번에도 멀리멀리 날아가시나요</p>
-                    {/* </div> */}
+                    <ul>
+                        {
+                            comment.map((cmt) => (
+                                <li key={cmt.qnaCommentIdx}>
+                                    <div className={styles.name}>
+                                        <strong>{cmt.userId}</strong>
+                                        <span>{cmt.qnaCommentTime}</span>
+                                    </div>
+                                    <p>{cmt.qnaCommentContent}</p>
+                                </li>
+                            ))
+                        }
+                    </ul>
                 </div>
                 <div className={styles.buttonWrap}>
-                    <Link to={`/qna/update/${qnaIdx}`}><Button sx={{  color: "white", background:"#5E8FCA", ":hover": { background: "#2d6ebd"}}}>수정하기</Button></Link>
-                    <Button sx={{  color: "white", background:"#5E8FCA", ":hover": { background: "#2d6ebd"}}} style={{ marginLeft: "20px", marginRight: "20px" }} onClick={handlerClickList}>목록보기</Button>
-                    <Button sx={{  color: "white", background:"#5E8FCA", ":hover": { background: "#2d6ebd"}}} onClick={handlerClickDelete}>삭제하기</Button>
+                    <Link to={`/qna/update/${qnaIdx}`}><Button sx={{ color: "white", background: "#5E8FCA", ":hover": { background: "#2d6ebd" } }}>수정하기</Button></Link>
+                    <Button sx={{ color: "white", background: "#5E8FCA", ":hover": { background: "#2d6ebd" } }} style={{ marginLeft: "20px", marginRight: "20px" }} onClick={handlerClickList}>목록보기</Button>
+                    <Button sx={{ color: "white", background: "#5E8FCA", ":hover": { background: "#2d6ebd" } }} onClick={handlerClickDelete}>삭제하기</Button>
                 </div>
             </div>
         </Frame>

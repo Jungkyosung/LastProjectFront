@@ -65,8 +65,12 @@
     width:60%;
     display:flex;
     flex-direction: column;
-    border-top: 1px solid #5E8FCA;
     margin-bottom:20px;
+}
+
+.commentList ul li {
+    border-top: 1px solid #5E8FCA;
+    margin-bottom: 30px;
 }
 
 .commentList .name strong {
@@ -80,7 +84,7 @@
 .commentList .name span {
     margin-right: 10px;
     font-weight: 600;
-    font-size: 14px;
+    font-size:14px;
 }
 .commentList p {
     padding-left:20px;
