@@ -13,10 +13,24 @@ import { DatePicker } from "@mui/x-date-pickers";
 
 const MapWrite = () => {
 
+  //CourseDay 배열
+  const [arrCourseDay, setArrCourseDay] = useState([{
+    day: 1,
+    dayinfo: [{
+      order: 1,
+      placeName: "1번 장소",
+      lat: 1,
+      lng: 1
+    }]
+  }]);
+
+  const [day, setDay] = useState(1);
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
   const [placeName, setPlaceName] = useState('');
   const [date, setDate] = useState('');
+
+
 
 
   const navigate = useNavigate();
@@ -70,6 +84,63 @@ const MapWrite = () => {
 
   //props 위아래로만 전달가능 maptest(좌표,장소 이름 출력) => coursewrite(넘겨받은 정보 임시저장후 던짐) => mapwrite(받은 정보 출력)
 
+  const 데이선택핸들러 = (day) => {
+    setDay(day);
+    console.log(day);
+    console.log("day" + day + " 선택");
+    console.log(arrCourseDay);
+  }
+
+  //{핸들러} 일정 추가
+  const handlerAddDay = () => {
+    console.log("추가 클릭");
+    const 배열복사본 = [...arrCourseDay];
+    배열복사본.push({
+      day: 배열복사본.length + 1,
+      dayinfo: []
+    })
+    setArrCourseDay(배열복사본);
+  }
+
+
+
+  const 장소저장 = () => {
+    //일단 현재 배열값 복사하고, 순서를 위해서 
+    const 배열복사본 = [...arrCourseDay];
+    const 객체 = 배열복사본.filter( arr => arr.day == day );
+    console.log(객체);
+    let order번호 = (객체[0].dayinfo.length == 0 ? 1 : 객체[0].dayinfo[객체[0].dayinfo.length-1].order + 1)
+    const newDayInfo = {
+      order: order번호,
+      placeName: placeName,
+      lat: lat,
+      lng: lng
+    }
+    배열복사본[day - 1].dayinfo.push(newDayInfo);
+    setArrCourseDay(배열복사본);
+  }
+
+  //칩 삭제 버튼
+  const 장소삭제 = (chipday, chipPlace) => {
+    let 배열복사본 = [...arrCourseDay];
+    //칩에 날짜랑 동일한 객체(DAY) 반환
+    let 객체 = 배열복사본.filter( arr => arr.day == chipday );
+    
+    let 옮길객체 = 배열복사본.filter( arr => arr.day !== chipday );
+    
+    console.log(객체);
+    console.log(옮길객체);
+
+    //해당 날짜 객체에서 
+    const 수정객체dayinfo = 객체[0].dayinfo.filter( 객체 => 객체.placeName !== chipPlace);
+    console.log(수정객체dayinfo);
+
+    객체[0].dayinfo = 수정객체dayinfo;
+    배열복사본[chipday-1] = 객체[0];
+    console.log(배열복사본);
+    setArrCourseDay(배열복사본);
+  }
+
 
   return (
     <Frame>
@@ -94,6 +165,9 @@ const MapWrite = () => {
           setPlaceName={setPlaceName}
           date={date}
           setDate={setDate} />
+        <Button variant="contained" endIcon={<Add />} onClick={장소저장}>
+          장소 저장
+        </Button>
         <form id='map-write-form' name='frm' onSubmit={handlerSubmit}>
           <h2 id="map-write-title">제목</h2>
           <div id="map-write-title-input">
@@ -101,8 +175,19 @@ const MapWrite = () => {
               onChange={handlerChangeTitle} />
           </div>
 
-          <CourseWrite />
-          <div id="course-plus-btn">
+          <CourseWrite
+            lat={lat}
+            setLat={setLat}
+            lng={lng}
+            setLng={setLng}
+            placeName={placeName}
+            setPlaceName={setPlaceName}
+            date={date}
+            setDate={setDate}
+            arrCourseDay={arrCourseDay}
+            데이선택핸들러={데이선택핸들러}
+            장소삭제={장소삭제} />
+          <div id="course-plus-btn" onClick={handlerAddDay}>
             <Button variant="contained" endIcon={<Add />}>
               일정추가
             </Button>

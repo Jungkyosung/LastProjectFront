@@ -72,8 +72,11 @@ function MapObject(props) {
       //핀 위치 저장을 어떻게 할까?
       setLat(place.geometry.location.lat());
       setLng(place.geometry.location.lng());
+      setPlaceName(place.name);
       console.log(place.name);
       console.log(place.formatted_address);
+      console.log(place.geometry.location.lat());
+      console.log(place.geometry.location.lng());
       console.log(lat);
       console.log(lng);
 
@@ -119,27 +122,27 @@ function MapObject(props) {
     });
   };
 
-  const handlerSaveLocation = () => {
+  // //장소 저장 누르면
+  // const handlerSaveLocation = () => {
 
-    //장소 정보 입력 요청
-    axios.post(`http://localhost:8080/api/map/laction/${lat},${lng}`,)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    // {formatdate(props.data)}
+  //   //장소 정보 입력 요청
+  //   // axios.post(`http://localhost:8080/api/map/laction/${lat},${lng}`,)
+  //   //   .then((response) => {
+  //   //     console.log(response);
+  //   //   })
+  //   //   .catch((error) => {
+  //   //     console.log(error);
+  //   //   });
+  //   // {formatdate(props.data)}
 
+  
+  //   //인풋창 존나 안나와서 새로 만들어 줌.
+  //   const newInput = document.body.appendChild(document.createElement("input"))
+  //   newInput.id = "pac-input";
 
+  //   initMakeMarker();
 
-    //인풋창 존나 안나와서 새로 만들어 줌.
-    const newInput = document.body.appendChild(document.createElement("input"))
-    newInput.id = "pac-input";
-
-    initMakeMarker();
-
-  };
+  // };
 
 
 
@@ -151,7 +154,6 @@ function MapObject(props) {
       <div id="map-wrap">
         <input id="pac-input" type="text" placeholder="Search Box" />
         <div id="map"></div>
-        <Button variant="contained" onClick={handlerSaveLocation}>장소저장</Button>
       </div>
     </>
   );

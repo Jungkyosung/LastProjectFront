@@ -16,6 +16,14 @@
 
 }
 
+.course-date-pick-delete-btn{
+  cursor: pointer;
+}
+
+.course-date-pick-delete-btn:hover{
+  color: rgb(255, 104, 104);
+}
+
 .course-date-pick-wrap > h2{
   margin-bottom : 30px;
 }
@@ -36,9 +44,14 @@
 }
 
 .course-date-pick-description{
+  width: 80%;
   margin-top:20px;
   margin-bottom: 20px;
   font-size: 0.8rem;
+}
+
+.course-date-pick-description > div{
+  width: 100%;
 }
 
 #course-date-wrap{

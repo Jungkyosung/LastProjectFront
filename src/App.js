@@ -6,7 +6,6 @@ import LoginPage from './login/LoginPage';
 import RegistGoogle from './regist/RegistGoogle';
 import Parent from './chat/ChatParent';
 import Notice from './notice/Notice';
-import Tried from './tried/Tried';
 import Accompany from './accompany/Accompany';
 import Weather from './weather/Weather';
 import Webcartoon from './webcartoon/Webcartoon';
@@ -37,6 +36,7 @@ import QnaList from './qna/QnaList';
 import QnaDetail from './qna/QnaDetail';
 import QnaWrite from './qna/QnaWrite';
 import QnaUpdate from './qna/QnaUpdate';
+import TriedList from './tried/TriedList';
 
 
 function App() {
@@ -64,7 +64,7 @@ function App() {
         <Route path="/koreaprice"                     element={<Koreaprice/>}      />
         <Route path="/webcartoon"                     element={<Webcartoon/>}      />
         <Route path="/webcartoon/write"               element={<WebcartoonWrite/>} />
-        <Route path="/tried"                          element={<Tried/>}           />
+        <Route path="/tried"                          element={<TriedList/>}           />
         <Route path="/accompany"                      element={<Accompany/>}       />
         <Route path="/accompany/detail/:accompanyIdx" element={<AccompanyDetail/>} />
         <Route path="/accompany/write"                element={<AccompanyWrite/>}  />
