@@ -21,7 +21,7 @@ const QnaDetail = () => {
     useEffect(() => {
         axios.get(`http://localhost:8080/api/qna/${qnaIdx}`)
             .then(response => {
-                // console.log(response.data)
+                console.log(response.data)
                 setQna(response.data.selectQnaInfo);
                 setComment(response.data.selectCommentList);
                 let str = response.data.selectQnaInfo.qnaContent;
