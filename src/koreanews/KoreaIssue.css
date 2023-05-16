@@ -6,6 +6,16 @@
     margin-bottom : 50px;
 }
 
+#issue-title{
+    font-size: 1.5rem;
+    font-weight: bold;
+    box-sizing: border-box;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    width: 60%;
+    border-bottom: 1px solid black;
+}
+
 #issue-lists {
     display: flex;
     width: 80%;
@@ -19,12 +29,14 @@
     width: 70%;
     font-size: 1rem;
     margin-bottom: 40px;
+    border-radius: 10px;
+    border: 1px solid rgb(216, 216, 216);
 }
 
 
 .issue-img {
     width: 100%;
-    border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 0px 0px;
     overflow: hidden;
 }
 
@@ -41,7 +53,7 @@
 }
 
 .issue-date {
-
+    color: rgb(148, 148, 148);
 }
 
 a {

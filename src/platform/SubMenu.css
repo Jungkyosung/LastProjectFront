@@ -10,6 +10,11 @@
     cursor: pointer;
 }
 
+#submenu-logo{
+    width:auto;
+    height: 30px;
+}
+
 /* 기본 서브메뉴 */
 .submenu-box {
     display: flex;
@@ -20,7 +25,9 @@
     top:0;
     left:0;
     justify-content: space-between;
-    padding-top:15px;
+    align-items: center;
+    padding-top:7px;
+    padding-bottom: 7px;
     height: 2rem;
     border-bottom: 2px solid rgb(16, 167, 255);
 }
@@ -64,6 +71,10 @@
 
     #blank-submenu{
         display:inline;
+    }
+
+    #submenu-logo{
+        display:none;
     }
     
 }

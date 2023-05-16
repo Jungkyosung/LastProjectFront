@@ -186,9 +186,13 @@ function IdealrealWrite() {
             ?
             <>
               {idealrealIdealImg.map((image, id) => (
-                <div key={id}>
+                <><div key={id} >
                   <img src={image} style={{ width: 'auto', height: 400 }} />
-                </div>
+                <input type='file'
+                name='idealrealIdealImg'
+                ref={inputFiles1}
+                onChange={handlerChangeFile}                
+                /></div></>
               ))}
             </>
             :
@@ -208,9 +212,13 @@ function IdealrealWrite() {
             ?
             <>
               {idealrealRealImg.map((image, id) => (
-                <div key={id}>
+                <><div key={id}>
                   <img src={image} style={{ width: 'auto', height: 400 }} />
-                </div>
+                  <input type='file'
+                name='idealrealRdealImg'
+                ref={inputFiles2}
+                onChange={handlerChangeFile}                
+                /></div></>
               ))}
             </>
             :

@@ -18,20 +18,63 @@
   border-bottom-width: 1px;
   border-bottom-color: black;
   border-bottom-style: solid;
-  width : 900px;
+  width : 90%;
   height: 40px;
   text-align: center;
 }
 
 #travelcourse-list-write{
-  width: 900px;
+  width: 90%;
   text-align: end;
   margin-bottom: 30px;
 }
 
 #travelcourse-list-lists{
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
   justify-items: center;
-  width: 900px;
+  width: 100%;
+}
+
+@media ( min-width : 600px ){
+
+  #travelcourse-list-img > img{
+    height: 150px;
+  }
+
+  #travelcourse-list-lists{
+    grid-template-columns: 1fr 1fr ;
+    width: 600px;
+  }
+
+  #travelcourse-list-title{
+    width : 580px;
+  }
+
+  #travelcourse-list-write{
+    width: 580px;
+  }
+}
+
+
+@media ( min-width : 1000px ){
+  #travelcourse-list-img > img{
+    height: 200px;
+  }
+
+  #travelcourse-list-lists{
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 900px;
+  }
+
+  #travelcourse-list-title{
+    width : 900px;
+  }
+
+  #travelcourse-list-write{
+    width: 900px;
+  }
+
+
+  
 }

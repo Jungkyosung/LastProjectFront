@@ -21,6 +21,7 @@
     color: snow;
     float: left;
     font-weight: 600;
+    list-style: none;
 }
 .footer .footerContainer li:first-child {
     color:#5E8FCA;
@@ -32,5 +33,4 @@
     text-align: center;
     margin: 0 auto;
     margin-top:22px;
-    width:1180px;
 }

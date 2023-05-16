@@ -1,23 +1,49 @@
 // import { useState } from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 function LNButton(props) {
 
-    const [ idealreal, setIdealreal] = useState([]) 
+    const setData = props.setData;
+    const [idealreal, setIdealreal] = useState([]);
+    const [ likeCount, setLikeCount ] = useState(0);
+    const { idealrealIdx } = useParams();
 
-    useEffect(() => {
-        axios.get(`http://localhost:8080/api/posts?sort=${sort}`)
-            .then((response) => {
-                setPosts(response.data);
+    // useEffect(() => {
+    //     axios.get(`http://localhost:8080/api/listidealreal`)
+    //         .then((response) => {
+    //             setLikeCount(response.date.likeCount)
+    //             setDate(response.data);
+    //         })
+    //         .catch((error) => {
+    //             console.error(error);
+    //         });
+    // }, []);
+
+    const handleLikeChange = (e) => {
+        axios.get(`http://localhost:8080/api/listidealrealwithlike`)
+            .then(response => {
+                setData(response.data);
+                console.log(response);
             })
-            .catch((error) => {
-                console.error(error);
+            .catch(error => {
+                console.log(error);
+                return;
             });
-    }, []);
+    }
 
-    const handleSortChange = (e) => {
-        setSort(e.target.value);
+    const handleListChange = (e) => {
+        axios.get(`http://localhost:8080/api/listidealreal`)
+            .then(response => {
+                setData(response.data);
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+                return;
+            });
     }
 
     const buttonContainer = {
@@ -33,53 +59,19 @@ function LNButton(props) {
         lineHeight: '30px'
     }
 
-    const [posts, setPosts] = useState([]);
-    const [sort, setSort] = useState("latest");
 
 
     return (
 
-        //         <>
-
-        //             <button style={buttonContainer} onClick={handlerDay}>인기</button>
-        //             <button style={buttonContainer} onClick={handlerLike}>최신</button>
-
-        //         </>
-        //     )
-        // }
-
-        <div>
-            <div>
-                <label>
-                    <input
-                        type="radio"
-                        value="latest"
-                        checked={sort === "latest"}
-                        onChange={handleSortChange}
-                    />
-                    최신순
-                </label>
-                <label>
-                    <input
-                        type="radio"
-                        value="popular"
-                        checked={sort === "popular"}
-                        onChange={handleSortChange}
-                    />
-                    인기순
-                </label>
-            </div>
-            <div>
-                {posts.map((idealreal) => (
-                    <div key={idealreal.id}>
-                        <h2>{idealreal.title}</h2>
-                        <img src={idealreal.image} alt={idealreal.title} />
-                        <p>{idealreal.content}</p>
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
+        <>
+            <button style={buttonContainer} onClick={handleLikeChange}>인기</button>
+            <button style={buttonContainer} onClick={handleListChange}>최신</button>
+        </>
+    )
 }
+
+
+
+
 
 export default LNButton;

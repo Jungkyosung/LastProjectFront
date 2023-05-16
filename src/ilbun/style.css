@@ -64,6 +64,9 @@ img {
 	background: rgba(255, 255, 255, 0.8);
 	box-shadow: rgba(0, 0, 0, 0.3) 0 0 3px;
 	float:right;
+	/* right: 0; */
+	/* transform: translateX(-100%); */
+	/* transition: 3.5s 0.5s linear; */
 }
 .step1 {
 	margin-bottom: 60vh;
@@ -76,14 +79,18 @@ img {
 	width: 50;
 	text-align: right;
 	display: inline-block;
+	/* left: 0;
+	transform: translateX(-100%);
+	transition: 3.5s 0.5s linear; */
 }
 .bird {
 	position: absolute;
-	left: 0;
+	/* 위치 */
+	left: 0;	
 	bottom: 70%;
 	width: 100px;
 	transform: translateX(-100%);
-	transition: 1.5s 0.5s linear;
+	transition: 3.5s 0.5s linear;
 }
 [data-index="5"] .bird {
 	left: 30%;

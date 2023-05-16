@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useRef } from "react";
 
 function IdealrealRetouch() {
 
@@ -10,8 +11,10 @@ function IdealrealRetouch() {
     const [userId, setUserId] = useState('');
     const [idealrealCreatedTime, setIdealrealCreatedTime] = useState('');
     const [idealrealCnt, setIdealrealCnt] = useState('');
-    const [idealrealIdealImg, setIdealrealIdealImg] = useState('');
-    const [idealrealRealImg, setIdealrealRealImg] = useState('');
+    const [idealrealIdealImg, setIdealrealIdealImg] = useState([])
+    const [idealrealRealImg, setIdealrealRealImg] = useState([])
+    const [contents, setContents] = useState('')
+    const [name, setName] = useState('');
 
     const { idealrealIdx } = useParams();
     const navigate = useNavigate();
@@ -27,15 +30,15 @@ function IdealrealRetouch() {
                 setUserId(response.data.userId);
                 setIdealrealCreatedTime(response.data.idealrealCreatedTime);
                 setIdealrealCnt(response.data.idealrealCnt);
-                setIdealrealIdealImg(response.data.idealrealIdealImg);
-                setIdealrealRealImg(response.data.idealrealRealImg);
+                // setIdealrealIdealImg(response.data.idealrealIdealImg);
+                // setIdealrealRealImg(response.data.idealrealRealImg);
 
 
-                if (response.data.idealrealDto.userId != response.data.selectIdealRealList.userId && response.data.idealrealDto.userId != "test") {
-                    alert('잘못된 접근 입니다.');
-                    navigate('/listidealreal')
-                    return;
-                }
+                // if (response.data.idealrealDto.userId != response.data.selectIdealRealList.userId && response.data.idealrealDto.userId != "test") {
+                //     alert('잘못된 접근 입니다.');
+                //     navigate('/listidealreal')
+                //     return;
+                // }
                 // const token = sessionStorage.getItem('token')
                 // const decode = jwtDecode(token);
 
@@ -71,16 +74,6 @@ function IdealrealRetouch() {
         setIdealrealContent(e.target.value)
     }
     const sytles = {
-        // display: 'felx',
-        // flexDirection: 'row',
-        // border: '1px solid aqua',
-        // borderRadius: 16,
-        // padding: 8,
-        // margin: 8,
-        // width: 1200,
-        // height: 'auto',
-        // textAlign: 'center'
-
         display: 'flex',
         flexDirection: 'comlum',
         width: '1200px',
@@ -88,17 +81,124 @@ function IdealrealRetouch() {
         position: 'relative',
         marginLeft: '5',
         border: '1px solid aqua',
-
-
-
     }
+
+
+
+    const [imageFiles, setImageFiles] = useState([])
+    // FORM DATA를 저장할 상태 변수를 변수 이름: 값 형식으로 설정
+    let datas = {
+        idealrealIdx: idealrealIdx,
+        idealrealTitle: name,
+        idealrealContent: contents
+    };
+
+    // 서버로 전달할 폼 데이터를 작성
+    const formData = new FormData();
+    formData.append(
+        'data',
+        new Blob([JSON.stringify(datas)], { type: 'application/json' })
+    );
+    Object.values(imageFiles).forEach(
+        file => Object.values(file.files).forEach(
+            f => formData.append(file.name, f)));
+
+    // multipart/form-data 형식으로 서버로 전달
+    const handleSubmit = (e) => {
+        console.log(datas);
+        console.log(formData);
+        e.preventDefault();
+        axios({
+            method: 'PUT',
+            url: `http://localhost:8080/reupload/${idealrealIdx}`,
+            headers: { 'Content-Type': 'multipart/form-data' },
+            data: formData
+            // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
+        })
+            .then(response => {
+                console.log("xxxxxxxxxxxxx")
+                console.log(response)
+                alert(`${response.data}\n오 수정`)
+                navigate('/listidealreal')
+            })
+            .catch(error => {
+                console.log(error)
+                alert(error.message)
+            })
+        console.log(`Name: ${name}, Comment: ${contents}`);
+    };
+    const changeImageFiles = (data, type) => {
+        console.log(data, type);
+        const newImageFiles = [...imageFiles];
+
+        if (type === 'ideal')
+            newImageFiles[0] = data;
+        else
+            newImageFiles[1] = data;
+
+        setImageFiles(newImageFiles);
+    };
+
+
+    const inputFiles1 = useRef();
+    const inputFiles2 = useRef();
+
+    const handlerChangeFile = (e) => {
+        const name = e.target.name;
+        const files = e.target.files;
+
+        if (e.target.name == 'idealrealIdealImg') {
+            const imageArr = e.target.files;
+            let imageURLs = [];
+            let image;
+            let imagesLength = imageArr.length > 6 ? 6 : imageArr.length;
+
+            for (let i = 0; i < imagesLength; i++) {
+                image = imageArr[i];
+
+                // 이미지 미리보기 로직 FileReader라는 자체코드로 원리는 모르지만 알아서 짜줌
+                const reader = new FileReader();
+                reader.onload = () => {
+                    console.log(reader.result);
+                    imageURLs[i] = reader.result;
+                    setIdealrealIdealImg([...imageURLs]);
+                };
+                reader.readAsDataURL(image);
+            }
+        }
+
+        if (e.target.name == 'idealrealRealImg') {
+            const imageArr = e.target.files;
+            let imageURLs = [];
+            let image;
+            let imagesLength = imageArr.length > 6 ? 6 : imageArr.length;
+
+            for (let i = 0; i < imagesLength; i++) {
+                image = imageArr[i];
+
+                const reader = new FileReader();
+                reader.onload = () => {
+                    console.log(reader.result);
+                    imageURLs[i] = reader.result;
+                    setIdealrealRealImg([...imageURLs]);
+                };
+                reader.readAsDataURL(image);
+            }
+        }
+
+        const unchangedImageFiles = imageFiles.filter(file => file.name !== name)
+        setImageFiles([...unchangedImageFiles, { name, files }]);
+    };
+
+    const idealImg = `http://localhost:8080/api/getimage/${idealrealIdealImg}`;
+    const realImg = `http://localhost:8080/api/getimage/${idealrealRealImg}`;
 
 
     return (
         <>
             <div style={sytles}>
                 {/* <h2>리뷰 상세</h2> */}
-                <form action="" method="POST" id="frm" name="frm">
+                <form onSubmit={handleSubmit} action="" method="POST" id="frm" name="frm">
 
                     <table >
                         <colgroup>
@@ -132,6 +232,64 @@ function IdealrealRetouch() {
                                 <td>{userId}</td>
                             </tr>
 
+                            <div style={{ display: 'flex', flexDirection: 'row', margin: 200, width: '800px', border: '1px solid blue' }} >
+                                {
+                                    idealrealIdealImg.length !== 0
+                                        ?
+                                        <>
+                                            {idealrealIdealImg.map((image, id) => (
+                                                <><div key={id} >
+                                                    <img src={image} style={{ width: 'auto', height: 400 }} />
+                                                    <input type='file'
+                                                        name='idealrealIdealImg'
+                                                        ref={inputFiles1}
+                                                        onChange={handlerChangeFile}
+                                                    />
+                                                </div>
+                                                </>
+                                            ))}
+                                        </>
+                                        :
+                                        <>
+                                            <input type='file'
+                                                name='idealrealIdealImg'
+                                                ref={inputFiles1}
+                                                onChange={handlerChangeFile}
+                                                style={{ width: '50%', height: 300, background: 'red' }}
+                                            />
+
+                                        </>
+                                }
+
+                                {
+                                    idealrealRealImg.length !== 0
+                                        ?
+                                        <>
+                                            {idealrealRealImg.map((image, id) => (
+                                                <><div key={id}>
+                                                    <img src={image} style={{ width: 'auto', height: 400 }} />
+                                                    <input type='file'
+                                                        name='idealrealRdealImg'
+                                                        ref={inputFiles2}
+                                                        onChange={handlerChangeFile}
+                                                    />
+                                                </div>
+                                                </>
+                                            ))}
+                                        </>
+                                        :
+                                        <>
+                                            <input type='file'
+                                                name='idealrealRealImg'
+                                                ref={inputFiles2}
+                                                onChange={handlerChangeFile}
+                                                style={{ width: '50%', height: 300, background: 'aqua' }}
+                                            />
+                                        </>
+                                }
+
+                            </div>
+
                             <tr>
                                 <td colSpan="6">
                                     <textarea style={{ width: "1000px", height: "500px" }} onChange={handlercontents} value={idealrealContent}></textarea>
@@ -140,7 +298,7 @@ function IdealrealRetouch() {
                         </tbody>
                     </table>
                     <div>
-                        <input type="button" id="edit" value="확인" onClick={handlerClickUpdate} />
+                        <button type="submit" id="edit" value="확인">확인 </button>
                     </div>
                 </form>
 

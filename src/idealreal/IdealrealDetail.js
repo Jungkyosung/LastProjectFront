@@ -103,7 +103,7 @@ function IdealrealDetail() {
                         borderCollapse: 'collapse'
                     }}>
                         <colgroup>
-                            <col width="60px" />
+                            <col width="15px" />
                             <col width="35%" />
                             <col width="15%" />
                             <col width="35%" />

@@ -1,29 +1,33 @@
-import { useEffect, useState } from "react";
-import { useLocation } from 'react-router-dom';
-import axios from 'axios';
+import { Link, useLocation } from 'react-router-dom';
 import Frame from "../main/Frame";
+import styles from "./KoreaIssueDetail.module.css";
+import Button from '@mui/material/Button';
 
-const KoreaIssueDetail = ( props ) => {
+const KoreaIssueDetail = (props) => {
+    //Link to 로 프랍스 받는 변수 
     const location = useLocation();
     // const title = location.state.title;
     // const content = location.state.content;
     // const index = location.state.index;
     // const thum_url = location.state.thum_url;
     // const broadcast_date = location.state.broadcast_date;
-    const {title, content, thum_url, broadcast_date } = location.state;
+    const { title, content, thum_url, broadcast_date } = location.state;
 
-    
 
-    
-    
-    return(
+
+
+
+    return (
         <Frame>
-            <h2>한국 이슈</h2>
+            <div className={styles.contentsWrap}>
+                <h2>한국 이슈</h2>
 
-            <img src={thum_url}></img>
-            <h3>{title}</h3>
-            <em>{broadcast_date}</em>
-            <p>{content}</p>
+                <h3>{title}</h3>
+                <em>{broadcast_date.substr(0,10)}</em>
+                <img src={thum_url}></img>
+                <p>{content}</p>
+                <Link to="/koreaissue/"><Button variant="contained">목록으로</Button></Link>
+            </div>
         </Frame>
     );
 }

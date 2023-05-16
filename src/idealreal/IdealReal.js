@@ -4,6 +4,9 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Thumb from "./Thumb";
 import { useParams } from "react-router-dom";
+import { Pagination } from "@mui/material";
+import Frame from "../main/Frame";
+
 
 function Idealreal() {
     const [idealreal, setIdealreal] = useState("")
@@ -13,21 +16,69 @@ function Idealreal() {
     const [idealrealIdealImg, setIdealrealIdealImg] = useState([]);
     const [idealrealRealImg, setIdealrealRealImg] = useState([]);
     const { idealrealIdx } = useParams();
+    const [likeCount, setLikeCount] = useState(0);
+    const [page, setPage] = useState(1);
+    const [pageCount, setPageCount] = useState(0);
+    const lengthDifference = 10 - data.length;
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/listidealreal`)
+        //1페이지 리스트 조회
+        axios.get(`http://localhost:8080/api/listidealreal/${page}`)
             .then(response => {
-                setIdealrealIdealImg(response.data.idealrealIdealImg);
-                setIdealrealRealImg(response.data.idealrealRealImg);
-                setUserId(response.data.userId)
-                setRcmdIdx(response.data.rcmdIdx)
                 console.log(response.data)
-                setData(response.data)
-                // setIdealreal(response.date.idealrealDto)
+                setData(response.data);
             })
-            .catch(error => console.log(error))
+            .catch(error => {
+                console.log(error);
+            })
+
+        //페이지수 조회
+        axios.get(`http://localhost:8080/api/listidealrealpagecount`)
+            .then(response => {
+                console.log(response.data)
+                // let pageCount = response.data;
+                // if( pageCount > 1){
+                //     pageCount = 10;
+                // }
+                // setPageCount(pageCount);
+                setPageCount(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }, [])
 
+
+
+    useEffect(() => {
+        //1페이지 리스트 조회
+        axios.get(`http://localhost:8080/api/listidealreal/${page}`)
+            .then(response => {
+                console.log(response.data)
+                setData(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+
+        //페이지수 조회
+        axios.get(`http://localhost:8080/api/listidealrealpagecount`)
+            .then(response => {
+                console.log(response.data)
+                // let pageCount = response.data;
+                // if( pageCount > 1){
+                //     pageCount = 10;
+                // }
+                // setPageCount(pageCount);
+                setPageCount(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }, [page])
+
+
+    // 원본이 없어도 사진 보이고 싶었는데 잘 안됩니다
     const idealImg = `http://localhost:8080/api/getimage/${idealrealIdealImg}`;
     const realImg = `http://localhost:8080/api/getimage/${idealrealRealImg}`;
 
@@ -104,19 +155,33 @@ function Idealreal() {
 
     }
 
-    //인기,최신 버튼? 시도중입니다
-    // const [posts, setPosts] = useState([]);
-    // const [sort, setSort] = useState("latest");
+    // 페이징
+    const handlerChange = (event, value) => {
+        console.log(event, value);
+        setPage(value);
+    }
 
+    const addEmptyRows = () =>{
+        const result = [];
+        if( !lengthDifference == 8 ){
+        
+            for (let i = 0 ; i < lengthDifference ; i ++ ){
+                result.push(<tr style={{borderTop:"1px solid rgba(94, 143, 202, 0.2)", height:"60px"}}><td colSpan="4"></td></tr>);
+            }    
+        }
+
+        return result;
+    }
 
 
 
 
     return (
+        <Frame>
 
         <>
             <div style={container} >
-                <LNButton />
+                <LNButton setData={setData}/>
                 <Link to="/listidealreal/write" style={a.buttonContainer} >글쓰기</Link>
             </div>
             <div style={container}>
@@ -125,6 +190,9 @@ function Idealreal() {
                     {/* 작성한 사람의 이름과 내용 */}
                     <div style={styles.nameText}>이상과 현실</div>
                     {/* </div> */}
+                    <br/>
+                    <br/>
+                    <br/>
                     <div style={styles.box1}>
                         {data &&
                             data.map((idealreal, rcmd) => (
@@ -139,9 +207,8 @@ function Idealreal() {
                                                         <td style={styles.wrapper1}>{idealreal.idealrealIdx}
                                                             {console.log(idealreal.idealrealIdealImg)}
                                                             {idealreal.idealrealTitle}
-                                                            {idealrealIdx}
-                                                            <td>{rcmd.rcmdIdx}</td>
-                                                            <div><td></td></div>
+                                                            {idealreal.likeCount}
+                                                            <div><br/></div>
                                                             <img
                                                                 style={styles.image}
                                                                 src={`http://localhost:8080/api/getimage/${idealreal.idealrealIdealImg}`}
@@ -156,19 +223,18 @@ function Idealreal() {
                                                 {/* <Thumb /> */}
 
                                             </tr>
+                                            { addEmptyRows() }
                                         </tbody>
                                     </table>
 
                                 </div>
                             ))}
                     </div>
+                            <Pagination count={pageCount} color="primary" page={page} onChange={handlerChange} />
                 </div>
             </div>
-
-
-
-
         </>
+            </Frame>
     )
 }
 

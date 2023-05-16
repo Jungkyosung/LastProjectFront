@@ -3,7 +3,7 @@
 	const actions = {
 		birdFlies(key) {
 			if (key) {
-				document.querySelector('[data-index="2"] .bird').style.transform = `translateX(${window.innerWidth}px)`;
+				document.querySelector('[data-index="2"] .bird').style.transform = `translateX(${window.innerWidth / 3}px)`;
 			} else {
 				document.querySelector('[data-index="2"] .bird').style.transform = `translateX(-100%)`;
 			}
@@ -15,6 +15,7 @@
 				document.querySelector('[data-index="5"] .bird').style.transform = `translateX(-100%)`;
 			}
 		},
+		
 	};
 	
 	const stepElems = document.querySelectorAll('.step');
