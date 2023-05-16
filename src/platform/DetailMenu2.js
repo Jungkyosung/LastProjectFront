@@ -9,7 +9,6 @@ const DetailMenu2 = () => {
                 <ul className={styles.detail1}>
                     <li className={styles.detail1Li}><Link to="/weather">날씨</Link></li>
                     <li className={styles.detail1Li}><Link to="/course">여행코스</Link></li>
-                    <li className={styles.detail1Li}><Link to="/koreaissue">카드뉴스</Link></li>
                 </ul>
             </div>
         </>

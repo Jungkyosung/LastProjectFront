@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 
 function MapObject(props) {
 
-  const { lat, setLat, lng, setLng, placeName, setPlaceName, data, setDate } = props;
+  const { lat, setLat, lng, setLng, setPlaceName } = props;
 
 
   //컴포넌트 마운트 됐을 때 실행하는 함수

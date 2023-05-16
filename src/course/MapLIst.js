@@ -12,9 +12,11 @@ import MapDetail from './MapDetail';
 const MapList = () => {
 
     let nickName = null;
+    let userId = null;
     let jwtToken = null;
     if (sessionStorage.getItem('token') != null) {
         jwtToken = sessionStorage.getItem('token');
+        userId = jwt_decode(jwtToken).sub;
         nickName = jwt_decode(jwtToken).nickname;
     }
 
@@ -31,14 +33,69 @@ const MapList = () => {
     }
 
     const [datas, setDatas] = useState([]);
+    const [filterDatas, setFilterDatas] = useState([]);
+    const [days, setDays] = useState([]);
 
-    // useEffect(() => {
-    //     axios.get('http://localhost:8080/api/course', { headers: header })
-    //         .then(response => {
-    //             console.log(response);
-    //             setDatas(response.data);
-    //         })
-    // }, []);
+    //시작하면 리스트 가져오는 함수
+    useEffect(() => {
+        axios.get('http://localhost:8080/api/course', { headers: header })
+            .then(response => {
+                console.log(response);
+                let array = response.data;
+                array = removeDuplicates(array, "travelcourseIdx");
+                setFilterDatas(array);
+                console.log(array);
+                setDatas(response.data);
+                let 데이정보 = 객체배열담기(array, response.data);
+                console.log(데이정보);
+                setDays(데이정보);
+            })
+    }, []);
+
+    const 객체배열담기 = (filter, origin) => {
+        const 필터배열 = filter;
+        const 원본배열 = origin;
+        const 담을배열 = [];
+        let 임시객체 = [];
+
+        for (let i = 0; i < 필터배열.length; i++) {
+            for (let j = 0; j < 원본배열.length; j++) {
+                if (필터배열[i].travelcourseIdx == 원본배열[j].travelcourseIdx) {
+                    임시객체 = [
+                        ...임시객체,{day: 원본배열[j].day,
+                            dayDescription: 원본배열[j].dayDescription,
+                            lat: 원본배열[j].lat,
+                            lng: 원본배열[j].lat,
+                            orders: 원본배열[j].orders,
+                            placeName: 원본배열[j].placeName}
+                ]
+                }
+            }
+            if(임시객체 != 0){
+                담을배열.push(임시객체);
+                }
+                임시객체 = [];//초기화
+        }
+        return 담을배열;
+    }
+
+
+    //중복제거 함수
+    const removeDuplicates = (array, key) => {
+        const uniqueArray = [];
+        const uniqueKeys = [];
+
+        array.forEach((item) => {
+            const value = item[key];
+            if (!uniqueKeys.includes(value)) {
+                uniqueKeys.push(value);
+                uniqueArray.push(item);
+            }
+        });
+
+        return uniqueArray;
+    };
+
 
     return (
         <Frame>
@@ -53,13 +110,16 @@ const MapList = () => {
                     </Link>
                 </div>
                 <div id="travelcourse-list-lists">
-                    <MapEach modalOpen={modalOpen} />
-                    <MapEach />
-                    <MapEach />
-                    <MapEach />
-                    <MapEach />
-                    <MapEach />
-                    <MapEach />
+                    {filterDatas && filterDatas.map((course,index) => (
+                        <MapEach
+                            modalOpen={modalOpen}
+                            userNickname={course.userNickname}
+                            startDate={course.travelcourseStartDate.substr(0, 10)}
+                            endDate={course.travelcourseEndDate.substr(0, 10)}
+                            title={course.travelcourseTitle}
+                            days={days[index]}
+                        />
+                    ))}
                 </div>
                 {modal &&
                     <MapDetail modal={modal} setModal={setModal} />
@@ -71,20 +131,6 @@ const MapList = () => {
                         </div>
                     )
                 }
-                {
-                    datas && datas.map(course => (
-                        <div key={course.travelcourseIdx}>
-                            <span>{course.travelcourseIdx}</span>
-                            <span className="title">
-                                <Link to={`/course/detail/${course.travelcourseIdx}`}>{course.travelcourseTitle}</Link></span>
-                            <span>{course.travelcourseCnt}</span>
-                            <span>{course.travelcourseCreatedtime}</span>
-                        </div>
-                    ))
-                }
-
-
-                <Link to="/course/mapwrite" className="btn">글쓰기</Link>
             </div>
         </Frame>
     );
