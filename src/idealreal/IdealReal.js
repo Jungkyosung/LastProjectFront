@@ -138,7 +138,7 @@ function Idealreal() {
                                                     to={`/listidealreal/detail/${idealreal.idealrealIdx}`}
                                                 > */}
                                                 {/* <td className={styles.idealrealTitle} > */}
-                                                <td style={{ width: "10%" }}>
+                                                <td style={{ width: "50%" }}>
                                                     {/* {idealreal.idealrealIdx} */}
                                                     {/* {console.log(idealreal.idealrealIdealImg)} */}
                                                     <div className={styles.topBox}>

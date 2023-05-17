@@ -18,3 +18,10 @@
 .buttonContainer:last-child {
     border-left: 1px solid #333;
 }
+
+@media (max-width: 800px) {
+    .buttonBox {
+    width: 70%;
+}
+   
+}

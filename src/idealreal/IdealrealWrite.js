@@ -163,7 +163,7 @@ function IdealrealWrite() {
   return (
     <Frame>
       <div className={styles.contentsWrap}>
-        <h2 className={styles.qnaTitle}>이상과 현실</h2>
+        <h2 className={styles.realTitle}>이상과 현실</h2>
         <h3 className={styles.subTitle}>제목</h3>
         {/* <form onSubmit={handleSubmit} className={styles.container}> */}
           <Input placeholder="제목을 적어주세요" id="name" name="name" value={name} onChange={handleChangeName} style={{ border: "none", borderBottom: "1px solid #5E8FCA", borderRadius: 0, width: "59%" }} />
@@ -184,7 +184,7 @@ function IdealrealWrite() {
                 <>
                   {idealrealIdealImg.map((image, id) => (
                     <><div key={id} className={styles.imgWidth}>
-                      <img src={image} style={{width:"100%", height: 300, objectFit:"scale-down"  }} />
+                      <img src={image} className={styles.imgHi} />
                       <label htmlFor="fileSltLeft" className={styles.label}>Select File</label>
                       <input
                         id="fileSltLeft" 
@@ -220,7 +220,7 @@ function IdealrealWrite() {
                 <>
                   {idealrealRealImg.map((image, id) => (
                     <><div key={id} className={styles.imgWidth}>
-                      <img src={image} style={{width:"100%", height: 300, objectFit:"scale-down"  }} />
+                      <img src={image} className={styles.imgHi} />
                       <label htmlFor="fileSltRight" className={styles.label}>Select File</label>
                       <input 
                         id="fileSltRight"

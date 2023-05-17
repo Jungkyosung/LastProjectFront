@@ -207,10 +207,10 @@ function IdealrealRetouch() {
                 <h2 className={styles.realTitle}>이상과 현실</h2>
                 <div className={styles.content}>
                     {/* <h3 className={styles.subTitle}>{idealrealTitle}</h3> */}
-                    <Input placeholder="제목을 적어주세요" id="idealrealTitle" name="idealrealTitle" value={idealrealTitle} onChange={handlerChange} style={{ border: "none", borderBottom: "1px solid #5E8FCA", borderRadius: 0, width: "59%" }} />
+                    <Input placeholder="제목을 적어주세요" id="idealrealTitle" name="idealrealTitle" value={idealrealTitle} onChange={handlerChange} className={styles.titleInput}  />
                     <span className={styles.userId}>{userId}</span>
                     <div className={styles.timeCnt}>
-                        <span style={{ marginLeft: "51%" }}>{idealrealCreatedTime}</span>
+                        <span className={styles.time}>{idealrealCreatedTime}</span>
                         <span>조회수 {idealrealCnt}</span>
                     </div>
                     <div className={styles.contentBox}>
@@ -222,7 +222,7 @@ function IdealrealRetouch() {
                                         <>
                                             {idealrealRealImg.map((image, id) => (
                                                 <><div key={id} className={styles.imgWidth}>
-                                                    <img src={image} style={{ width: "100%", height: 300, objectFit: "scale-down" }} />
+                                                    <img src={image} style={{ width: "100%", height: 250, objectFit: "scale-down" }} />
                                                     <label htmlFor="fileSltRight" className={styles.label}>Select File</label>
                                                     <input
                                                         id="fileSltRight"
@@ -256,7 +256,7 @@ function IdealrealRetouch() {
                                         <>
                                             {idealrealIdealImg.map((image, id) => (
                                                 <><div key={id} className={styles.imgWidth}>
-                                                    <img src={image} style={{ width: "100%", height: 300, objectFit: "scale-down" }} />
+                                                    <img src={image} style={{ width: "100%", height: 250, objectFit: "scale-down" }} />
                                                     <label htmlFor="fileSltLeft" className={styles.label}>Select File</label>
                                                     <input
                                                         id="fileSltLeft"

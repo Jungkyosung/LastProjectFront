@@ -90,6 +90,26 @@
     padding-left:20px;
 } 
 
+@media (max-width:800px) {
+    .contentsWrap .title {
+        font-size: 24px;
+        margin-right:0;
+        margin-top: 50px;
+        margin-bottom:21px;
+    }
+
+    .contentsWrap .subTitle {
+        font-size: 18px;
+        margin-right:0;
+    }
+
+    .contentsWrap em {
+        font-size: 14px;
+        margin-bottom: 40px;
+    }
+
+}
+
 /* CSS default */
 
 .contentsWrap .editor h2 {

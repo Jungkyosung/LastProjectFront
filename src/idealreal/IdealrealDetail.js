@@ -89,7 +89,7 @@ function IdealrealDetail() {
                     <h3 className={styles.subTitle}>{idealrealTitle}</h3>
                     <span className={styles.userId}>{userId}</span>
                     <div className={styles.timeCnt}>
-                        <span style={{marginLeft:"51%"}}>{idealrealCreatedTime}</span>
+                        <span className={styles.time}>{idealrealCreatedTime}</span>
                         <span>조회수 {idealrealCnt}</span>
                     </div>
                     <div className={styles.contentBox}>
