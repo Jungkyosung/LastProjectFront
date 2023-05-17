@@ -23,6 +23,8 @@ const QnaUpdate = () => {
             .then(response => {
                 console.log(response.data);
                 setQna(response.data);
+                setTitle(response.data.selectQnaInfo.qnaTitle);
+                setContent(response.data.selectQnaInfo.qnaContent);
             })
             .catch(error => {
                 console.log(error);
@@ -58,7 +60,8 @@ const QnaUpdate = () => {
                 <div className={styles.editor}>
                     <CKEditor
                         editor={ClassicEditor}
-                        data="</br></br></br></br></br></br></br></br></br></br></br></br>"
+                        data={content}
+                        // data="</br></br></br></br></br></br></br></br></br></br></br></br>"
                         onReady={editor => {
                             // You can store the "editor" and use when it is needed.
                             console.log('Editor is ready to use!', editor);

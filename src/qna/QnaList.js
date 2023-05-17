@@ -3,7 +3,7 @@ import Input from '@mui/joy/Input';
 import Button from '@mui/joy/Button';
 import styles from "./QnaList.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
@@ -18,6 +18,8 @@ const QnaList = () => {
     const navigate = useNavigate();
 
     const lengthDifference = 10 - datas.length;
+
+    const refSearchInput = useRef();
 
     // useEffect(() => {
 
@@ -110,7 +112,6 @@ const QnaList = () => {
             const response = await axios.get( `http://localhost:8080/api/qnalistbypage`, { params });
             console.log(response.data);
             setDatas(response.data);
-            // navigate( `${ pages}/${search}`);
             navigate( `/qnalist`);
         } catch (e) {
             console.log(e);
@@ -120,11 +121,11 @@ const QnaList = () => {
             const response = await axios.get( `http://localhost:8080/api/qnapagecount`, { params });
             console.log(response.data);
             setPageCount(response.data);
-            // navigate( `${ pages}/${search}`);
             navigate( `/qnalist`);
         } catch (e) {
             console.log(e);
         }
+        setPages(1);
     }
 
         const handlerWrite = () => {
@@ -136,11 +137,16 @@ const QnaList = () => {
 
         const addEmptyRows = () => {
             const result = [];
+            if(lengthDifference == 10){
+                return
+            } else{
             for (let i = 0; i < lengthDifference; i++) {
-                result.push(<tr style={{ borderTop: "1px solid rgba(94, 143, 202, 0.2)", height: "60px" }}><td colSpan="4"></td></tr>);
+                result.push(<tr style={{ borderTop: " 1px solid #ccc ", height: "60px" }}><td colSpan="4"></td></tr>);
             }
             return result;
+            
         }
+    }
 
 
         return (
@@ -149,7 +155,7 @@ const QnaList = () => {
                     <h2 className={styles.title}>QNA</h2>
                     <div className={styles.content}>
                         <div className={styles.search}>
-                            <Input placeholder="검색어를 입력해주세요." variant="outlined" color="primary" onChange={handlerChangeSearch} value={search} />
+                            <Input placeholder="검색어를 입력해주세요." variant="outlined" color="primary" onChange={handlerChangeSearch} value={search}  ref={refSearchInput} onKeyDown={e => { if (e.key === "Enter") { handlerSubmitSearch(e); }}} />
                             <Button style={{ marginLeft: "20px" }} onClick={handlerSubmitSearch}>검색</Button>
                         </div>
                         <div className={styles.table}>
@@ -188,6 +194,7 @@ const QnaList = () => {
                                                     <td style={{ color: "black" }}>{n.userId}</td>
                                                 </tr>
                                             ))
+                                            
                                     }
                                     {addEmptyRows()}
                                 </tbody>

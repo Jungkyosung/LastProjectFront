@@ -25,6 +25,8 @@ const NoticeUpdate = () => {
             .then(response => {
                 console.log(response.data);
                 setNotice(response.data);
+                setTitle(response.data.noticeTitle);
+                setContent(response.data.noticeContent);
             })
             .catch(error => {
                 console.log(error);
@@ -65,7 +67,7 @@ const NoticeUpdate = () => {
                 <div className={styles.editor}>
                     <CKEditor
                         editor={ClassicEditor}
-                        data="</br></br></br></br></br></br></br></br></br></br></br></br>"
+                        data={content}
                         onReady={editor => {
                             // You can store the "editor" and use when it is needed.
                             //console.log('Editor is ready to use!', editor);

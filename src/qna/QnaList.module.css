@@ -45,10 +45,12 @@
 
 .contentsWrap .table .noData {
     text-align: center;
+    line-height: 208px;
 }
 
 .contentsWrap .table .noData td {
     padding: 200px 0;
+
 }
 
 .contentsWrap .write {

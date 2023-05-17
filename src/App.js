@@ -16,6 +16,10 @@ import QnaList from './qna/QnaList';
 import QnaDetail from './qna/QnaDetail';
 import QnaWrite from './qna/QnaWrite';
 import QnaUpdate from './qna/QnaUpdate';
+import Idealreal from './idealreal/IdealReal';
+import IdealrealWrite from './idealreal/IdealrealWrite';
+import IdealrealDetail from './idealreal/IdealrealDetail';
+import IdealrealRetouch from './idealreal/IdealrealRetouch'
 
 
 
@@ -40,6 +44,10 @@ function App() {
         <Route path="/qna/:qnaIdx" Component={QnaDetail} exact={true} />
         <Route path="/qna/write" Component={QnaWrite} exact={true} />
         <Route path="/qna/Update/:qnaIdx" Component={QnaUpdate} exact={true} />
+        <Route path="/idealreal" Component={Idealreal} exact={true} />
+        <Route path="/listidealreal/detail/:idealrealIdx" Component={IdealrealDetail} exact={true}/>
+        <Route path="/idealreal/write" Component={IdealrealWrite} exact={true} />
+        <Route path="/idealrealretouch/:idealrealIdx" Component={IdealrealRetouch} exact={true}/>
       </Routes>
     </>
   );
