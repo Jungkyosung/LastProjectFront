@@ -3,11 +3,13 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
 import './AccompanyWrite.css';
+import { useState } from "react";
 
 const ariaLabel = { 'aria-label': 'description' };
 
 const AccompanyWrite = () => {
 
+    const [region, setRegion] = useState('');
 
     return (
         <Frame>

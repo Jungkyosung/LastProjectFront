@@ -51,7 +51,7 @@ const MainMenu = () => {
             </div>
             <nav className={styles.dropmenu}>
                 <ul>
-                    <li ><Link to="/" className={styles.main}>{t('page:aboutUs')}</Link></li>
+                    <li ><Link to="/aboutus" className={styles.main}>{t('page:aboutUs')}</Link></li>
                     <li ><Link to="/" className={styles.main}>{t('page:nowKorea')}</Link>
                         <ul>
                             <li className={styles.sub}><DetailMenu1 t={t}/></li>

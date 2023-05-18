@@ -82,10 +82,11 @@ const MapList = () => {
                 if (필터배열[i].travelcourseIdx == 원본배열[j].travelcourseIdx) {
                     임시객체 = [
                         ...임시객체, {
+                            travelcourseIdx: 원본배열[j].travelcourseIdx,
                             day: 원본배열[j].day,
                             dayDescription: 원본배열[j].dayDescription,
                             lat: 원본배열[j].lat,
-                            lng: 원본배열[j].lat,
+                            lng: 원본배열[j].lng,
                             orders: 원본배열[j].orders,
                             placeName: 원본배열[j].placeName
                         }

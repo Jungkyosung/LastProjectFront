@@ -107,14 +107,21 @@
 
 #mapdetail-map{
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-content: center;
   width: 250px;
   height: 150px;
-  color: aliceblue;
-  background-color:cadetblue;
+  
   border-radius: 20px;
   overflow: hidden;
+}
+
+#mapdetail-map-googlemap{
+  color: rgb(27, 80, 255);
+  font-weight: bold;
+  cursor: pointer;
+  font-family: 'Gowun Dodum', sans-serif;
 }
 
 #mapdetail-course-list{
@@ -208,11 +215,12 @@
     display: flex;
     flex-direction: row;
     width: 95%;
+    height: 300px;
   }
 
   #mapdetail-map{
     width: 40%;
-    height: 250px;
+    height: 300px;
   }
   
   #mapdetail-course-list{

@@ -122,33 +122,6 @@ function MapObject(props) {
     });
   };
 
-  // //장소 저장 누르면
-  // const handlerSaveLocation = () => {
-
-  //   //장소 정보 입력 요청
-  //   // axios.post(`http://localhost:8080/api/map/laction/${lat},${lng}`,)
-  //   //   .then((response) => {
-  //   //     console.log(response);
-  //   //   })
-  //   //   .catch((error) => {
-  //   //     console.log(error);
-  //   //   });
-  //   // {formatdate(props.data)}
-
-  
-  //   //인풋창 존나 안나와서 새로 만들어 줌.
-  //   const newInput = document.body.appendChild(document.createElement("input"))
-  //   newInput.id = "pac-input";
-
-  //   initMakeMarker();
-
-  // };
-
-
-
-  //투두리스트 같은 입력된 장소가 다시 나오는 컴포넌트 생성
-  // axios.get(`http://localhost:8080/api/map/laction/id) 배열로 정보를 받아서 
-  // 
   return (
     <>
       <div id="map-wrap">

@@ -31,27 +31,29 @@ import IdealrealWrite from './idealreal/IdealrealWrite';
 import IdealrealRetouch from './idealreal/IdealrealRetouch';
 import WebcartoonWrite from './webcartoon/WebcartoonWrite';
 import Koreaprice from './koreaprice/Koreaprice';
-import { ProductionQuantityLimitsTwoTone } from '@mui/icons-material';
 import QnaList from './qna/QnaList';
 import QnaDetail from './qna/QnaDetail';
 import QnaWrite from './qna/QnaWrite';
 import QnaUpdate from './qna/QnaUpdate';
 import TriedList from './tried/TriedList';
+import AboutUs from './aboutus/AboutUs';
 
 
 function App() {
   return (
     <>
       <Routes>
+        <Route path="/aboutus"                        element={<AboutUs />}        />
         <Route path="/"                               element={<MainPage/>}        />
         <Route path="/login"                          element={<LoginPage/>}       />
         <Route path="/regist"                         element={<Regist/>}          />
         <Route path="/regist/social/google"           element={<RegistGoogle/>}    />
+        <Route path="/aboutus"                        element={<AboutUs/>}         />
         <Route path="/notice/:noticeIdx"              element={<NoticeDetail/>}    />
         <Route path="/notice/write"                   element={<NoticeWrite/>}     />
         <Route path="/noticeList"                     element={<Notice/>}          />
         <Route path="/notice/update/:noticeIdx"       element={<NoticeUpdate/>}    />
-        <Route path="/qnalist"                       element={<QnaList/>}         />
+        <Route path="/qnalist"                        element={<QnaList/>}         />
         <Route path="/qna/:qnaIdx"                    element={<QnaDetail/>}       />
         <Route path="/qna/write"                      element={<QnaWrite/>}        />
         <Route path="/qna/update/:qnaIdx"             element={<QnaUpdate/>}       />
@@ -64,7 +66,7 @@ function App() {
         <Route path="/koreaprice"                     element={<Koreaprice/>}      />
         <Route path="/webcartoon"                     element={<Webcartoon/>}      />
         <Route path="/webcartoon/write"               element={<WebcartoonWrite/>} />
-        <Route path="/tried"                          element={<TriedList/>}           />
+        <Route path="/tried"                          element={<TriedList/>}       />
         <Route path="/accompany"                      element={<Accompany/>}       />
         <Route path="/accompany/detail/:accompanyIdx" element={<AccompanyDetail/>} />
         <Route path="/accompany/write"                element={<AccompanyWrite/>}  />
@@ -75,7 +77,7 @@ function App() {
         <Route path="/course/mapwrite"                element={<MapWrite />}       />
         <Route path="/course/detail/:travelcourseIdx" element={<MapDetail />}      />
         <Route path="/listidealreal"                  element={<Idealreal />}      />
-        <Route path="/listidealreal/detail/:idealrealIdx"element={<IdealrealDetail />}/>
+        <Route path="/listidealreal/detail/:idealrealIdx"element={<IdealrealDetail/>}/>
         <Route path="/listidealreal/write"            element={<IdealrealWrite />} />
         <Route path="/idealrealretouch/:idealrealIdx" element={<IdealrealRetouch/>}/>
         <Route path="/*"                              element={<NotFound/>}        />
