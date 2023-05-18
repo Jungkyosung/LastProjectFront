@@ -5,6 +5,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 const CourseModal = (props) => {
 
     const modal = props.modal;
+    const modalStateClose = props.modalStateClose;
 
     useEffect(() => {
         document.body.style.cssText = `
@@ -20,17 +21,17 @@ const CourseModal = (props) => {
     // overflow-y: scroll;
     // overflow: hidden;
 
-    const modalClose = () => {
-        props.setModal(false);
-        document.body.style.cssText = `
-        position: static;`
-    }
+    // const modalClose = () => {
+    //     props.setModal(false);
+    //     document.body.style.cssText = `
+    //     position: static;`
+    // }
 
     return (
         <>
-            <div className="course-modal" onClick={modalClose}>
+            <div className="course-modal" onClick={modalStateClose}>
                 <div className="course-modalBody" onClick={(e) => e.stopPropagation()}>
-                    <ClearIcon id="course-modalCloseBtn" onClick={modalClose} />
+                    <ClearIcon id="course-modalCloseBtn" onClick={modalStateClose} />
                     {props.children}
                 </div>
             </div>

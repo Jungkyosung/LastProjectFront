@@ -55,7 +55,8 @@ const MapWrite = () => {
   }]);
   //1---------------------------------------
 
-  //{핸들러} 글쓰기 버튼
+  //2----------핸들러----------------------
+  //2-1.{핸들러} 글쓰기 버튼
   const handlerSubmit = (e) => {
     e.preventDefault();
 
@@ -95,13 +96,13 @@ const MapWrite = () => {
       });
   };
 
-  //{핸들러} DAY 선택
+  //2-2.{핸들러} DAY 선택
   const 데이선택핸들러 = (day) => {
     setChoiceDay(day);
     console.log("day" + day + " 선택");
   }
 
-  //{핸들러} 일정 추가
+  //2-3.{핸들러} 일정 추가
   const handlerAddDay = () => {
     console.log("추가 클릭");
     const 배열복사본 = [...arrCourseDay];
@@ -112,6 +113,7 @@ const MapWrite = () => {
     setArrCourseDay(배열복사본);
   }
 
+  //2-4.{핸들러} 장소저장
   const 장소저장 = () => {
     //일단 현재 배열값 복사하고, 순서를 위해서 
     const 배열복사본 = [...arrCourseDay];
@@ -128,7 +130,7 @@ const MapWrite = () => {
     setArrCourseDay(배열복사본);
   }
 
-  //칩 삭제 버튼
+  //2-5.{핸들러}칩 삭제 버튼
   const 장소삭제 = (chipday, chipPlace) => {
     let 배열복사본 = [...arrCourseDay];
     //칩에 날짜랑 동일한 객체(DAY) 반환
@@ -142,7 +144,7 @@ const MapWrite = () => {
     setArrCourseDay(배열복사본);
   }
 
-  //{핸들러} 일정 삭제
+  //2-6.{핸들러} 일정 삭제
   const 일정삭제 = (courseDay) => {
     let 배열복사본 = [...arrCourseDay];
 
@@ -154,7 +156,7 @@ const MapWrite = () => {
     setArrCourseDay(수정배열);
   }
 
-  //{핸들러} 일정 올리기
+  //2-7.{핸들러} 일정 올리기
   const 일정올리기 = (courseDay) => {
     let 배열복사본 = [...arrCourseDay]; //배열복사하여 2개를 사용 한개의 배열의 값이 바뀌기 때문에
     let 배열복사본2 = [...arrCourseDay];  //초기값을 두개로 설정해둠.
@@ -171,7 +173,7 @@ const MapWrite = () => {
 
   }
 
-  //{핸들러} 일정 내리기
+  //2-8.{핸들러} 일정 내리기
   const 일정내리기 = (courseDay) => {
     let 배열복사본 = [...arrCourseDay];
     let 배열복사본2 = [...배열복사본];
@@ -187,15 +189,21 @@ const MapWrite = () => {
     setArrCourseDay(배열복사본3);
   }
 
-  //{핸들러} 코스소개
+  //2-9.{핸들러} 코스소개
   const 코스소개작성 = (day, 코스내용) => {
     let 배열복사본 = [...arrCourseDay];
     배열복사본[day - 1].dayDescription = 코스내용;
     setArrCourseDay(배열복사본);
   }
 
+  //2--------------------------------------------
   //뒤로가기 같은걸 누르면 작성을 취소하시겠습니까? 컨펌창 키기
 
+  if( startDate > endDate && endDate !== '' ) {
+    alert("endDate은 startDate보다 후일 수 없다.")
+    setEndDate('');
+    return
+  }
 
   return (
     <Frame>

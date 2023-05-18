@@ -4,16 +4,17 @@ import PinDropRoundedIcon from '@mui/icons-material/PinDropRounded';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useState } from 'react';
+import MapDetail from './MapDetail';
 
 const MapEach = (props) => {
 
-  const userNickname = props.userNickname;
-  const startDate = props.startDate;
-  const endDate = props.endDate;
-  const title = props.title;
-  const courseList = props.courseList;
   const modalOpen = props.modalOpen;
-  const days = props.days;
+  const userNickname = props.userNickname;  //작성자닉네임
+  const startDate = props.startDate;        //시작일
+  const endDate = props.endDate;            //끝일
+  const title = props.title;                //제목
+  const days = props.days;                  //데이정보
+
 
   console.log(days);
 
@@ -67,6 +68,7 @@ const MapEach = (props) => {
     return uniqueArray;
   };
 
+  //days를 사용해서 DAY별 객체로 담음. days는 day중복있는 데이터.
   const 필터day = 객체배열담기(days)
   console.log(필터day);
 
@@ -91,6 +93,7 @@ const MapEach = (props) => {
   console.log(days[dayIndex].day);
 
 
+
   // onClick={props.modalOpen}
   return (
     <>
@@ -110,7 +113,7 @@ const MapEach = (props) => {
             </div>
           </div>
         </div>
-        <div id="map-each-main-img" onClick={modalOpen}>
+        <div id="map-each-main-img" onClick={()=>modalOpen()}>
           <img src="https://i.pinimg.com/564x/eb/d9/1a/ebd91a5fa8ccfec0f0dbc9a9eb31fb75.jpg" />
         </div>
         <div id="map-each-course-info">

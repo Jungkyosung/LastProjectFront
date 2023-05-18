@@ -25,13 +25,23 @@ const MapList = () => {
         'Content-Type': 'application/json'
     };
 
-    //배열로 변경해야 함.
+    //모달을 배열로 변경
+    const [modalState, setModalState] = useState([]);
     const [modal, setModal] = useState(false);
-
-    const modalOpen = () => {
-        setModal(true);
+    const modalOpen = (index) => {
+        let updateArray = [...modalState];
+        updateArray[index] = true;
+        console.log('몇번째 모달 켜진거지?', updateArray)
+        setModalState(updateArray);
     }
 
+    const modalStateClose = (index) => {
+        let updateArray = [...modalState];
+        updateArray[index] = false;
+        setModalState(updateArray);
+        document.body.style.cssText = `
+        position: static;`
+    }
     const [datas, setDatas] = useState([]);
     const [filterDatas, setFilterDatas] = useState([]);
     const [days, setDays] = useState([]);
@@ -44,6 +54,15 @@ const MapList = () => {
                 let array = response.data;
                 array = removeDuplicates(array, "travelcourseIdx");
                 setFilterDatas(array);
+
+                //모달배열만들기 ( 글 개수만큼 )
+                let updateModalArray = [...array];
+                for (let i = 0; i < array.length; i++) {
+                    updateModalArray[i] = false;
+                }
+                console.log(updateModalArray);
+                setModalState(updateModalArray);
+
                 console.log(array);
                 setDatas(response.data);
                 let 데이정보 = 객체배열담기(array, response.data);
@@ -62,19 +81,21 @@ const MapList = () => {
             for (let j = 0; j < 원본배열.length; j++) {
                 if (필터배열[i].travelcourseIdx == 원본배열[j].travelcourseIdx) {
                     임시객체 = [
-                        ...임시객체,{day: 원본배열[j].day,
+                        ...임시객체, {
+                            day: 원본배열[j].day,
                             dayDescription: 원본배열[j].dayDescription,
                             lat: 원본배열[j].lat,
                             lng: 원본배열[j].lat,
                             orders: 원본배열[j].orders,
-                            placeName: 원본배열[j].placeName}
-                ]
+                            placeName: 원본배열[j].placeName
+                        }
+                    ]
                 }
             }
-            if(임시객체 != 0){
+            if (임시객체 != 0) {
                 담을배열.push(임시객체);
-                }
-                임시객체 = [];//초기화
+            }
+            임시객체 = [];//초기화
         }
         return 담을배열;
     }
@@ -110,24 +131,37 @@ const MapList = () => {
                     </Link>
                 </div>
                 <div id="travelcourse-list-lists">
-                    {filterDatas && filterDatas.map((course,index) => (
-                        <MapEach
-                            modalOpen={modalOpen}
-                            userNickname={course.userNickname}
-                            startDate={course.travelcourseStartDate.substr(0, 10)}
-                            endDate={course.travelcourseEndDate.substr(0, 10)}
-                            title={course.travelcourseTitle}
-                            days={days[index]}
-                        />
+                    {filterDatas && filterDatas.map((course, index) => (
+                        <>
+                            <MapEach
+                                modalOpen={() => modalOpen(index)}
+                                userNickname={course.userNickname}
+                                startDate={course.travelcourseStartDate.substr(0, 10)}
+                                endDate={course.travelcourseEndDate.substr(0, 10)}
+                                title={course.travelcourseTitle}
+                                days={days[index]}
+                                modal={modal}
+                                setModal={setModal}
+                            />
+                            {modalState[index] &&
+                                <MapDetail
+                                    modal={modal}
+                                    setModal={setModal}
+                                    userNickname={course.userNickname}
+                                    startDate={course.travelcourseStartDate.substr(0, 10)}
+                                    endDate={course.travelcourseEndDate.substr(0, 10)}
+                                    title={course.travelcourseTitle}
+                                    days={days[index]}
+                                    modalStateClose={() => modalStateClose(index)}
+                                />
+                            }
+                        </>
                     ))}
                 </div>
-                {modal &&
-                    <MapDetail modal={modal} setModal={setModal} />
-                }
                 {
                     datas.length === 0 && (
                         <div>
-                            <span>일치하는 지도가 없다.</span>
+                            <span> 데이터가 없다.</span>
                         </div>
                     )
                 }

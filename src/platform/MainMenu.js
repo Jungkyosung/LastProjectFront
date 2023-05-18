@@ -11,15 +11,33 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-
+import i18n from "i18next";
+import { useTranslation } from 'react-i18next';
  
 
 
 const MainMenu = () => {
 
+    const { t } = useTranslation();
+
+    const onChangeLang = (lang) => {
+        let a="";
+        switch(lang){
+            case 10 : a = 'en'
+            break;
+            case 15 : a = 'ko'
+            break;
+            case 20 : a = 'jp'
+            break;
+        }
+        i18n.changeLanguage(a);
+    }
+
     const [lang, setLang] = useState(15);
     
     const handleChange = (event) => {
+      onChangeLang(event.target.value);
+
       setLang(event.target.value);
     };
     
@@ -33,20 +51,20 @@ const MainMenu = () => {
             </div>
             <nav className={styles.dropmenu}>
                 <ul>
-                    <li ><Link to="/" className={styles.main}>ABOUT_US</Link></li>
-                    <li ><Link to="/" className={styles.main}>지금 한국은</Link>
+                    <li ><Link to="/" className={styles.main}>{t('page:aboutUs')}</Link></li>
+                    <li ><Link to="/" className={styles.main}>{t('page:nowKorea')}</Link>
                         <ul>
-                            <li className={styles.sub}><DetailMenu1 /></li>
+                            <li className={styles.sub}><DetailMenu1 t={t}/></li>
                         </ul>
                     </li>
-                    <li ><Link to="/" className={styles.main}>여행정보</Link>
+                    <li ><Link to="/" className={styles.main}>{t('page:travelInfo')}</Link>
                         <ul>
-                            <li className={styles.sub}><DetailMenu2 /></li>
+                            <li className={styles.sub}><DetailMenu2 t={t}/></li>
                         </ul>
                     </li>
-                    <li ><Link to="/" className={styles.main}>커뮤니티</Link>
+                    <li ><Link to="/" className={styles.main}>{t('page:community')}</Link>
                         <ul>
-                            <li className={styles.sub}><DetailMenu3 /></li>
+                            <li className={styles.sub}><DetailMenu3 t={t}/></li>
                         </ul>
                     </li>
                 </ul>
