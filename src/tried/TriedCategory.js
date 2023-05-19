@@ -1,25 +1,11 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
+
 
 const TriedCategory = ({ triedCategoryIdx, setTriedCategoryIdx, order, setOrder, year, setYear }) => {
-    const [data, setData] = useState([]);
     
     const handleClick = (triedCategoryIdx) => {
         setTriedCategoryIdx(triedCategoryIdx);
     }
-    // 데이터를 가지고 오는 로직
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios
-                    .get(`http://localhost:8080/api/tried/1/${order}/${year}-01-01/${year}-12-31/1`);
-                setData(response.data);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        fetchData();
-    }, [triedCategoryIdx, order, year]);
 
     return (
         <div className="triedCategory">
@@ -42,6 +28,7 @@ const TriedCategory = ({ triedCategoryIdx, setTriedCategoryIdx, order, setOrder,
                     onChange={(e) => setOrder(e.target.value)}>
                     <option value="recent">최신순</option>
                     <option value="rcmd">추천순</option>
+                    <option value="count">조회순</option>
                 </select>
             </div>
             <div className="category-year">

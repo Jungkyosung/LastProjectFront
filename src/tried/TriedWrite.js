@@ -3,32 +3,21 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const TriedWrite = () => {
-    const navigate = useNavigate();     // useNavigate hook 사용
+    const navigate = useNavigate();
 
     const [triedTitle, setTriedTitle] = useState('');
     const [triedContent, setTriedContent] = useState('');
     const [triedCategoryIdx, setTriedCategoryIdx] = useState('1');
     const [triedImg, setTriedImg] = useState([]);
-    const [imageFiles, setImageFiles] = useState([])
+    const [imageFiles, setImageFiles] = useState([]);
 
+    
     const handlerChangeTitle = e => setTriedTitle(e.target.value);
     const handlerChangeContent = e => setTriedContent(e.target.value);
     const handlerClick = e => {
         console.log('선택된 값:', e.target.value);
         setTriedCategoryIdx(e.target.value);
     };
-
-    // const changeImageFiles = (data, type) => {
-    //     console.log(data, type);
-    //     const newImageFiles = [...imageFiles];
-
-    //     if (type === 'tried')
-    //         newImageFiles[0] = data;
-    //     else
-    //         newImageFiles[1] = data;
-
-    //     setImageFiles(newImageFiles);
-    // };
 
     const inputFile = useRef();
 

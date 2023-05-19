@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 const TriedItem = ({ tried, imageUrl }) => {
 
+    console.log(tried);
     return (
         <div className="triedTitle">
             <Link to={`/tried/detail/${tried.triedIdx}`}>
