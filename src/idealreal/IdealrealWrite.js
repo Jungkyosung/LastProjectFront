@@ -57,6 +57,7 @@ function IdealrealWrite() {
 
   // FORM DATA를 저장할 상태 변수를 변수 이름: 값 형식으로 설정
   let datas = {
+    idealrealIdx: idealrealIdx,
     idealrealTitle: name,
     idealrealContent: contents
   };

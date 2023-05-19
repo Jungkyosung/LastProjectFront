@@ -75,7 +75,7 @@ function IdealrealRetouch() {
             });
     };
     const handlerChange = (e) => {
-        setIdealrealTitle(e.target.value);
+        setName(e.target.value);
     }
     const handlercontents = (e) => {
         setIdealrealContent(e.target.value)
@@ -207,7 +207,7 @@ function IdealrealRetouch() {
                 <h2 className={styles.realTitle}>이상과 현실</h2>
                 <div className={styles.content}>
                     {/* <h3 className={styles.subTitle}>{idealrealTitle}</h3> */}
-                    <Input placeholder="제목을 적어주세요" id="idealrealTitle" name="idealrealTitle" value={idealrealTitle} onChange={handlerChange} className={styles.titleInput}  />
+                    <Input placeholder="제목을 적어주세요" id="name" name="name" value={name} onChange={handlerChange} className={styles.titleInput}  />
                     <span className={styles.userId}>{userId}</span>
                     <div className={styles.timeCnt}>
                         <span className={styles.time}>{idealrealCreatedTime}</span>
