@@ -83,6 +83,7 @@ const TriedWrite = () => {
                 .catch(error => {
                     console.log(error)
                     alert(error.message)
+                    return;
                 })
         };
     };

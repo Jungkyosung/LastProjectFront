@@ -6,7 +6,7 @@ const TriedUpdate = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { imgUrl } = location.state;
-    console.log('이미지', imgUrl);
+    // console.log('이미지', imgUrl);
 
     const { triedIdx } = useParams();
 
@@ -33,11 +33,12 @@ const TriedUpdate = () => {
                 setTriedTitle(response.data.triedTitle);
                 setTriedContent(response.data.triedContent);
                 setTriedCreatedTime(response.data.triedCreatedTime);
-                setFilename(response.data.triedImg);
             })
             .catch(error =>
                 console.log(error));
     }, [triedIdx]);
+
+
 
     // 제목 수정
     const handlerTitleChange = (e) => {
@@ -55,56 +56,13 @@ const TriedUpdate = () => {
         navigate('/tried');
     };
 
-    // const handlerClickUpdate = () => {
-    //     navigate(`/tried/update/${triedIdx}`, 
-    //     { state: { imgUrl: tried.triedImg } });
-    // };
-
-    // 이미지 가져오기
-    useEffect(() => {
-        if (triedImg) {
-          const imageUrl = `http://localhost:8080/api/getImage/${triedImg}`;
-          axios.get(imageUrl, { responseType: 'arraybuffer' })
-            .then(response => {
-              const imageBlob = new Blob([response.data], { type: response.headers['content-type'] });
-              const imageUrl = URL.createObjectURL(imageBlob);
-              setImageUrl(imageUrl);
-            })
-            .catch(error => {
-              console.log(error);
-            });
-        }
-      }, [triedImg]);
-
-    // 이미지 수정 
+    // 파일(이미지) 변경 및 수정 
     const handleFileChange = (e) => {
         const files = e.target.files;
         // setSelectedFiles([...selectedFiles, ...files]);
         // setSelectedFiles([...triedImg, ...files]);
         setSelectedFiles((prevFiles) => [...prevFiles, ...files]);
     };
-
-    // formData를 저장할 상태 변수 설정 => 변수 이름 : 값
-    let datas = {
-        triedTitle: triedTitle,
-        triedContent: triedContent,
-        triedImg: triedImg
-    };
-    // 서버로 전달할 폼 데이터를 작성
-    const formData = new FormData();
-    formData.append(
-        'data',
-        new Blob([JSON.stringify(datas)], { type: 'application/json' })
-    );
-
-    Object.values(imageFiles).forEach((files) => {
-        files.forEach((file) => {
-            formData.append('triedImg', file);
-        });
-    });
-    triedImg.forEach((img) => {
-        formData.append('triedImg', img);
-    });
 
     // Multipart/formData 형식으로 서버로 전달
     const handlerSubmit = (e) => {
@@ -128,7 +86,9 @@ const TriedUpdate = () => {
                 });
             } else {
                 // 이미지 변경이 없을 경우 기존의 이미지 파일을 전송
-                formData.append('triedImg', triedImg);
+                triedImg.forEach((triedImg) => {
+                    formData.append('triedImg', triedImg);
+                });
             }
             axios.put(`http://localhost:8080/reupload/${triedIdx}`, formData,
                 {
@@ -136,13 +96,14 @@ const TriedUpdate = () => {
                     // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
                 })
                 .then(response => {
-                    console.log(response)
+                    console.log('업데이트 성공', response)
                     alert('수정 완료')
                     navigate(`/tried/detail/${triedIdx}`)
                 })
                 .catch(error => {
                     console.log(error)
-                    alert(error.message)
+                    alert('업데이트 실패', error.message)
+                    return;
                 })
         };
     };
@@ -161,10 +122,10 @@ const TriedUpdate = () => {
                         <input type="text" name="triedTitle" value={triedTitle || ''}
                             onChange={handlerTitleChange} />
                     </div>
-                    <div className="update-img">
+                    {/* <div className="update-img"> */}
                         {/* <img src={imgUrl} style={{ width: '500px' }} /> */}
-                        {imageUrl && <img src={imageUrl} style={{ width: '500px' }} />}
-                    </div>
+                        {/* {imageUrl && <img src={imageUrl} style={{ width: '500px' }} />} */}
+                    {/* </div> */}
                     <div className="update-img">
                         {selectedFiles.map((file, index) => (
                             <img key={index}
@@ -188,3 +149,27 @@ const TriedUpdate = () => {
 };
 
 export default TriedUpdate;
+
+
+    // const handlerClickUpdate = () => {
+    //     navigate(`/tried/update/${triedIdx}`, 
+    //     { state: { imgUrl: tried.triedImg } });
+    // };
+
+
+      // 이미지 가져오기
+    //   useEffect(() => {
+    //     if (filename) {
+    //         const imageUrl = `http://localhost:8080/api/getImage/${filename}`;
+    //         axios.get(imageUrl, { responseType: 'arraybuffer' })
+    //             .then(response => {
+    //                 const imageBlob = new Blob([response.data], { type: response.headers['content-type'] })
+    //                 const imageUrl = URL.createObjectURL(imageBlob);
+    //                 setImageUrl(imageUrl);
+    //                 console.log(imageUrl);
+    //             })
+    //             .catch(error => {
+    //                 console.log(error);
+    //             });
+    //     }
+    // }, [filename]);

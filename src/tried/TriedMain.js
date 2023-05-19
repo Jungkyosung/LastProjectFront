@@ -45,6 +45,7 @@ const TriedMain = () => {
                 axios.get(`http://localhost:8080/api/tried/${triedCategoryIdx}/${order}/${year}-01-01/${year}-12-31/1`);
             
             let updateData = [];
+            console.log(response);
             console.log(response.data)
             console.log(response.data.length)
             for ( let i = 0 ; i < response.data.length ; i++){
@@ -85,7 +86,6 @@ const TriedMain = () => {
             setIsLoading(false);
         }
     };
-
 
     useEffect(() => {
         fetchData();

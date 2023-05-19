@@ -24,7 +24,7 @@ function App() {
         <Route path="/tried/write" element={<TriedWrite/>} />
         <Route path="/tried/detail/:triedIdx" element={<TriedDetail/>} />
         <Route path="/tried/update/:triedIdx" element={<TriedUpdate/>} />
-        <Route path="/tried/:triedCategoryIdx" element={<TriedList />} />
+        {/* <Route path="/tried/:triedCategoryIdx" element={<TriedList />} /> */}
       </Routes>
     </>
   );
