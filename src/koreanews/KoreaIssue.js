@@ -3,7 +3,8 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Frame from "../main/Frame";
 import CircularProgress from '@mui/material/CircularProgress';
-import './KoreaIssue.css';
+import styles from "./KoreaIssue.module.css";
+
 
 // const URL = "/api/B551024/openArirangNewsApi/news";
 
@@ -12,8 +13,8 @@ const KoreaIssue = () => {
 
     // const [loading, setLoading] = useState(false);
     const [responseData, setResponseData] = useState([]);
-
     const [loading, setLoading] = useState(true);
+
     // API 데이터 가지고 오기
 
     const loadItem = async (pageNo, numOfRows) => {
@@ -51,12 +52,12 @@ const KoreaIssue = () => {
 
     return (
         <Frame>
-            <div id="contents-wrap">
-                <h2 id="issue-title">한국 이슈</h2>
+            <div className={styles.contentsWrap}>
+                <h2 className={styles.title}>한국 이슈</h2>
                 {loading ? <CircularProgress color="secondary" /> : null}
-                <ul id="issue-lists"> {
+                <ul className={styles.issueLists}> {
                     responseData.map((apiData, index) => (
-                        <li className="issue-list" key={index}>
+                        <li key={index}>
                             <Link to=
                                 {`/koreaissue/${apiData.index}`}
                                 state={
@@ -68,14 +69,10 @@ const KoreaIssue = () => {
                                         broadcast_date: apiData.broadcast_date
                                     }
                                 }
-                            >   <div className="issue-img">
-                                    <img src={apiData.thum_url} />
-                                </div>
-                                <br />
-                                <strong>{apiData.title}</strong>
-                                <br />
-                                <span className="issue-date">{apiData.broadcast_date.substr(0,10)}</span>
-                            </Link></li>
+                            >
+                                <div className="issueImg">
+                                <img src={apiData.thum_url} />
+                                </div><strong>{apiData.title}</strong><span className="issueDate">{apiData.broadcast_date}</span></Link></li>
 
                     ))
                 }

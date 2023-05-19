@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Thumb from "./Thumb";
 import { useNavigate, useParams } from "react-router-dom";
+import Frame from "../main/Frame";
+import styles from "./IdealrealDetail.module.css";
+import Parser from "html-react-parser";
+import Button from '@mui/joy/Button';
 
 
 function IdealrealDetail() {
@@ -47,7 +51,7 @@ function IdealrealDetail() {
     }, []);
 
     //목록 수정 삭제 버튼 클릭시 이동
-    const hanlderClickList = () => navigate('/listidealreal')
+    const hanlderClickList = () => navigate('/idealreal')
     const handlerClickRetouch = () => navigate(`/idealrealretouch/${idealrealIdx}`)
     const handlerClickDelete = () => {
         axios.delete(`http://localhost:8080/api/listidealreal/${idealrealIdx}`,
@@ -56,7 +60,7 @@ function IdealrealDetail() {
             .then(response => {
                 console.log(response)
                 alert('헤어진 다음날 전화기를 켜보니')
-                navigate('/listidealreal');
+                navigate('/idealreal');
             })
             .catch(erorr => {
                 console.log('안되나용')
@@ -67,32 +71,43 @@ function IdealrealDetail() {
     const idealImg = `http://localhost:8080/api/getimage/${idealrealIdealImg}`;
     const realImg = `http://localhost:8080/api/getimage/${idealrealRealImg}`;
 
-    const container = {
-        display: 'flex',
-        flexDirection: 'comlum',
-        width: '1180px',
-        margin: '0 auto',
-        position: 'relative'
-    }
+    // const container = {
+    //     display: 'flex',
+    //     flexDirection: 'comlum',
+    //     width: '1180px',
+    //     margin: '0 auto',
+    //     position: 'relative'
+    // }
 
 
 
     return (
-        <>
-            <div className="container" style={{
-                maxWidth: '1000px',
-                width: '100%',
-                margin: '0 auto',
-                display: 'flex',
-                flexDirection: 'column',
-                flexWrap: 'wrap',
-                alignContent: 'center',
-                justifyContent: 'center',
-                alignItems: 'center',
-                textAlign: 'center'
-            }}>
-                <h2>이상과 현실</h2>
-                <form action="" method="POST" id="frm" name="frm">
+        <Frame>
+            <div className={styles.containerWrap}>
+                <h2 className={styles.realTitle}>이상과 현실</h2>
+                <div className={styles.content}>
+                    <h3 className={styles.subTitle}>{idealrealTitle}</h3>
+                    <span className={styles.userId}>{userId}</span>
+                    <div className={styles.timeCnt}>
+                        <span className={styles.time}>{idealrealCreatedTime}</span>
+                        <span>조회수 {idealrealCnt}</span>
+                    </div>
+                    <div className={styles.contentBox}>
+                        <div className={styles.imgBox}>
+                            <img src={realImg} className={styles.img} />
+                            <img src={idealImg} className={styles.img} />
+                        </div>
+                        <div className={styles.lineBox}>
+                            <div className={styles.line1}></div>
+                            <div className={styles.editor}>
+                                {idealrealContent == null ? "" : Parser(idealrealContent)}
+                            </div>
+                            <div className={styles.line2}></div>
+                        </div>
+                    </div>
+                        <div style={{margin:"20px 0"}}><Thumb idealrealIdx={idealrealIdx}/></div>
+                </div>
+                {/* <form action="" method="POST" id="frm" name="frm">
 
                     <input type="hidden" name="idealrealIdx" />
 
@@ -152,14 +167,19 @@ function IdealrealDetail() {
                             </tr>
                         </tbody>
                     </table>
-                </form>
-                <div>
+                </form> */}
+                <div className={styles.buttonWrap}>
+                    <Button sx={{ color: "white", background: "#5E8FCA", ":hover": { background: "#2d6ebd" } }} id="edit" value="수정하기" onClick={handlerClickRetouch}>수정하기</Button>
+                    <Button sx={{ color: "white", background: "#5E8FCA", ":hover": { background: "#2d6ebd" } }} style={{ marginLeft: "20px", marginRight: "20px" }} id="list" value="목록으로" onClick={hanlderClickList}>목록보기</Button>
+                    <Button sx={{ color: "white", background: "#5E8FCA", ":hover": { background: "#2d6ebd" } }} id="delete" value="삭제하기" onClick={handlerClickDelete} >삭제하기</Button>
+                </div>
+                {/* <div>
                     <input type="button" id="list" className="btn" value="목록으로" onClick={hanlderClickList} />
                     <input type="button" id="edit" className="btn" value="수정하기" onClick={handlerClickRetouch} />
                     <input type="button" id="delete" className="btn" value="삭제하기" onClick={handlerClickDelete} />
-                </div>
+                </div> */}
             </div>
-        </>
+        </Frame>
     );
 }
 

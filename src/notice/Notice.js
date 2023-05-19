@@ -10,7 +10,7 @@ const Notice = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_JYS_IP}:8080/api/noticeList`)
+        axios.get(`http://localhost:8080/api/noticeList`)
             .then(response => {
                 console.log(response.data)
                 setDatas(response.data);

@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
 import LNButton from "./LNButton";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Thumb from "./Thumb";
 import { useParams } from "react-router-dom";
 import { Pagination } from "@mui/material";
 import Frame from "../main/Frame";
+import styles from "./IdealReal.module.css"
+import Button from '@mui/joy/Button';
 
 
 function Idealreal() {
+
+    const navigate = useNavigate();
+
     const [idealreal, setIdealreal] = useState("")
     const [data, setData] = useState([])
     const [userId, setUserId] = useState('')
@@ -82,78 +87,6 @@ function Idealreal() {
     const idealImg = `http://localhost:8080/api/getimage/${idealrealIdealImg}`;
     const realImg = `http://localhost:8080/api/getimage/${idealrealRealImg}`;
 
-    const styles = {
-        wrapper: {
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            border: '1px solid aqua',
-            borderRadius: 16,
-            padding: 8,
-            margin: 8,
-            width: 1200,
-            height: 'auto',
-        },
-        wrapper1: {
-            border: '1px solid purple',
-            borderRadius: 16,
-            padding: 8,
-            margin: 8,
-            width: "550px",
-            height: 300
-        },
-        image: {
-            width: '50%',
-            height: 300,
-            borderRadius: 10
-        },
-
-        nameText: {
-
-            color: 'pink',
-            fontSize: 25,
-            fontWeight: 'bold',
-            marginBottom: 5,
-            textAlign: 'center'
-
-        },
-        box1: {
-            width: '100%',
-            overflow: 'hidden',
-
-        },
-        box2: {
-            // border: '1px solid pink',
-            width: 'auto',
-            float: 'left',
-            textAlign: 'center',
-        }
-    };
-
-    const a = {
-        buttonContainer: {
-            marginLeft: '900px',
-            width: '100px',
-            height: '30px',
-            background: '#8f86bb',
-            color: 'snow',
-            fontSize: '17px',
-            borderRadius: '10px',
-            marginTop: '50px',
-            textAlign: 'center',
-            lineHeight: '30px'
-        }
-    };
-
-    const container = {
-        display: 'flex',
-        flexDirection: 'comlum',
-        width: '1200px',
-        margin: '0 auto',
-        position: 'relative',
-        marginLeft: '5',
-
-    }
 
     // 페이징
     const handlerChange = (event, value) => {
@@ -161,80 +94,88 @@ function Idealreal() {
         setPage(value);
     }
 
-    const addEmptyRows = () =>{
+    const addEmptyRows = () => {
         const result = [];
-        if( !lengthDifference == 8 ){
-        
-            for (let i = 0 ; i < lengthDifference ; i ++ ){
-                result.push(<tr style={{borderTop:"1px solid rgba(94, 143, 202, 0.2)", height:"60px"}}><td colSpan="4"></td></tr>);
-            }    
+        if (!lengthDifference == 8) {
+
+            for (let i = 0; i < lengthDifference; i++) {
+                result.push(<tr style={{ borderTop: "1px solid rgba(94, 143, 202, 0.2)", height: "60px" }}><td colSpan="4"></td></tr>);
+            }
         }
 
         return result;
     }
 
-
+    const handlerInpage = (idealrealIdx) => {
+        navigate(`/listidealreal/detail/${idealrealIdx}`);
+    }
 
 
     return (
         <Frame>
+            <div className={styles.containerWrap}>
+                <h2 className={styles.realTitle}>이상과 현실</h2>
+                <LNButton setData={setData} />
 
-        <>
-            <div style={container} >
-                <LNButton setData={setData}/>
-                <Link to="/listidealreal/write" style={a.buttonContainer} >글쓰기</Link>
-            </div>
-            <div style={container}>
-                <div style={styles.wrapper}>
+                <div className={styles.wrapper}>
                     {/* <div style={styles.contentContainer}> */}
                     {/* 작성한 사람의 이름과 내용 */}
-                    <div style={styles.nameText}>이상과 현실</div>
+                    {/* <div className={styles.nameText}>이상과 현실</div> */}
                     {/* </div> */}
-                    <br/>
-                    <br/>
-                    <br/>
-                    <div style={styles.box1}>
+                    {/* <br />
+                    <br />
+                    <br /> */}
+                    <div className={styles.box1}>
                         {data &&
                             data.map((idealreal, rcmd) => (
-                                <div key={idealreal.idealrealIdx} style={styles.box2}>
+                                <div key={idealreal.idealrealIdx} className={styles.tdBox} onClick={() => {
+                                    handlerInpage(idealreal.idealrealIdx)
+                                }}   >
                                     <table>
                                         <tbody>
                                             <tr>
-                                                <Link
+                                                {/* <Link
                                                     to={`/listidealreal/detail/${idealreal.idealrealIdx}`}
-                                                >
-                                                    <td className="idealrealTitle" >
-                                                        <td style={styles.wrapper1}>{idealreal.idealrealIdx}
-                                                            {console.log(idealreal.idealrealIdealImg)}
-                                                            {idealreal.idealrealTitle}
-                                                            {idealreal.likeCount}
-                                                            <div><br/></div>
-                                                            <img
-                                                                style={styles.image}
-                                                                src={`http://localhost:8080/api/getimage/${idealreal.idealrealIdealImg}`}
-                                                            />
-                                                            <img
-                                                                style={styles.image}
-                                                                src={`http://localhost:8080/api/getimage/${idealreal.idealrealRealImg}`}
-                                                            />
-                                                        </td>
-                                                    </td>
-                                                </Link>
+                                                > */}
+                                                {/* <td className={styles.idealrealTitle} > */}
+                                                <td style={{ width: "50%" }}>
+                                                    {/* {idealreal.idealrealIdx} */}
+                                                    {/* {console.log(idealreal.idealrealIdealImg)} */}
+                                                    <div className={styles.topBox}>
+                                                        <em className={styles.flexTitle}>{idealreal.idealrealTitle}</em>
+                                                        <span className={styles.flexLike}>{idealreal.likeCount}</span>
+                                                    </div>
+                                                    <div className={styles.imgBox}>
+                                                        <img
+                                                            className={styles.image}
+                                                            src={`http://localhost:8080/api/getimage/${idealreal.idealrealRealImg}`}
+                                                        />
+                                                        <img
+                                                            className={styles.image}
+                                                            src={`http://localhost:8080/api/getimage/${idealreal.idealrealIdealImg}`}
+                                                        />
+                                                    </div>
+                                                </td>
+                                                {/* </td> */}
+                                                {/* </Link> */}
                                                 {/* <Thumb /> */}
 
                                             </tr>
-                                            { addEmptyRows() }
+                                            {addEmptyRows()}
                                         </tbody>
                                     </table>
 
                                 </div>
                             ))}
                     </div>
-                            <Pagination count={pageCount} color="primary" page={page} onChange={handlerChange} />
                 </div>
+                <div className={styles.write}>
+                    <Button><Link to="/idealreal/write" className={styles.buttonContainer}>글쓰기</Link></Button>
+                </div>
+                <Pagination count={pageCount} color="primary" page={page} onChange={handlerChange} />
             </div>
-        </>
-            </Frame>
+            {/* <Link to="/idealreal/write" className={styles.buttonContainer}>글쓰기</Link> */}
+        </Frame>
     )
 }
 

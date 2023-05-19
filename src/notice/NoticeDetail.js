@@ -14,7 +14,7 @@ const NoticeDetail = () => {
     const [notice, setNotice] = useState({});
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_JYS_IP}:8080/api/notice/${noticeIdx}`)
+        axios.get(`http://localhost:8080/api/notice/${noticeIdx}`)
             .then(response => {
                 console.log(response.data)
                 setNotice(response.data);
@@ -29,7 +29,7 @@ const NoticeDetail = () => {
     const handlerClickList = () => navigate('/noticeList');
 
     const handlerClickDelete = () => {
-        axios.delete(`http://${process.env.REACT_APP_JYS_IP}:8080/api/notice/${noticeIdx}`
+        axios.delete(`http://localhost:8080/api/notice/${noticeIdx}`
             // ,{ headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
         )
             .then(response => {
@@ -52,9 +52,11 @@ const NoticeDetail = () => {
                     <em>공지</em>
                     <h3 className={styles.subTitle}>{notice.noticeTitle}</h3>
                     <span>{notice.noticeCreatedTime}</span>
+                        <div className={styles.line1}></div>
                     <div className={styles.editor}>
                         {notice.noticeContent == null ? "" : Parse(notice.noticeContent)}
                     </div>
+                        <div className={styles.line2}></div>
                     <div className={styles.attachWrap}>
                         <strong>첨부파일</strong>
                         <div>첨부파일1</div>

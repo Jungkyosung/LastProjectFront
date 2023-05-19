@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import styles from "./LNButton.module.css";
 
 function LNButton(props) {
 
@@ -12,7 +13,7 @@ function LNButton(props) {
     const { idealrealIdx } = useParams();
 
     // useEffect(() => {
-    //     axios.get(`http://localhost:8080/api/listidealreal`)
+    //     axios.get(`http://192.168.0.4/api/listidealreal`)
     //         .then((response) => {
     //             setLikeCount(response.date.likeCount)
     //             setDate(response.data);
@@ -46,27 +47,17 @@ function LNButton(props) {
             });
     }
 
-    const buttonContainer = {
-        marginLeft: 'auto',
-        width: '100px',
-        height: '30px',
-        background: '#8f86bb',
-        color: 'snow',
-        fontSize: '17px',
-        borderRadius: '10px',
-        marginTop: '50px',
-        textAlign: 'center',
-        lineHeight: '30px'
-    }
-
-
 
     return (
 
-        <>
-            <button style={buttonContainer} onClick={handleLikeChange}>인기</button>
-            <button style={buttonContainer} onClick={handleListChange}>최신</button>
-        </>
+        <ul className={styles.buttonBox}>
+            <li className={styles.buttonContainer} onClick={handleLikeChange}>인기순</li>
+            <li className={styles.buttonContainer} onClick={handleListChange}>최신순</li>
+        </ul>
+        // <div style={buttonBox}>
+        //     <button style={buttonContainer} onClick={handleLikeChange}>인기순</button>
+        //     <button style={buttonContainer} onClick={handleListChange}>최신순</button>
+        // </div>
     )
 }
 

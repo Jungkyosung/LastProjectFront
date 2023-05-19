@@ -2,6 +2,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRef } from "react";
+import Frame from "../main/Frame";
+import styles from "./IdealrealRetouch.module.css";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import Button from '@mui/joy/Button';
+import { Input } from "@mui/material";
 
 function IdealrealRetouch() {
 
@@ -25,6 +31,7 @@ function IdealrealRetouch() {
             // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
         )
             .then(response => {
+                console.log(response);
                 setIdealrealTitle(response.data.idealrealTitle);
                 setIdealrealContent(response.data.idealrealContent);
                 setUserId(response.data.userId);
@@ -59,7 +66,7 @@ function IdealrealRetouch() {
             .then(response => {                                         // 200번대 응답코드가 반환되는 경우
                 console.log(response);
                 alert("오 수정")
-                navigate('/listidealreal')
+                navigate('/idealreal')
             })
             .catch(error => {                                           // 200번대를 제외한 응답코드가 반환되는 경우
                 console.log(error);
@@ -68,20 +75,20 @@ function IdealrealRetouch() {
             });
     };
     const handlerChange = (e) => {
-        setIdealrealTitle(e.target.value)
+        setIdealrealTitle(e.target.value);
     }
     const handlercontents = (e) => {
         setIdealrealContent(e.target.value)
     }
-    const sytles = {
-        display: 'flex',
-        flexDirection: 'comlum',
-        width: '1200px',
-        margin: '0 auto',
-        position: 'relative',
-        marginLeft: '5',
-        border: '1px solid aqua',
-    }
+    // const sytles = {
+    //     display: 'flex',
+    //     flexDirection: 'comlum',
+    //     width: '1200px',
+    //     margin: '0 auto',
+    //     position: 'relative',
+    //     marginLeft: '5',
+    //     border: '1px solid aqua',
+    // }
 
 
 
@@ -89,7 +96,7 @@ function IdealrealRetouch() {
     // FORM DATA를 저장할 상태 변수를 변수 이름: 값 형식으로 설정
     let datas = {
         idealrealIdx: idealrealIdx,
-        idealrealTitle: name,
+        idealrealTitle: idealrealTitle,
         idealrealContent: contents
     };
 
@@ -119,7 +126,7 @@ function IdealrealRetouch() {
                 console.log("xxxxxxxxxxxxx")
                 console.log(response)
                 alert(`${response.data}\n오 수정`)
-                navigate('/listidealreal')
+                navigate('/idealreal')
             })
             .catch(error => {
                 console.log(error)
@@ -195,9 +202,126 @@ function IdealrealRetouch() {
 
 
     return (
-        <>
-            <div style={sytles}>
-                {/* <h2>리뷰 상세</h2> */}
+        <Frame>
+            <div className={styles.containerWrap}>
+                <h2 className={styles.realTitle}>이상과 현실</h2>
+                <div className={styles.content}>
+                    {/* <h3 className={styles.subTitle}>{idealrealTitle}</h3> */}
+                    <Input placeholder="제목을 적어주세요" id="idealrealTitle" name="idealrealTitle" value={idealrealTitle} onChange={handlerChange} className={styles.titleInput}  />
+                    <span className={styles.userId}>{userId}</span>
+                    <div className={styles.timeCnt}>
+                        <span className={styles.time}>{idealrealCreatedTime}</span>
+                        <span>조회수 {idealrealCnt}</span>
+                    </div>
+                    <div className={styles.contentBox}>
+                        <div className={styles.imgBox}>
+                            <div className={styles.imgBox1} >
+                                {
+                                    idealrealRealImg.length !== 0
+                                        ?
+                                        <>
+                                            {idealrealRealImg.map((image, id) => (
+                                                <><div key={id} className={styles.imgWidth}>
+                                                    <img src={image} style={{ width: "100%", height: 250, objectFit: "scale-down" }} />
+                                                    <label htmlFor="fileSltRight" className={styles.label}>Select File</label>
+                                                    <input
+                                                        id="fileSltRight"
+                                                        type='file'
+                                                        name='idealrealRealImg'
+                                                        ref={inputFiles2}
+                                                        onChange={handlerChangeFile}
+                                                        className={styles.input}
+                                                    /></div></>
+                                            ))}
+                                        </>
+                                        :
+                                        <>
+                                            <label htmlFor="fileSltRight" className={`${styles.imgSelect}`} >Select File</label>
+                                            <input
+                                                id="fileSltRight"
+                                                type='file'
+                                                name='idealrealRealImg'
+                                                ref={inputFiles2}
+                                                onChange={handlerChangeFile}
+                                                className={styles.input}
+                                            // className={`${styles.imgSelect}`}
+                                            //style={{ width: '40%', height: 300, background: 'rgba(94, 143, 202, 0.3)', boxSizing:"border-box", padding:"10px", borderRadius:"10px", cursor: "pointer"}}
+                                            />
+                                        </>
+                                }
+
+                                {
+                                    idealrealIdealImg.length !== 0
+                                        ?
+                                        <>
+                                            {idealrealIdealImg.map((image, id) => (
+                                                <><div key={id} className={styles.imgWidth}>
+                                                    <img src={image} style={{ width: "100%", height: 250, objectFit: "scale-down" }} />
+                                                    <label htmlFor="fileSltLeft" className={styles.label}>Select File</label>
+                                                    <input
+                                                        id="fileSltLeft"
+                                                        className={styles.input}
+                                                        type='file'
+                                                        name='idealrealIdealImg'
+                                                        ref={inputFiles1}
+                                                        onChange={handlerChangeFile}
+                                                    />
+                                                </div></>
+                                            ))}
+                                        </>
+                                        :
+                                        <>
+                                            <label htmlFor="fileSltLeft" className={styles.imgSelect} >Select File</label>
+                                            <input
+                                                id="fileSltLeft"
+                                                type='file'
+                                                name='idealrealIdealImg'
+                                                ref={inputFiles1}
+                                                onChange={handlerChangeFile}
+                                                className={styles.input}
+                                            // className={`${styles.imgSelect}`}
+                                            // style={{ width: '40%', height: 300, background: 'rgba(94, 143, 202, 0.3)',boxSizing:"border-box", padding:"10px", borderRadius:"10px",cursor: "pointer" }}
+                                            />
+                                        </>
+                                }
+
+                            </div>
+                        </div>
+                        <div className={styles.lineBox}>
+                            <div className={styles.line1}></div>
+                            <div className={styles.editor}>
+                                <CKEditor
+                                    value={idealrealContent}
+                                    editor={ClassicEditor}
+                                    data={idealrealContent}
+                                    onReady={editor => {
+                                        // You can store the "editor" and use when it is needed.
+                                        console.log('Editor is ready to use!', editor);
+                                    }}
+
+                                    onChange={(event, editor) => {
+                                        const data = editor.getData();
+                                        console.log({ event, editor, data });
+                                        setContents(data);
+                                    }}
+                                // onBlur={ ( event, editor ) => {
+                                //     console.log( 'Blur.', editor );
+                                // } }
+                                // onFocus={ ( event, editor ) => {
+                                //     console.log( 'Focus.', editor );
+                                // } }
+                                />
+                            </div>
+                            {/* <div className={styles.editor}>
+                                {idealrealContent == null ? "" : Parser(idealrealContent)}
+                            </div> */}
+                            <div className={styles.line2}></div>
+                        </div>
+                    </div>
+                    {/* <div style={{margin:"20px 0"}}><Thumb idealrealIdx={idealrealIdx}/></div> */}
+                </div>
+                {/* <div style={sytles}>
+
                 <form onSubmit={handleSubmit} action="" method="POST" id="frm" name="frm">
 
                     <table >
@@ -303,8 +427,15 @@ function IdealrealRetouch() {
                 </form>
 
 
+            </div> */}
+                <Button style={{ marginTop: "30px" }} sx={{ color: "white", background: "#5E8FCA", ":hover": { background: "#2d6ebd" } }} id="edit" value="수정안하기" onClick={handleSubmit}>수정할꼬야?</Button>
+                {/* <div>
+                    <input type="button" id="list" className="btn" value="목록으로" onClick={hanlderClickList} />
+                    <input type="button" id="edit" className="btn" value="수정하기" onClick={handlerClickRetouch} />
+                    <input type="button" id="delete" className="btn" value="삭제하기" onClick={handlerClickDelete} />
+                </div> */}
             </div>
-        </>
+        </Frame>
     )
 }
 
