@@ -9,6 +9,8 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import MessageIcon from '@mui/icons-material/Message';
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import Parser from "html-react-parser";
+import styles from "./AccompanyDetail.module.css";
 
 // const 임시내용 = "4월 26일(수)~28(금) 2박3일간 부산(해운대)여행에 함께 하실 30~40대 여성분을 찾습니다.\
 // 제가 40대 남자여서 부산여행을 같이 하실 분도 40대 여성이면 더 편할것 같은데, 나이는 크게 중요하지 않습니다.^^ (50대도 신청 가능)\
@@ -26,9 +28,9 @@ const AccompanyDetail = () => {
 
     const navigate = useNavigate();
 
-    const { accompanyIdx} = useParams();
+    const { accompanyIdx } = useParams();
 
-    const [ datas, setDatas ] = useState({});
+    const [datas, setDatas] = useState({});
 
     useEffect(() => {
         if (sessionStorage.getItem('token') != null) {
@@ -62,23 +64,35 @@ const AccompanyDetail = () => {
             <div id="accompany-detail-wrap">
                 <div id="accompany-detail-img">
                     <img src="https://cdn.traveltimes.co.kr/news/photo/202212/403574_25364_1916.jpg" />
+                    {/* {datas.accompanyImage/> */}
                 </div>
-                <div id="accompany-detail-duration">
-                    여행기간 : 2023.04.15 ~ 2023.05.16
+                <div id="accompany-detail-duration-box">
+                    <div id="accompany-detail-duration">
+                        여행기간 : {datas.accompanyStartTime} ~ {datas.accompanyEndTime}
+                    </div>
+                    <span id="accompany-detail-number">
+                        희망인원: {datas.accompanyNumbers}
+                    </span>
                 </div>
                 <div id="accompany-detail-title">
                     {datas.accompanyTitle}
                 </div>
+
                 <div id="accompany-detail-date-cnt">
                     <span>
-                        작성시간: 2023.04.26 14:14
+                        작성시간: {datas.accompanyCreatedTime}
+                        {/* 작성시간: 2023.04.26 14:14 */}
                     </span>
                     <span>
-                    {datas.accompanyCnt}
+                        조회수: {datas.accompanyCnt}
                     </span>
                 </div>
+
                 <div id="accompany-detail-content">
-                    내용
+                    <div className={styles.editor}>
+                        {datas.accompanyContent == null ? "" : Parser(datas.accompanyContent)}
+                        {/* {datas.accompanyContent} */}
+                    </div>
                 </div>
                 <div id="accomapny-detail-btn">
                     <Button variant="contained" onClick={handlerToList}><ListIcon /><span>LIST</span></Button>

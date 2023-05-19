@@ -25,6 +25,12 @@
     margin-top: 50px;
     margin-bottom: 50px;
 }
+.selected {
+    border-style: none;
+    font-weight: 800;
+    background: rgb(12, 77, 162);
+    color: #fff;
+  }
 
 #accompany-write-area-ul > li{
     width: 60px;

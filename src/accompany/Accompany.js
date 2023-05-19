@@ -21,7 +21,38 @@ const Accompany = () => {
   const [pages, setPages] = useState(1);
   const [search, setSearch] = useState('');
   const [pageCount, setPageCount] = useState(0);
+  const [region, setRegion] = useState('');
 
+  // 
+  const regions = [
+    {name : "서울", value : "category1"},
+    {name : "강원도", value : "category2"},
+    {name : "제주도", value : "category3"},
+    {name: "부산", value: "category4" },
+    {name: "경기도", value: "category5" },
+    { name: "인천", value: "category6" },
+    { name: "충청도", value: "category7" },
+    { name: "경상도", value: "category8" },
+    { name: "전라도", value: "category9" }
+  ];
+
+  const categories = ["All", ...new Set(regions.map((item) => item.name))];
+  console.log(categories);
+
+  const [activeCat, setActiveCat] = useState(categories);
+  const [data, setData] = useState(regions);
+
+  const activeCategory = (btn) => {
+    if (btn === "All") {
+      setData(regions);
+      return;
+    }
+
+    const filteredData = regions.filter((item) => item.name === btn);
+    setData(filteredData);
+  };
+
+// 
   const refSearchInput = useRef();
 
   const lengthDifference = 9 - datas.length;
@@ -50,7 +81,7 @@ const Accompany = () => {
     };
     axios.get(`http://localhost:8080/api/accompanylistbypage`, { params })
       .then(response => {
-        console.log(response.data)
+        console.log(response.data);
         setDatas(response.data);
       })
       .catch(error => {
@@ -59,7 +90,7 @@ const Accompany = () => {
 
     axios.get(`http://localhost:8080/api/accompanypagecount`, { params })
       .then(response => {
-        console.log(response.data)
+        console.log(response.data);
         setPageCount(response.data);
       })
       .catch(error => {
@@ -101,7 +132,17 @@ const Accompany = () => {
       </div>
       <div id="accompany-list-wrap">
         <ul id="accompany-list-area-ul">
-          <li>서울</li>
+        {activeCat.map((cate) => {
+            return (
+              <li
+                // className="cat_btn hover"
+                onClick={() => activeCategory(cate)}
+              >
+                {cate}
+              </li>
+            );
+          })}
+          {/* <li>서울</li>
           <li>강원도</li>
           <li>제주도</li>
           <li>부산</li>
@@ -109,7 +150,7 @@ const Accompany = () => {
           <li>인천</li>
           <li>충청도</li>
           <li>경상도</li>
-          <li>전라도</li>
+          <li>전라도</li> */}
         </ul>
         <div id="accompany-list-search-write">
           {/* <Input placeholder="Search" inputProps={ariaLabel}  /> */}
