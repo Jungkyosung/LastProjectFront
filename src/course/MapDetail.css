@@ -120,9 +120,26 @@
 #mapdetail-map-googlemap{
   color: rgb(27, 80, 255);
   font-weight: bold;
-  cursor: pointer;
+  
   font-family: 'Gowun Dodum', sans-serif;
 }
+
+#mapdetail-map-googlemap-btn{
+  cursor: pointer;
+} 
+
+
+#mapdetail-map-googlemap-pin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#mapdetail-map-googlemap-pin>svg {
+
+  cursor: pointer;
+}
+
 
 #mapdetail-course-list{
 

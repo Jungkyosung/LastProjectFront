@@ -1,12 +1,30 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import Thumb from "./Thumb";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Frame from "../main/Frame";
-
+import styles from "./IdealrealDetail.module.css";
+import Parser from "html-react-parser";
+import Button from '@mui/joy/Button';
+import jwt_decode from 'jwt-decode';
 
 function IdealrealDetail() {
+
+    let nickName = null;
+    // let userId = null;
+    let jwtToken = null;
+    if (sessionStorage.getItem('token') != null) {
+        jwtToken = sessionStorage.getItem('token');
+        // userId = jwt_decode(jwtToken).sub;
+        nickName = jwt_decode(jwtToken).nickname;
+    }
+
+    const header = {
+        'Authorization': `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json'
+    };
+
+
     const [data, setData] = useState([]);
     const [idealrealTitle, setIdealrealTitle] = useState('');
     const [idealrealContent, setIdealrealContent] = useState('');
@@ -23,7 +41,6 @@ function IdealrealDetail() {
     const { idealrealIdx } = useParams();
     const navigate = useNavigate();
 
-
     useEffect(() => {
         // if (!sessionStorage.getItem('token')) {
         //     alert("로그인 했어?")
@@ -32,7 +49,7 @@ function IdealrealDetail() {
         // }
 
         axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal/detail/${idealrealIdx}`
-            // ,{ headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
+            ,{ headers: header }
         )
             .then(response => {
                 console.log(response);
@@ -49,19 +66,23 @@ function IdealrealDetail() {
     }, []);
 
     //목록 수정 삭제 버튼 클릭시 이동
-    const hanlderClickList = () => navigate('/listidealreal')
-    const handlerClickRetouch = () => navigate(`/idealrealretouch/${idealrealIdx}`)
+    const hanlderClickList = () => navigate('/idealreal')
+    
+    
+    const handlerClickRetouch = () => navigate(`/idealrealretouch/${idealrealIdx}`, {state : { idealImg: idealImg, realImg: realImg }})
+
+
     const handlerClickDelete = () => {
         axios.delete(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal/${idealrealIdx}`,
-            // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
+            {headers:header}
         )
             .then(response => {
                 console.log(response)
-                alert('헤어진 다음날 전화기를 켜보니')
-                navigate('/listidealreal');
+                alert('삭제되었습니다.')
+                navigate('/idealreal');
             })
-            .catch(erorr => {
-                console.log('안되나용')
+            .catch(error => {
+                console.log(error)
                 return
             })
     };
@@ -69,72 +90,38 @@ function IdealrealDetail() {
     const idealImg = `http://${process.env.REACT_APP_KTG_IP}:8080/api/getimage/${idealrealIdealImg}`;
     const realImg = `http://${process.env.REACT_APP_KTG_IP}:8080/api/getimage/${idealrealRealImg}`;
 
-    const container = {
-        display: 'flex',
-        flexDirection: 'comlum',
-        width: '1180px',
-        margin: '0 auto',
-        position: 'relative'
-    }
-
-
 
     return (
         <Frame>
-            <div className="container" style={{ width: 1000, margin: '0 auto', textAlign: 'center', border: '1px solid purple' }}>
-                <h2>이상과 현실</h2>
-                <form action="" method="POST" id="frm" name="frm">
-
-                    <input type="hidden" name="idealrealIdx" />
-
-                    <table className="idealreal_detail">
-                        <colgroup>
-                            <col width="15%" />
-                            <col width="5%" />
-                            <col width="70%" />
-                            <col width="15%" />
-                        </colgroup>
-                        <tbody>
-                            <tr>
-                                <th scope="row">글번호</th>
-                                <td>{idealrealIdx}</td>
-                                <th scope="row">조회수</th>
-                                <td>{idealrealCnt}</td>
-                                <th scope="row"><Thumb /></th>
-                            </tr>
-                            <tr>
-                                <th scope="row">작성자</th>
-                                <td>{userId}</td>
-                                <th scope="row">작성일</th>
-                                <td>{idealrealCreatedTime}</td>
-                            </tr>
-                            <tr style={{width: 400, height: 200}}>
-                                <th scope="row">제목</th>
-                                <td colSpan="3">
-                                    {idealrealTitle}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row"></th>
-                                <td colSpan="3">
-                                    <div style={{ display: 'flex', width: 300, height: 400 }} >
-                                        <img src={idealImg} />
-                                        <img src={realImg} />
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colSpan="4" className="view_text" style={{ width: 800, height: 300, border: '1px solid purple'}}>
-                                    {idealrealContent}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </form>
-
-                <input type="button" id="list" className="btn" value="목록으로" onClick={hanlderClickList} />
-                <input type="button" id="edit" className="btn" value="수정하기" onClick={handlerClickRetouch} />
-                <input type="button" id="delete" className="btn" value="삭제하기" onClick={handlerClickDelete} />
+            <div className={styles.containerWrap}>
+                <h2 className={styles.realTitle}>이상과 현실</h2>
+                <div className={styles.content}>
+                    <h3 className={styles.subTitle}>{idealrealTitle}</h3>
+                    <span className={styles.userId}>{userId}</span>
+                    <div className={styles.timeCnt}>
+                        <span className={styles.time}>{idealrealCreatedTime}</span>
+                        <span>조회수 {idealrealCnt}</span>
+                    </div>
+                    <div className={styles.contentBox}>
+                        <div className={styles.imgBox}>
+                            <img src={realImg} className={styles.img} />
+                            <img src={idealImg} className={styles.img} />
+                        </div>
+                        <div className={styles.lineBox}>
+                            <div className={styles.line1}></div>
+                            <div className={styles.editor}>
+                                {idealrealContent == null ? "" : Parser(idealrealContent)}
+                            </div>
+                            <div className={styles.line2}></div>
+                        </div>
+                    </div>
+                        <div style={{margin:"20px 0"}}><Thumb idealrealIdx={idealrealIdx}/></div>
+                </div>
+                <div className={styles.buttonWrap}>
+                    <Button sx={{ color: "white", background: "#5E8FCA", ":hover": { background: "#2d6ebd" } }} id="edit" value="수정하기" onClick={handlerClickRetouch}>수정하기</Button>
+                    <Button sx={{ color: "white", background: "#5E8FCA", ":hover": { background: "#2d6ebd" } }} style={{ marginLeft: "20px", marginRight: "20px" }} id="list" value="목록으로" onClick={hanlderClickList}>목록보기</Button>
+                    <Button sx={{ color: "white", background: "#5E8FCA", ":hover": { background: "#2d6ebd" } }} id="delete" value="삭제하기" onClick={handlerClickDelete} >삭제하기</Button>
+                </div>
 
             </div>
         </Frame>

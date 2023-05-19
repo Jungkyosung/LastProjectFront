@@ -14,7 +14,7 @@ const DetailMenu3 = (props) => {
                     {/* <li className={styles.detail1Li}><Link to="/webcartoon">웹 만화</Link></li> */}
                     <li className={styles.detail1Li}><Link to="/tried">{t('page:tried')}</Link></li>
                     <li className={styles.detail1Li}><Link to="/accompany">{t('page:accompany')}</Link></li>
-                    <li className={styles.detail1Li}><Link to="/listidealreal">{t('page:idealreal')}</Link></li>
+                    <li className={styles.detail1Li}><Link to="/idealreal">{t('page:idealreal')}</Link></li>
                 </ul>
             </div>
         </>

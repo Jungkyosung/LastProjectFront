@@ -7,9 +7,24 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@mui/joy";
+import jwt_decode from 'jwt-decode';
 
 const QnaUpdate = () => {
 
+    let nickName = null;
+    let userId = null;
+    let jwtToken = null;
+    if (sessionStorage.getItem('token') != null) {
+        jwtToken = sessionStorage.getItem('token');
+        userId = jwt_decode(jwtToken).sub;
+        nickName = jwt_decode(jwtToken).nickname;
+    }
+
+    const header = {
+        'Authorization': `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json'
+    };
+ 
     const { qnaIdx } = useParams();
 
     const navigate = useNavigate();
@@ -19,10 +34,12 @@ const QnaUpdate = () => {
     const [qna, setQna] = useState({});
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/qna/${qnaIdx}`)
+        axios.get(`http://${process.env.REACT_APP_JYS_IP}:8080/api/qna/${qnaIdx}`, {headers: header})
             .then(response => {
                 console.log(response.data);
                 setQna(response.data);
+                setTitle(response.data.selectQnaInfo.qnaTitle);
+                setContent(response.data.selectQnaInfo.qnaContent);
             })
             .catch(error => {
                 console.log(error);
@@ -30,8 +47,8 @@ const QnaUpdate = () => {
     }, [])
 
     const handlerClickUpdate = () => {
-        axios.put(`http://localhost:8080/api/qna/update/${qnaIdx}`,
-            { "qnaTitle": title, "qnaContent": content })
+        axios.put(`http://${process.env.REACT_APP_JYS_IP}:8080/api/qna/update/${qnaIdx}`,
+            { "qnaTitle": title, "qnaContent": content }, {headers: header})
             .then(response => {
                 console.log(response)
                 alert("정상처리 되었습니다");
@@ -54,11 +71,11 @@ const QnaUpdate = () => {
                 <h3 className={styles.subTitle}>문의 제목</h3>
                 <Input placeholder="제목을 적어주세요" id="qnatitle" name="title" value={title} onChange={handleChangeTitle}  style={{ border: "none", borderBottom: "1px solid #5E8FCA", borderRadius: 0, width: "60%" }} />
                 <h3 className={styles.subTitle}>문의 내용</h3>
-                {/* <Textarea id="comment" name="comment" value={content} placeholder="내용을 적어주세요" onChange={handleChangeComment} variant="plain" style={{ borderBottom: "1px solid rgba(94, 143, 202, 0.2)", borderTop: "1px solid #5E8FCA", borderRadius: 0, width: "1180px", height: "363px" }} /> */}
                 <div className={styles.editor}>
                     <CKEditor
                         editor={ClassicEditor}
-                        data="</br></br></br></br></br></br></br></br></br></br></br></br>"
+                        data={content}
+
                         onReady={editor => {
                             // You can store the "editor" and use when it is needed.
                             console.log('Editor is ready to use!', editor);
@@ -68,12 +85,6 @@ const QnaUpdate = () => {
                             console.log({ event, editor, data });
                             setContent(data);
                         }}
-                    // onBlur={ ( event, editor ) => {
-                    //     console.log( 'Blur.', editor );
-                    // } }
-                    // onFocus={ ( event, editor ) => {
-                    //     console.log( 'Focus.', editor );
-                    // } }
                     />
                 </div>
                 <Button style={{ marginTop:"30px"}} type="button" sx={{  color: "white", background:"#5E8FCA", ":hover": { background: "#2d6ebd"}}} onClick={handlerClickUpdate}>수정하기</Button>

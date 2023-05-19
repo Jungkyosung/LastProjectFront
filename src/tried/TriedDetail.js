@@ -13,7 +13,7 @@ const TriedDetail = () => {
     const [tried, setTried] = useState({});
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/tried/${triedIdx}`)
+        axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/detail/${triedIdx}`)
             // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
             .then(response => {
                 setFilename(response.data.triedImg);
@@ -27,7 +27,7 @@ const TriedDetail = () => {
     // 이미지 가져오기
     useEffect(() => {
         if (filename) {
-            const imageUrl = `http://localhost:8080/api/getImage/${filename}`;
+            const imageUrl = `http://${process.env.REACT_APP_CMJ_IP}:8080/api/getImage/${filename}`;
             axios.get(imageUrl, { responseType: 'arraybuffer' })
                 .then(response => {
                     const imageBlob = new Blob([response.data], { type: response.headers['content-type'] })
@@ -47,15 +47,15 @@ const TriedDetail = () => {
     };
 
     // 버튼 => 수정
-    const handlerClickUpdate = () => {
-        navigate(`/tried/update/{triedIdx}`)
+    const handlerClickUpdate = (imgUrl) => {
+        navigate(`/tried/update/${triedIdx}`, { state :{ imgUrl: imgUrl} });
     };
 
     // 버튼 => 삭제
     const handlerClickDelete = () => {
         if (window.confirm('삭제하시겠습니까?')) {
             axios
-                .delete(`http://localhost:8080/api/tried/${triedIdx}`)
+                .delete(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/${triedIdx}`)
                 // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
                 .then(response => {
                     console.log(response);
@@ -78,6 +78,7 @@ const TriedDetail = () => {
                     <div className="tried-title">
                         <div>닉네임 : {tried.userId}</div>
                         <div>작성 시간 : {tried.triedCreatedTime}</div>
+                        <div>글 번호 : {tried.triedIdx}</div>
                         <div>제목 : {tried.triedTitle}</div>
                         <div className="detail">
                             <div>조회수 : {tried.triedCnt}</div>
@@ -86,7 +87,7 @@ const TriedDetail = () => {
                         <div className="tried-img">
                             <div>이미지</div>
                             <img
-                                src={imageUrl} style={{ width: '300px'}}
+                                src={imageUrl} style={{ width: '500px'}}
                             />
                             <div className="tried-content">
                                 <div>내용</div>
@@ -96,7 +97,7 @@ const TriedDetail = () => {
                     </div>
                 </form>
                 <input type="button" id="list" className="btn" value="목록" onClick={handlerClickList} />
-                <input type="button" id="edit" className="btn" value="수정" onClick={handlerClickUpdate} />
+                <input type="button" id="edit" className="btn" value="수정" onClick={()=>handlerClickUpdate(imageUrl)} />
                 <input type="button" id="delete" className="btn" value="삭제" onClick={handlerClickDelete} />
             </div>
         </>

@@ -69,6 +69,11 @@
   width: 20%;
 }
 
+.koreaprice-cart-col-products-wrap{
+  overflow: scroll;
+  height : 230px;
+}
+
 .koreaprice-cart-col-products{
   display: flex;
   text-align: center;
@@ -93,11 +98,15 @@
 }
 
 .koreaprice-cart-5{
+  width: 20%;
+}
+
+.koreaprice-cart-6{
   height: 24px;
   cursor: pointer;
 }
 
-.koreaprice-cart-5>svg{
+.koreaprice-cart-6>svg{
   color: rgb(80, 176, 255);
 }
 
@@ -118,9 +127,19 @@
 }
 
 #koreaprice-exchange-won{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-bottom: 1px rgb(201, 201, 201) solid;
 }
 
+
+#koreaprice-exchange-others{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 /* 상품 정보창 */
 #koreaprice-items-list {
   display: flex;

@@ -1,45 +1,50 @@
-import { useState } from "react";
+// import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import styles from "./LNButton.module.css";
 
-function LNButton() {
+function LNButton(props) {
 
-    const [sortType, setSortType] = useState('Thumb');
-    const [date, setDate] = useState('')
-    const [like, setLike] = useState('')
-    const [idealrealIdx, setIdealrealIdx] = useState([])
-    const [idealrealCreatedTime, setIdealrealCreatedTime] = useState([])
+    const setData = props.setData;
+    const [idealreal, setIdealreal] = useState([]);
+    const [ likeCount, setLikeCount ] = useState(0);
+    const { idealrealIdx } = useParams();
 
-    const handlerLike = () => {
-        setSortType('Thumb');
+
+    const handleLikeChange = (e) => {
+        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealrealwithlike`)
+            .then(response => {
+                setData(response.data);
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+                return;
+            });
     }
 
-    const handlerDate = () => {
-        setSortType('idealrealCreatedTime');
-
+    const handleListChange = (e) => {
+        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal`)
+            .then(response => {
+                setData(response.data);
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+                return;
+            });
     }
 
-    const buttonContainer = {
-        marginLeft: 'auto',
-        width: '100px',
-        height: '30px',
-        background: '#8f86bb',
-        color: 'snow',
-        fontSize: '17px',
-        borderRadius: '10px',
-        marginTop: '50px',
-        textAlign: 'center',
-        lineHeight: '30px'
-    }
-
-    // const orderedDate = idealreal.sort((a, b) =>{;return(new Date(a.idealrealCreatedTime) - new Date(b.idealrealCreatedTime))})
 
     return (
 
-        <>
+        <ul className={styles.buttonBox}>
+            <li className={styles.buttonContainer} onClick={handleLikeChange}>인기순</li>
+            <li className={styles.buttonContainer} onClick={handleListChange}>최신순</li>
+        </ul>
 
-            <button style={buttonContainer} onClick={handlerDate}>인기</button>
-            <button style={buttonContainer} onClick={handlerLike}>최신</button>
-
-        </>
     )
 }
 

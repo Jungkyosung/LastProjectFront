@@ -48,7 +48,7 @@ const MapList = () => {
 
     //시작하면 리스트 가져오는 함수
     useEffect(() => {
-        axios.get('http://localhost:8080/api/course', { headers: header })
+        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/course`, { headers: header })
             .then(response => {
                 console.log(response);
                 let array = response.data;
@@ -148,12 +148,14 @@ const MapList = () => {
                                 <MapDetail
                                     modal={modal}
                                     setModal={setModal}
+                                    userId={course.userId}
                                     userNickname={course.userNickname}
                                     startDate={course.travelcourseStartDate.substr(0, 10)}
                                     endDate={course.travelcourseEndDate.substr(0, 10)}
                                     title={course.travelcourseTitle}
                                     days={days[index]}
                                     modalStateClose={() => modalStateClose(index)}
+                                    removeDuplicates={removeDuplicates}
                                 />
                             }
                         </>

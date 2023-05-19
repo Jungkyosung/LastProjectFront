@@ -1,158 +1,200 @@
 import { useEffect, useState } from "react";
 import LNButton from "./LNButton";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Thumb from "./Thumb";
+import { useParams } from "react-router-dom";
+import { Pagination } from "@mui/material";
 import Frame from "../main/Frame";
+import styles from "./IdealReal.module.css"
+import Button from '@mui/joy/Button';
+import jwt_decode from 'jwt-decode';
 
 function Idealreal() {
+
+    let nickName = null;
+    // let userId = null;
+    let jwtToken = null;
+    if (sessionStorage.getItem('token') != null) {
+        jwtToken = sessionStorage.getItem('token');
+        // userId = jwt_decode(jwtToken).sub;
+        nickName = jwt_decode(jwtToken).nickname;
+    }
+
+    const header = {
+        'Authorization': `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json'
+    };
+
+    const navigate = useNavigate();
+
     const [idealreal, setIdealreal] = useState("")
     const [data, setData] = useState([])
     const [userId, setUserId] = useState('')
     const [rcmdIdx, setRcmdIdx] = useState('')
     const [idealrealIdealImg, setIdealrealIdealImg] = useState([]);
     const [idealrealRealImg, setIdealrealRealImg] = useState([]);
+    const { idealrealIdx } = useParams();
+    const [likeCount, setLikeCount] = useState(0);
+    const [page, setPage] = useState(1);
+    const [pageCount, setPageCount] = useState(0);
+    const lengthDifference = 10 - data.length;
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal`)
+        if (!sessionStorage.getItem('token')) {
+            alert("로그인이 필요합니다.")
+            navigate(`/login`);
+            return
+        }
+
+        //1페이지 리스트 조회
+        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal/${page}`, {headers:header})
             .then(response => {
-                setIdealrealIdealImg(response.data.idealrealIdealImg);
-                setIdealrealRealImg(response.data.idealrealRealImg);
-                setUserId(response.data.userId)
-                setRcmdIdx(response.data.rcmdIdx)
                 console.log(response.data)
-                setData(response.data)
-                // setIdealreal(response.date.idealrealDto)
+                setData(response.data);
             })
-            .catch(error => console.log(error))
+            .catch(error => {
+                console.log(error);
+            })
+
+        //페이지수 조회
+        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealrealpagecount`, {headers:header})
+            .then(response => {
+                console.log(response.data)
+                // let pageCount = response.data;
+                // if( pageCount > 1){
+                //     pageCount = 10;
+                // }
+                // setPageCount(pageCount);
+                setPageCount(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }, [])
 
-    const idealImg = `http://${process.env.REACT_APP_KTG_IP}:8080/api/getimage/${idealrealIdealImg}`;
-    const realImg = `http://${process.env.REACT_APP_KTG_IP}:8080/api/getimage/${idealrealRealImg}`;
 
-    const styles = {
-        wrapper: {
-            display: "flex",
-            flexDirection: "column",
-            justifyContent : "center",
-            border: '1px solid aqua',
-            borderRadius: 16,
-            padding: 8,
-            margin: 8,
-            width: 1200,
-            height: 'auto',
-        },
-        wrapper1: {
-            border: '1px solid purple',
-            borderRadius: 16,
-            padding: 8,
-            margin: 8,
-            width: "600px"
-        },
-        image: {
-            width: 'auto',
-            height: 300,
-            borderRadius: 10
-        },
-        
-        nameText: {
 
-            color: 'pink',
-            fontSize: 25,
-            fontWeight: 'bold',
-            marginBottom: 5,
-            textAlign: 'center'
+    useEffect(() => {
+        //1페이지 리스트 조회
+        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal/${page}`,{headers:header})
+            .then(response => {
+                console.log(response.data)
+                setData(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
 
-        },
-        box1 : {
-            width: '100%',
-            overflow: 'hidden',
-            
-        },
-        box2 : {
-            // border: '1px solid pink',
-            width: '50%',
-            float: 'left',
-            textAlign: 'center',
+        //페이지수 조회
+        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealrealpagecount`,{headers:header})
+            .then(response => {
+                console.log(response.data)
+                // let pageCount = response.data;
+                // if( pageCount > 1){
+                //     pageCount = 10;
+                // }
+                // setPageCount(pageCount);
+                setPageCount(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }, [page])
+
+
+    // 원본이 없어도 사진 보이고 싶었는데 잘 안됩니다
+    // const idealImg = `http://${process.env.REACT_APP_KTG_IP}:8080/api/getimage/${idealrealIdealImg}`;
+    // const realImg = `http://${process.env.REACT_APP_KTG_IP}:8080/api/getimage/${idealrealRealImg}`;
+
+
+    // 페이징
+    const handlerChange = (event, value) => {
+        console.log(event, value);
+        setPage(value);
+    }
+
+    const addEmptyRows = () => {
+        const result = [];
+        if (!lengthDifference == 8) {
+
+            for (let i = 0; i < lengthDifference; i++) {
+                result.push(<tr style={{ borderTop: "1px solid rgba(94, 143, 202, 0.2)", height: "60px" }}><td colSpan="4"></td></tr>);
+            }
         }
-    };
 
-    const a = {
-        buttonContainer: {
-            marginLeft: '900px',
-            width: '100px',
-            height: '30px',
-            background: '#8f86bb',
-            color: 'snow',
-            fontSize: '17px',
-            borderRadius: '10px',
-            marginTop: '50px',
-            textAlign: 'center',
-            lineHeight: '30px'
-        }
-    };
+        return result;
+    }
 
-    const container = {
-        display: 'flex',
-        flexDirection: 'comlum',
-        width: '1200px',
-        margin: '0 auto',
-        position: 'relative',
-        marginLeft: '5',
-
+    const handlerInpage = (idealrealIdx) => {
+        navigate(`/idealreal/detail/${idealrealIdx}`);
     }
 
 
     return (
         <Frame>
-            <div style={container} >
-                <LNButton />
-                <Link to="/listidealreal/write" style={a.buttonContainer} >글쓰기</Link>
-            </div>
-            <div style={container}>
-                <div style={styles.wrapper}>
+            <div className={styles.containerWrap}>
+                <h2 className={styles.realTitle}>이상과 현실</h2>
+                <LNButton setData={setData} />
+
+                <div className={styles.wrapper}>
                     {/* <div style={styles.contentContainer}> */}
-                        {/* 작성한 사람의 이름과 내용 */}
-                        <div style={styles.nameText}>이상과 현실</div>
+                    {/* 작성한 사람의 이름과 내용 */}
+                    {/* <div className={styles.nameText}>이상과 현실</div> */}
                     {/* </div> */}
-                    <div style={styles.box1}>
+                    {/* <br />
+                    <br />
+                    <br /> */}
+                    <div className={styles.box1}>
                         {data &&
                             data.map((idealreal, rcmd) => (
-                                <div key={idealreal.idealrealIdx} style={styles.box2}>
+                                <div key={idealreal.idealrealIdx} className={styles.tdBox} onClick={() => {
+                                    handlerInpage(idealreal.idealrealIdx)
+                                }}   >
                                     <table>
                                         <tbody>
                                             <tr>
-                                                <td className="idealrealTitle" >
-                                                    <td style={styles.wrapper1}>{idealreal.idealrealIdx}
-                                                    {console.log(idealreal.idealrealIdealImg)}
-                                                    <Link
-                                                        to={`/listidealreal/detail/${idealreal.idealrealIdx}`}
-                                                    >
-                                                        {idealreal.idealrealTitle}{userId}
-                                                <td>{rcmd.rcmdIdx}</td>
-                                                <div><td></td></div>
+                                                {/* <Link
+                                                    to={`/listidealreal/detail/${idealreal.idealrealIdx}`}
+                                                > */}
+                                                {/* <td className={styles.idealrealTitle} > */}
+                                                <td style={{ width: "50%" }}>
+                                                    {/* {idealreal.idealrealIdx} */}
+                                                    {/* {console.log(idealreal.idealrealIdealImg)} */}
+                                                    <div className={styles.topBox}>
+                                                        <em className={styles.flexTitle}>{idealreal.idealrealTitle}</em>
+                                                        <span className={styles.flexLike}>{idealreal.likeCount}</span>
+                                                    </div>
+                                                    <div className={styles.imgBox}>
                                                         <img
-                                                            style={styles.image}
-                                                            src={`http://localhost:8080/api/getimage/${idealreal.idealrealIdealImg}`}
+                                                            className={styles.image}
+                                                            src={`http://192.168.0.4:8080/api/getimage/${idealreal.idealrealRealImg}`}
                                                         />
                                                         <img
-                                                            style={styles.image}
-                                                            src={`http://localhost:8080/api/getimage/${idealreal.idealrealRealImg}`}
+                                                            className={styles.image}
+                                                            src={`http://192.168.0.4:8080/api/getimage/${idealreal.idealrealIdealImg}`}
                                                         />
-                                                    </Link>
+                                                    </div>
                                                 </td>
-                                                </td>
+                                                {/* </td> */}
+                                                {/* </Link> */}
                                                 {/* <Thumb /> */}
 
                                             </tr>
+                                            {addEmptyRows()}
                                         </tbody>
                                     </table>
-                                    
+
                                 </div>
                             ))}
                     </div>
                 </div>
+                <div className={styles.write}>
+                    <Button><Link to="/idealreal/write" className={styles.buttonContainer}>글쓰기</Link></Button>
+                </div>
+                <Pagination count={pageCount} color="primary" page={page} onChange={handlerChange} />
             </div>
+            {/* <Link to="/idealreal/write" className={styles.buttonContainer}>글쓰기</Link> */}
         </Frame>
     )
 }
