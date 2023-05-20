@@ -2,12 +2,14 @@ import axios from "axios";
 import { useCallback, useEffect } from "react";
 import { useRef, useState } from "react";
 import './Chat.css';
+import ChattingTranslate from "./ChattingTranslate";
 
 function ChattingWindow(props) {
 
     //글로벌 채팅인지, 동행채팅인지
-    const isGlobal = props.isGlobal;
-    const isAccompany = props.isAccompany;
+    const isGlobalAccompany = props.isGlobalAccompany;
+
+    console.log("채팅창에서 동행여부", isGlobalAccompany);
     const 동행글Idx = props.동행글Idx;
 
     const userId = props.userId;
@@ -20,16 +22,11 @@ function ChattingWindow(props) {
     const setIsChatroom = props.setIsChatroom;
 
     //상태변수 지정
-    const [isJoin, setIsJoin] = useState(false);  //참가여부는 여기선 의미 없음.
     const [message, setMessage] = useState('');
-    const [translateText, setTranslateText] = useState([{}]);
-
-
-
+    const [translateState, setTranslateState] = useState([]);
 
     //ref지정(요소 컨트롤)
     const refDialogDiv = useRef();
-    const refSenderInput = useRef();    //닉넴 토큰에서 가져와서 필요없음.
     const refMessageInput = useRef();
 
     //{핸들러: 메시지 전송}
@@ -37,7 +34,9 @@ function ChattingWindow(props) {
     const sendMessage = useCallback(e => {
         e.preventDefault();
 
-        if (isGlobal) {
+        //false라면(글로벌)
+        if (!isGlobalAccompany) {
+            console.log('여기까지 되나?')
             if (props.stompClient) {
                 props.stompClient.current.send('/app/chat.sendMessage', {},
                     JSON.stringify({ userId, message, type: 'CHAT' }));  //sender : sender, message : message, type : 'CHAT'       
@@ -48,14 +47,18 @@ function ChattingWindow(props) {
             refMessageInput.current.focus();
         }
 
-        if (isAccompany) {
+        //true라면(동행)
+        if (isGlobalAccompany) {
             let 채팅방UUID = '';
-
+            //동행글idx 기준으로 확인해봄, 
+            //백에서 동행글Idx로 만들어진 채팅방이 없다면, 새로 생성해주고, 채팅방ID를 반환해줌.
             axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/chatroom/${동행글Idx}`, { headers: header })
                 .then((response) => {
-                    // console.log(response.data);
+
+                    //채팅방ID반환하여 구독해줌.
                     채팅방UUID = response.data;
-                    // console.log("sender" + sender);
+
+                    //구독을 시도하고, Chat 메시지를 보냄 JSON객체로.
                     if (props.stompClient) {
                         props.stompClient.current.send(`/app/chat.sendMessage/${채팅방UUID}`, {},
                             JSON.stringify({ chatroomId: 채팅방UUID, userId, message, type: 'CHAT' }));  //sender : sender, message : message, type : 'CHAT'       
@@ -77,63 +80,72 @@ function ChattingWindow(props) {
         props.stompClient.current.disconnect(function () {
             alert("see you");
             setIsChatroom(true);
+            setChatHistory([]);
         });
     }
 
-    //{핸들러: 번역}
-    const handlerTranslate = (msg, idx) => {
-        //텍스트 div를 누르면 채팅 내역의 idx 번호를 기준으로 
-        chatHistory.map((msg,idx) => { })
-        setTranslateText()
-        const token = sessionStorage.getItem('token');
-        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/translate/${msg}`,
-            {
-                headers: { 'Authorization': `Bearer ${token}` }
-            })
-            .then((response) => {
-                console.log(response);
-                setTranslateText[idx](response.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-    };
+    
+
 
     //채팅 내역이 바뀌면, 스크롤을 내려줌.
     useEffect(() => {
+        //스크롤 내림
         refDialogDiv.current.scroll({
             top: refDialogDiv.current.scrollHeight,
             behavior: 'smooth'
         });
+
+        let translatelist = [...chatHistory];
+        for (let i = 0 ; i < translatelist.length; i++){
+            translatelist[i]=false;
+        }
+        setTranslateState(translatelist);
+        console.log(translateState);
     }, [chatHistory])
+
+
+    const translateOpen = (index) =>{
+        console.log('눌리긴 하나?', index)
+        let translatelist = [...translateState];
+            translatelist[index]=true;
+        setTranslateState(translatelist);
+        console.log(translatelist)
+    }
 
     return (
         <>
             <div id="chat-wrap">
                 <div id="chat">
-                    <div id="dialog" ref={refDialogDiv}>
-                        <div className="dialog-board">
-                            채팅내역
-                            { chatHistory ?
-                            chatHistory.map((item, idx) => (
-                                <div key={idx} className={item.userId === userId ? "me" : "other"}>
-                                    <span><b>{item.userId}</b></span>
-                                    <span className="date">{item.createdDt}</span><br />
-                                    <span>{item.message}</span>
-                                    {/* {
-                                        translateText[idx] != null ?
-                                            <p key={idx}>{translateText[idx]}</p>
-                                            :
-                                            ""
-                                    } */}
-                                </div>
-                            )) : ""}
+                    <div id="dialog">
+                        <div className="dialog-board"  ref={refDialogDiv}>
+                            {chatHistory ?
+                                chatHistory.map((item, idx) => (
+                                    <>
+                                        <div key={idx} className={item.userId === userId ? "dialog-me" : "dialog-other"}>
+                                            <div id="dialog-box">
+                                                <img id="dialog-profile-img" src="https://i.pinimg.com/564x/38/eb/7a/38eb7a74270f3e480224ffe26cb9d7d3.jpg" />
+                                                <div id={item.type=="CHAT"? "dialog-message-box": "dialog-message-box-other"}>
+                                                    <span id="dialog-profile-nickname">닉네임</span>
+                                                    {/* <span><b>{item.userId}</b></span> */}
+                                                    <div id="dialog-message" onClick={()=>translateOpen(idx)} >{item.message}</div>
+                                                    {/* 번역되면 메시지 아래에 번역문 보이도록 */}
+                                                    { translateState[idx] && <ChattingTranslate
+                                                        key={idx}
+                                                        message={item.message}
+                                                        header={header}
+                                                        translateState={translateState}
+                                                    />}
+                                                </div>
+                                            </div>
+                                            <span className="dialog-date">{item.createdDt}</span>
+                                        </div>
+                                    </>
+                                )) : ""}
                         </div>
                     </div>
 
                     <div id="divMessage">
                         <label>메시지</label>
-
                         <textarea id="messageInput" value={message} ref={refMessageInput}
                             // 값이 바뀌면 메시지 상태변수 수정해주고, 엔터 누르면 메시지 전송 함수 실행
                             onChange={e => setMessage(e.target.value)}

@@ -1,0 +1,42 @@
+#profile-wrap{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#profile-title{
+    border-bottom-width: 2px;
+    border-bottom-color: black;
+    border-bottom-style: solid;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 5%;
+    margin-right:5%;
+    width: 500px;
+    height: 3rem;
+    font-size: 1.2rem;
+}
+
+#profile {
+    display: grid;
+    margin-bottom: 50px;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+    width:500px;
+}
+
+#profile> img{
+    width:100px;
+    border-style: solid;
+    border-radius: 100%;
+}
+
+.cursor{
+    cursor: pointer;
+}
+
+.modifier:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}

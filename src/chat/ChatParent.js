@@ -24,33 +24,13 @@ function ChatParent(props) {
 
     const [isChatroom, setIsChatroom] = useState(true);
 
-    //상위컴포넌트에 올려서 버튼 누르면 true로 바꿔줘야됨.
-    const [isGlobal, setIsGlobal] = useState(true);          //글로벌 채팅이면 true
-    const [isAccompany, setIsAccompany] = useState(false);     //동행 채팅이면 true
+    //굳이 parent에서 관리할 필요 없을 듯
+    const [isGlobalAccompany, setIsGlobalAccompany] = useState(false);
 
     const [userId, setUserId] = useState(jwt_decode(sessionStorage.getItem('token')).sub);
-
     const [chatHistory, setChatHistory] = useState([]);
-
     const [동행글Idx, set동행글Idx] = useState(0);
-
     const stompClient = useRef(null);   //stomp를 바라보게 해둠. 하위컴포넌트로 props로 전달 함.
-
-    //{핸들러: 글로벌채팅으로 ON}
-    const handlerGlobalChat = () => {
-        setIsGlobal(true);
-        setIsAccompany(false);
-        console.log("accompany", isAccompany);
-        console.log("global", isGlobal);
-    }
-
-    //{핸들러: 동행채팅으로 ON}
-    const handlerAccompanyChat = () => {
-        setIsAccompany(true);
-        setIsGlobal(false);
-        console.log("accompany", isAccompany);
-        console.log("global", isGlobal);
-    }
 
     //{콜백함수: 구독 메시지 수신시}
     const onMessageReceived = payload => {
@@ -69,15 +49,29 @@ function ChatParent(props) {
         }
     };
 
-    //뒤로 가기
+    //뒤로 가기(연결끊기)
     const handlerArrowBack =()=>{
-        setIsChatroom(true);
+        stompClient.current.disconnect(function () {
+            alert("see you");
+            setIsChatroom(true);
+            setChatHistory([]);
+        });
     }
 
+    const handlerOutBtn = () =>{
+        if (isChatroom) {
+            handlerChatModal();
+            return
+        } else {
+        handlerArrowBack();
+        handlerChatModal();
+        }
+    }
 
-    const handler동행글Idx = (e) => {
-        set동행글Idx(e.target.value);
-        console.log(e.target.value);
+    //{핸들러} 동행글Idx 설정
+    const handler동행글Idx = (idx) => {
+        set동행글Idx(idx);
+        console.log(idx);
     }
 
     return (
@@ -88,34 +82,23 @@ function ChatParent(props) {
                     {!(isChatroom) ? <ArrowBackIcon id="ArrowBackIcon" onClick={handlerArrowBack} /> :
                     <span id="ArrowBackIconTemp"></span>}
                     <em>Chat Room</em>
-                    <CloseIcon id="CloseIcon" onClick={handlerChatModal}/>
+                    <CloseIcon id="CloseIcon" onClick={()=>handlerOutBtn()}/>
                 </div>
-
-                <button type="button" onClick={handlerGlobalChat}>글로벌채팅방</button>
-                <button type="button" onClick={handlerAccompanyChat}>동행채팅방</button>
                 {isChatroom ? <Chatroom
                     stompClient={stompClient}
                     userId={userId}
-                    isGlobal={isGlobal}
-                    isAccompany={isAccompany}
+                    setIsGlobalAccompany={setIsGlobalAccompany}
                     header={header}
-                    nickName={nickName}
-                    동행글Idx={동행글Idx}
                     handler동행글Idx={handler동행글Idx}
-                    chatHistory={chatHistory}
-                    setChatHistory={setChatHistory}
                     onMessageReceived={onMessageReceived}
-                    isChatroom={isChatroom}
                     setIsChatroom={setIsChatroom} />
                     : <ChattingWindow
                         stompClient={stompClient}
                         userId={userId}
-                        isGlobal={isGlobal}
-                        isAccompany={isAccompany}
+                        isGlobalAccompany={isGlobalAccompany}
                         header={header}
                         nickName={nickName}
                         동행글Idx={동행글Idx}
-                        handler동행글Idx={handler동행글Idx}
                         chatHistory={chatHistory}
                         setChatHistory={setChatHistory}
                         onMessageReceived={onMessageReceived}

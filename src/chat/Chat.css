@@ -1,39 +1,44 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
-/* 채팅아이콘 */
+/* 1. 채팅아이콘 */
 .chatPort {
   border-radius: 100%;
-  background-color: rgb(61, 136, 248);
+  background-color: rgb(255, 255, 255);
   width: 35px;
   height: 35px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 1px 2px 10px 7px rgb(218, 216, 216);
+  box-shadow: 1px 1px 5px 5px rgb(218, 216, 216);
   cursor: pointer;
-  position: absolute;
-  left: 60%;
-  top: 50%;
-  z-index: 999;
+  position: fixed;
+  right: 5%;
+  bottom: 20%;
+  z-index: 3;
 }
 
 
 
-/* 채팅부모창 */
+.chatPort:hover{
+  background-color: rgb(138, 183, 250);
+}
+
+
+/* 2. 채팅부모창 */
 .chatParent {
-  background-color: azure;
+  background-color: rgb(251, 251, 251);
   max-width: 500px;
   min-width: 400px;
   width: 30%;
-  position: absolute;
-  left: 60%;
-  top: 40%;
-  z-index: 999;
+  position: fixed;
+  right: 5%;
+  bottom: 20%;
+  z-index: 3;
   border-radius: 5px 5px 5px 5px;
-  height: 60%;
+  height: 70%;
   min-height: 300px;
-  max-height: 500px;
-  box-shadow: 2px 2px 10px 5px rgb(218, 216, 216);
+  max-height: 640px;
+  box-shadow: 1px 2px 10px 7px rgb(218, 216, 216);
   font-family: 'Roboto', sans-serif;
   overflow: auto;
 }
@@ -56,21 +61,17 @@
 }
 
 #ArrowBackIconTemp{
-  width : 16px;
+  width : 24px;
 }
 
 #CloseIcon {
   cursor: pointer;
 }
 
-
-
-
 /* 채팅방리스트 */
-.chatroomList{
-
+#chatroomList{
+  height: 100%;
 }
-
 
 /* 채팅대화창 */
 .dialog-board{
@@ -78,3 +79,8 @@
   max-height: 300px;
   overflow: auto;
 }
+
+#chat{
+  height: 550px;
+}
+

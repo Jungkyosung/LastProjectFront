@@ -24,7 +24,7 @@ const DetailMenu = () => {
                     <li><Link to="/chat"><Button variant="text">글로벌채팅</Button></Link></li>
                     <li><Link to=""><Button variant="text">웹만화</Button></Link></li>
                     <li><Link to=""><Button variant="text">어디까지</Button></Link></li>
-                    <li><Link to=""><Button variant="text">여행친구</Button></Link></li>
+                    <li><Link to="/accompany"><Button variant="text">여행친구</Button></Link></li>
                     <li><Link to=""><Button variant="text">이상과현실</Button></Link></li>
                     <li><Link to=""><Button variant="text">물가체험</Button></Link></li>
                 </ul>

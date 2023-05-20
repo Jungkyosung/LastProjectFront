@@ -4,12 +4,16 @@ import MainMenu from "../platform/MainMenu";
 import DetailMenu from "../platform/DetailMenu";
 import Footer from "../platform/Footer";
 import ChatPort from "../chat/ChatPort";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ChatParent from "../chat/ChatParent";
+import "./Frame.css";
+import { useNavigate } from 'react-router-dom';
+import VerticalAlignTopRoundedIcon from '@mui/icons-material/VerticalAlignTopRounded';
 
 const Frame = ({ children }) => {
 
     const [isChatModal, setIsChatIsModal] = useState(true);
+    const navigate = useNavigate();
 
     let isLogin = false;
 
@@ -26,21 +30,43 @@ const Frame = ({ children }) => {
         };
     };
 
+    const handlerChatPage = () => {
+        navigate('/mobilechat');
+    };
+
+    //스크롤 최상단으로 이동
+    const handlerTopMove = () => {
+        window.scroll({
+            top:0
+        });
+    };
+
     return (
         <>
             <Reset />
+            <div id="body">
+            </div>
             <SubMenu />
-            <MainMenu />
-            <DetailMenu />
+            <div id="mainmenu">
+                <MainMenu />
+            </div>
             {children}
             {isLogin && isChatModal &&
-                <div onClick={handlerChatModal}>
-                    <ChatPort handlerChatModal={handlerChatModal}/>
-                </div>
+                <>
+                    <div id="chatport-web" onClick={handlerChatModal}>
+                        <ChatPort />
+                    </div>
+                    <div id="chatport-mobile" onClick={handlerChatPage}>
+                        <ChatPort />
+                    </div>
+                </>
             }
             {isLogin && !isChatModal &&
-                <ChatParent handlerChatModal={handlerChatModal}/>
+                <ChatParent handlerChatModal={handlerChatModal} />
             }
+            <div id="top-arrow" onClick={handlerTopMove}>
+                <VerticalAlignTopRoundedIcon />
+            </div>
             <Footer />
         </>
     )
