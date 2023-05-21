@@ -4,9 +4,9 @@
     object-fit: cover;
 }
 
-#triedlist-wrap{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.triedList-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
     margin-bottom: 60px;
 }

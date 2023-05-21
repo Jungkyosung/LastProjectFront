@@ -38,6 +38,8 @@ import QnaUpdate from './qna/QnaUpdate';
 import TriedList from './tried/TriedList';
 import AboutUs from './aboutus/AboutUs';
 import TriedMain from './tried/TriedMain';
+import TriedWrite from './tried/TriedWrite';
+import TriedDetail from './tried/TriedDetail';
 
 
 function App() {
@@ -68,6 +70,8 @@ function App() {
         <Route path="/webcartoon"                     element={<Webcartoon/>}      />
         <Route path="/webcartoon/write"               element={<WebcartoonWrite/>} />
         <Route path="/tried"                          element={<TriedMain/>}       />
+        <Route path="/tried/write"                    element={<TriedWrite/>}      />
+        <Route path="/tried/detail/:triedIdx"         element={<TriedDetail/>}     />
         <Route path="/accompany"                      element={<Accompany/>}       />
         <Route path="/accompany/detail/:accompanyIdx" element={<AccompanyDetail/>} />
         <Route path="/accompany/write"                element={<AccompanyWrite/>}  />

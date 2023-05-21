@@ -10,8 +10,14 @@ import MapObject from "./MapObject";
 import Frame from "../main/Frame";
 import { DatePicker } from "@mui/x-date-pickers";
 import jwt_decode from 'jwt-decode';
+import { format, getDay, isAfter, isBefore } from 'date-fns';
+
 
 const MapWrite = () => {
+
+  let today = new Date();
+
+
 
   //0------------토큰확인----------------
   let nickName = null;
@@ -33,8 +39,8 @@ const MapWrite = () => {
   //1------------변수설정-----------------
   const navigate = useNavigate();
 
-  const [startDate, setStartDate] = useState('');//일정 시작 시간
-  const [endDate, setEndDate] = useState('');    //일정 끝 시간
+  const [startDate, setStartDate] = useState(today);//일정 시작 시간
+  const [endDate, setEndDate] = useState(today);    //일정 끝 시간
   const [title, setTitle] = useState('');        //글 제목
 
   const [choiceDay, setChoiceDay] = useState(1);  //Day선택
@@ -113,7 +119,7 @@ const MapWrite = () => {
     setArrCourseDay(배열복사본);
   }
 
-  //2-4.{핸들러} 장소저장
+  //2-4.{핸들러} 장소저장`
   const 장소저장 = () => {
     //일단 현재 배열값 복사하고, 순서를 위해서 
     const 배열복사본 = [...arrCourseDay];
@@ -198,12 +204,25 @@ const MapWrite = () => {
 
   //2--------------------------------------------
   //뒤로가기 같은걸 누르면 작성을 취소하시겠습니까? 컨펌창 키기
-
-  if( startDate > endDate && endDate !== '' ) {
-    alert("endDate은 startDate보다 후일 수 없다.")
-    setEndDate('');
-    return
+  
+  const handlerStartDate = (e) =>{
+    if( isAfter(e, endDate)) {
+      alert("startDate은 endDate보다 후일 수 없다.")
+      setStartDate(endDate);
+      return
+    }
+    setStartDate(e);
   }
+
+  const handlerEndDate = (e) =>{
+    if( isBefore(e, startDate)) {
+      alert("endDate은 startDate보다 전일 수 없다.")
+      setEndDate(startDate);
+      return
+    }
+    setEndDate(e);
+  }
+  
 
   return (
     <Frame>
@@ -212,11 +231,13 @@ const MapWrite = () => {
         <div id="course-date-duration">
           <span className='course-date-duration-label'>START</span>
           <span id="course-date-picker">
-            <DatePicker value={startDate} onChange={(e) => setStartDate(e)} />
+          {/* <DateRangePicker defaultValue={[today, tomorrow]} disableFuture /> */}
+            <DatePicker value={startDate} onChange={(e) => handlerStartDate(e)} disableFuture/>
           </span>
           <span className='course-date-duration-label'>END</span>
           <span id="course-date-picker">
-            <DatePicker value={endDate} onChange={(e) => setEndDate(e)} />
+          {/* <DateRangePicker defaultValue={[today, tomorrow]} disableFuture /> */}
+            <DatePicker value={endDate} onChange={(e) => handlerEndDate(e)} disableFuture/>
           </span>
         </div>
         <MapObject

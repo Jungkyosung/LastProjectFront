@@ -1,8 +1,20 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Frame from "../main/Frame";
+import './TriedDetail.css';
 
 const TriedDetail = () => {
+
+    let jwtToken = null;
+    if (sessionStorage.getItem("token") != null) {
+        jwtToken = sessionStorage.getItem("token");
+    }
+
+    const header = {
+        Authorization: `Bearer ${jwtToken}`
+    };
+
     const navigate = useNavigate();
 
     const { triedIdx } = useParams();
@@ -13,8 +25,8 @@ const TriedDetail = () => {
     const [tried, setTried] = useState({});
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/detail/${triedIdx}`)
-            // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
+        axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/detail/${triedIdx}`,
+            { headers: header })
             .then(response => {
                 setFilename(response.data.triedImg);
                 setTried(response.data);
@@ -48,7 +60,7 @@ const TriedDetail = () => {
 
     // 버튼 => 수정
     const handlerClickUpdate = (imgUrl) => {
-        navigate(`/tried/update/${triedIdx}`, { state :{ imgUrl: imgUrl} });
+        navigate(`/tried/update/${triedIdx}`, { state: { imgUrl: imgUrl } });
     };
 
     // 버튼 => 삭제
@@ -70,7 +82,10 @@ const TriedDetail = () => {
     };
 
     return (
-        <>
+        <Frame>
+            <div id="travelcourse-list-img">
+                <img src="https://i.pinimg.com/564x/67/1b/ba/671bba36fccbc46d70f7e2631b781c61.jpg" />
+            </div>
             <div className="triedDetail-container">
                 <h2>게시판 상세</h2>
                 <form action="" method="POST" id="frm" name="frm">
@@ -87,7 +102,7 @@ const TriedDetail = () => {
                         <div className="tried-img">
                             <div>이미지</div>
                             <img
-                                src={imageUrl} style={{ width: '500px'}}
+                                src={imageUrl} style={{ width: '500px' }}
                             />
                             <div className="tried-content">
                                 <div>내용</div>
@@ -97,10 +112,10 @@ const TriedDetail = () => {
                     </div>
                 </form>
                 <input type="button" id="list" className="btn" value="목록" onClick={handlerClickList} />
-                <input type="button" id="edit" className="btn" value="수정" onClick={()=>handlerClickUpdate(imageUrl)} />
+                <input type="button" id="edit" className="btn" value="수정" onClick={() => handlerClickUpdate(imageUrl)} />
                 <input type="button" id="delete" className="btn" value="삭제" onClick={handlerClickDelete} />
             </div>
-        </>
+        </Frame>
     );
 };
 

@@ -4,8 +4,13 @@ import TriedCategory from "./TriedCategory";
 import TriedList from "./TriedList";
 import Frame from "../main/Frame";
 import './TriedMain.css';
+import { PagesSharp, PropaneSharp } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 
 const TriedMain = () => {
+
+    const navigate = useNavigate();
 
     let jwtToken = null;
     if (sessionStorage.getItem("token") != null) {
@@ -29,6 +34,9 @@ const TriedMain = () => {
 
     // 카테고리가 변경되면 axios를 1페이지로 초기값 날림
     useEffect(() => {
+
+        let totalPage = 0;
+
         axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/${triedCategoryIdx}/${order}/${year}-01-01/${year}-12-31/${pages}`,
             { headers: header })
             .then((response) => {
@@ -45,6 +53,7 @@ const TriedMain = () => {
             .then((response) => {
                 console.log(response.data);
                 setTotalPages(response.data);
+                totalPage = response.data;
             })
             .catch((error) => {
                 console.error(error);
@@ -65,21 +74,22 @@ const TriedMain = () => {
             if (scrolledHeight >= fullHeight * scrollThreshold && !isLoading) {
                 //페이지 1씩 증가
                 console.log('현재페이지', pages);
-                console.log('총페이지', totalPages);
+                console.log('총페이지', totalPage);
 
-                if (pages >= totalPages) {
+                if (pages >= totalPage) {
                     setIsAllPagesLoaded(true);
                     return
                 } else {
-                    console.log("셋 페이지", pages + 1)
+
+
                     setPages(pages + 1);
                 }
             }
         };
 
         window.addEventListener("scroll", handlerScroll)
+
         return () => {
-            console.log('화면에서 사라지면 실행되나??');
             window.removeEventListener("scroll", handlerScroll)
         };
     }, []);
@@ -139,7 +149,10 @@ const TriedMain = () => {
 
     //카테고리 변경시 데이터 조회
     useEffect(() => {
-        fetchData();
+
+        if (triedCategoryIdx == triedCategoryIdx)
+
+            fetchData();
         totalPageRequest();
         console.log("궁금 첫 렌더링에 작업이 되나?")
     }, [triedCategoryIdx, order, year]);
@@ -153,32 +166,35 @@ const TriedMain = () => {
     }, [pages]);
 
 
-
-
-
+const handlerWrite = () =>{
+    navigate(`/tried/write`);
+}
 
     return (
         <Frame>
-            <div>
-                <img src="" />
+
+            <div id="travelcourse-list-img">
+                <img src="https://i.pinimg.com/564x/67/1b/ba/671bba36fccbc46d70f7e2631b781c61.jpg" />
             </div>
-            <TriedCategory
-                triedCategoryIdx={triedCategoryIdx}
-                setTriedCategoryIdx={setTriedCategoryIdx}
-                order={order} setOrder={setOrder}
-                year={year} setYear={setYear}
-            />
-            <a href="/tried/write" className="btn">글쓰기</a>
-            <div className="triedMain">
-                <TriedList
-                    data={data}
+            <div id="tried-wrap">
+                <TriedCategory
                     triedCategoryIdx={triedCategoryIdx}
+                    setTriedCategoryIdx={setTriedCategoryIdx}
                     order={order} setOrder={setOrder}
                     year={year} setYear={setYear}
                 />
+                <Button type='button' variant="contained" onClick={handlerWrite}>글쓰기</Button>
+                <div className="triedMain">
+                    <TriedList
+                        data={data}
+                        triedCategoryIdx={triedCategoryIdx}
+                        order={order} setOrder={setOrder}
+                        year={year} setYear={setYear}
+                    />
+                </div>
+                <div id="scroll" style={{ height: "1px" }}></div>
+                {isAllPagesLoaded && data.length > 0 && <div>재미있으셨나요? 글이 바닥났어요 ㅠㅠ 글을 써보시는건 어떠신가요?</div>}
             </div>
-            <div id="scroll" style={{ height: "1px" }}></div>
-            {isAllPagesLoaded && data.length > 0 && <div>재미있으셨나요? 글이 바닥났어요 ㅠㅠ 글을 써보시는건 어떠신가요?</div>}
         </Frame>
     );
 };

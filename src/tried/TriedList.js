@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import TriedItem from "./TriedItem";
 import axios from "axios";
-
+import './TriedList.css';
 
 const TriedList = ({ data, triedCategoryIdx }) => {
   const [triedImg, setTriedImg] = useState([]);
@@ -55,13 +55,13 @@ useEffect(() => {
     <>
       <div className="triedList-container">
         { data && data.map((tried) => (
-          <div key={tried.triedIdx}>
+
             <TriedItem
               
               tried={tried}
               imageUrl={triedImg[tried.triedIdx]}
             />
-          </div>
+
         ))}
       </div >
     </>
