@@ -22,7 +22,9 @@ const KoreapriceExchange = (props) => {
 
   useEffect(() => {
     axios
-      .get(`http://192.168.0.39:8080/api/exchangeList`, { headers: header })
+      .get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/exchangeList`, 
+      // { headers: header }
+      )
       .then((response) => {
         console.log(response.data);
         let rsp = response.data;

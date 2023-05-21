@@ -48,7 +48,9 @@ const Koreaprice = () => {
   //컴포넌트 마운트시 상품리스트에 이미지 이름 추가하기
   useEffect(() => {
     axios
-      .get(`http://192.168.0.39:8080/api/koreaprice`, { headers: header })
+      .get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/koreaprice`, 
+      // { headers: header }
+      )
       .then((response) => {
         console.log(response.data);
         let rsp = response.data;

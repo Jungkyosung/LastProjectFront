@@ -12,11 +12,11 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
-    <React.StrictMode>
+    {/* <React.StrictMode> */}
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <App />
       </LocalizationProvider>
-    </React.StrictMode>
+    {/* </React.StrictMode> */}
   </BrowserRouter>
 );
 

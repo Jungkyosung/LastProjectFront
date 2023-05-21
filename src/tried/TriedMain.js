@@ -6,80 +6,128 @@ import Frame from "../main/Frame";
 import './TriedMain.css';
 
 const TriedMain = () => {
+
+    let jwtToken = null;
+    if (sessionStorage.getItem("token") != null) {
+        jwtToken = sessionStorage.getItem("token");
+    }
+
+    const header = {
+        Authorization: `Bearer ${jwtToken}`
+    };
+
+
     const [data, setData] = useState([]);
     const [triedCategoryIdx, setTriedCategoryIdx] = useState(1);
     const [order, setOrder] = useState('recent');
     const [year, setYear] = useState('2023')
     const [pages, setPages] = useState(1);
-    const [totalPages, setTotalPages] = useState(0);
+    const [totalPages, setTotalPages] = useState(1);
     const [isAllPagesLoaded, setIsAllPagesLoaded] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
 
     // 카테고리가 변경되면 axios를 1페이지로 초기값 날림
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/${triedCategoryIdx}/${order}/${year}-01-01/${year}-12-31/${pages}`)
+        axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/${triedCategoryIdx}/${order}/${year}-01-01/${year}-12-31/${pages}`,
+            { headers: header })
             .then((response) => {
                 setData(response.data);
                 console.log(response.data);
+                setIsLoading(false);
             })
             .catch((error) => {
                 console.log(error);
             })
-    }, [])
+
+        axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/totalpage/${triedCategoryIdx}/${order}/${year}-01-01/${year}-12-31/${pages}`,
+            { headers: header })
+            .then((response) => {
+                console.log(response.data);
+                setTotalPages(response.data);
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+
+
+        const handlerScroll = () => {
+            //현재 스크롤 높이
+            const scrolledHeight =
+                window.innerHeight + document.documentElement.scrollTop;
+            //현재 스크린 풀 높이
+            const fullHeight = document.documentElement.offsetHeight;
+            //비율
+            const scrollThreshold = 0.8;
+
+            //풀화면 높이 보다 스크롤한 높이가 더 크다면 페이지를 +1 씩 증가시켜라
+
+            if (scrolledHeight >= fullHeight * scrollThreshold && !isLoading) {
+                //페이지 1씩 증가
+                console.log('현재페이지', pages);
+                console.log('총페이지', totalPages);
+
+                if (pages >= totalPages) {
+                    setIsAllPagesLoaded(true);
+                    return
+                } else {
+                    console.log("셋 페이지", pages + 1)
+                    setPages(pages + 1);
+                }
+            }
+        };
+
+        window.addEventListener("scroll", handlerScroll)
+        return () => {
+            console.log('화면에서 사라지면 실행되나??');
+            window.removeEventListener("scroll", handlerScroll)
+        };
+    }, []);
+
 
     // 페이지 수 가져오는 axios 요청
     const totalPageRequest = async () => {
         try {
             const response = await
-                axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/totalpage/${triedCategoryIdx}/${order}/${year}-01-01/${year}-12-31/${pages}`);
-            console.log(response);
-            setTotalPages(response.data); //총 페이지 수? <<요청도 안했음>>
+                axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/totalpage/${triedCategoryIdx}/${order}/${year}-01-01/${year}-12-31/${pages}`, { headers: header });
+            //console.log(response);
+            //totalPages = response.data;
+            setTotalPages(response.data);
         } catch (error) {
             console.error(error);
         }
     };
 
+    //카테고리 변경되면 1페이지로 조회
     const fetchData = async () => {
         try {
-
             const response = await
-                axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/${triedCategoryIdx}/${order}/${year}-01-01/${year}-12-31/1`);
-            
+                axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/${triedCategoryIdx}/${order}/${year}-01-01/${year}-12-31/1`, { headers: header });
             let updateData = [];
-            console.log(response.data)
-            console.log(response.data.length)
-            for ( let i = 0 ; i < response.data.length ; i++){
+            for (let i = 0; i < response.data.length; i++) {
                 updateData.push(response.data[i])
-                console.log(response.data[i])
+                //console.log(response.data[i])
             }
-
             setData(updateData);
-            console.log("왜 리셋 되지?",updateData);
-            setIsLoading(false);
+            //setIsLoading(false);
         } catch (error) {
             console.error(error);
             setData([]);
-            setIsLoading(false);
+            //setIsLoading(false);
         }
     };
 
 
+    //페이지 변경되면 해당 카테고리의 페이지대로 조회
     const fetchDataByPage = async () => {
         try {
-            
             const response = await
-                axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/${triedCategoryIdx}/${order}/${year}-01-01/${year}-12-31/${pages}`);
-            
+                axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/${triedCategoryIdx}/${order}/${year}-01-01/${year}-12-31/${pages}`, { headers: header });
             let updateData = [...data];
-            console.log(response.data)
-            console.log(response.data.length)
-            for ( let i = 0 ; i < response.data.length ; i++){
+            for (let i = 0; i < response.data.length; i++) {
                 updateData.push(response.data[i])
-                // console.log(response.data[i])
             }
             setData(updateData);
-            // console.log("왜 리셋 되지?",updateData);
             setIsLoading(false);
         } catch (error) {
             console.error(error);
@@ -89,49 +137,30 @@ const TriedMain = () => {
     };
 
 
+    //카테고리 변경시 데이터 조회
     useEffect(() => {
         fetchData();
         totalPageRequest();
+        console.log("궁금 첫 렌더링에 작업이 되나?")
     }, [triedCategoryIdx, order, year]);
 
+
+    //페이지 변경시 데이터 조회
     useEffect(() => {
         fetchDataByPage();
         totalPageRequest();
+        console.log("넌 왜 렌더링 되지 않니?? 페이지가 증가했잖니??")
     }, [pages]);
 
-    const handlerScroll = () => {
 
-        //현재 스크롤 높이
-        const scrolledHeight =
-            window.innerHeight + document.documentElement.scrollTop;
-        //현재 스크린 풀 높이
-        const fullHeight = document.documentElement.offsetHeight;
-        //비율
-        const scrollThreshold = 0.8;
 
-        //풀화면 높이 보다 스크롤한 높이가 더 크다면 페이지를 +1 씩 증가시켜라
-        if (scrolledHeight >= fullHeight * scrollThreshold && !isLoading) {
-            //페이지 1씩 증가
-            console.log('현재페이지', pages);
-            console.log('총페이지', totalPages);
 
-            if (pages >= totalPages) {
-                setIsAllPagesLoaded(true);
-                return
-            } else {
-                let prevPage = pages;
-                prevPage = prevPage + 1;
-                setPages(prevPage);
-            }
-        }
-    };
 
-    window.addEventListener("scroll", handlerScroll);
 
     return (
         <Frame>
             <div>
-                <img src=""/>
+                <img src="" />
             </div>
             <TriedCategory
                 triedCategoryIdx={triedCategoryIdx}
@@ -149,7 +178,7 @@ const TriedMain = () => {
                 />
             </div>
             <div id="scroll" style={{ height: "1px" }}></div>
-            {isAllPagesLoaded && data.length > 0 && <div>NoMoreData</div>}
+            {isAllPagesLoaded && data.length > 0 && <div>재미있으셨나요? 글이 바닥났어요 ㅠㅠ 글을 써보시는건 어떠신가요?</div>}
         </Frame>
     );
 };

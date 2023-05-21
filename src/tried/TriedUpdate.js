@@ -22,6 +22,8 @@ const TriedUpdate = () => {
     const [imageUrl, setImageUrl] = useState('');
 
     useEffect(() => {
+
+        
         axios.get(
             `http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/detail/${triedIdx}`)
             // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }

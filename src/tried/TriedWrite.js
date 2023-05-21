@@ -72,8 +72,7 @@ const TriedWrite = () => {
         e.preventDefault();
         if (window.confirm("글을 작성하시겠습니까?")) {
             axios.post(`http://${process.env.REACT_APP_CMJ_IP}:8080/upload`, formData, {
-                headers: { 'Content-Type': 'multipart/form-data' }
-                // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
+                headers: { 'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${sessionStorage.getItem('token')}` }
             })
                 .then(response => {
                     console.log(response)

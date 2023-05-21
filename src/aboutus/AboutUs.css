@@ -47,7 +47,7 @@
     /* float: right; */
 }
 .pic {
-    background-image: url("C:\Users\hi\JAVASCRIPT\LastProjectFront\src\aboutus\img/bum.gif");
+    /* background-image: url("C:\Users\hi\JAVASCRIPT\LastProjectFront\src\aboutus\img/bum.gif"); */
     background-repeat: no-repeat;
     background-position : left center;
     background-size: 100% 100%;

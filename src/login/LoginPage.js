@@ -13,7 +13,7 @@ import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import axios from "axios";
-
+import Swal from "sweetalert2";
 // const googleAuthUrl = 'https://oauth2.googleapis.com';
 // const googleLoginUrl = 'https://accounts.google.com';
 // const googleRedirectUrl = 'http://localhost:8080/google/login/redirect';
@@ -35,6 +35,9 @@ const LoginPage = () => {
         event.preventDefault();
     };
 
+    
+
+
     //구글 로그인
     const handlerOpenGoogle = () => {
         setGoogleLoginModal(true);
@@ -52,10 +55,19 @@ const LoginPage = () => {
           console.log(response);
           sessionStorage.setItem("token",response.data);
           //회원가입 후 로그인 페이지로 리다이렉트
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: '로그인 되었습니다.',
+            showConfirmButton: false,
+            timer: 1500
+          })
           navigate("/");
         })
         .catch((error)=>{
+          alert("이메일 또는 비밀번호를 확인해주세요.")
           console.log(error);
+          
         });
         console.log("버튼누름");
       }
@@ -65,7 +77,7 @@ const LoginPage = () => {
     return (
         <Frame>
             <div id="login-wrap">
-                <h2 id="login-title">LOGIN</h2>
+                <h2 id="login-title">로그인</h2>
                 <div id="logo-box">
                     <Link to="/"><span>LOGO</span></Link>
                 </div>
