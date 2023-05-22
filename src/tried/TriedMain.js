@@ -21,6 +21,7 @@ const TriedMain = () => {
         Authorization: `Bearer ${jwtToken}`
     };
 
+    let totalPage = 0;
 
     const [data, setData] = useState([]);
     const [triedCategoryIdx, setTriedCategoryIdx] = useState(1);
@@ -31,11 +32,35 @@ const TriedMain = () => {
     const [isAllPagesLoaded, setIsAllPagesLoaded] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
+    const handlerScroll = () => {
+        //현재 스크롤 높이
+        const scrolledHeight =
+            window.innerHeight + document.documentElement.scrollTop;
+        //현재 스크린 풀 높이
+        const fullHeight = document.documentElement.offsetHeight;
+        //비율
+        const scrollThreshold = 0.8;
+
+        //풀화면 높이 보다 스크롤한 높이가 더 크다면 페이지를 +1 씩 증가시켜라
+
+        if (scrolledHeight >= fullHeight * scrollThreshold && !isLoading) {
+            //페이지 1씩 증가
+            console.log('현재페이지', pages);
+            console.log('총페이지', totalPage);
+
+            if (pages >= totalPage) {
+                setIsAllPagesLoaded(true);
+                return
+            } else {
+                
+                setPages(pages + 1);
+                console.log('바뀐 페이지수',pages+1)
+            }
+        }
+    };
 
     // 카테고리가 변경되면 axios를 1페이지로 초기값 날림
     useEffect(() => {
-
-        let totalPage = 0;
 
         axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/${triedCategoryIdx}/${order}/${year}-01-01/${year}-12-31/${pages}`,
             { headers: header })
@@ -59,33 +84,6 @@ const TriedMain = () => {
                 console.error(error);
             })
 
-
-        const handlerScroll = () => {
-            //현재 스크롤 높이
-            const scrolledHeight =
-                window.innerHeight + document.documentElement.scrollTop;
-            //현재 스크린 풀 높이
-            const fullHeight = document.documentElement.offsetHeight;
-            //비율
-            const scrollThreshold = 0.8;
-
-            //풀화면 높이 보다 스크롤한 높이가 더 크다면 페이지를 +1 씩 증가시켜라
-
-            if (scrolledHeight >= fullHeight * scrollThreshold && !isLoading) {
-                //페이지 1씩 증가
-                console.log('현재페이지', pages);
-                console.log('총페이지', totalPage);
-
-                if (pages >= totalPage) {
-                    setIsAllPagesLoaded(true);
-                    return
-                } else {
-
-
-                    setPages(pages + 1);
-                }
-            }
-        };
 
         window.addEventListener("scroll", handlerScroll)
 
