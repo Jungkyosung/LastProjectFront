@@ -5,12 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NotFound from './not_found/NotFound';
+import {LocalizationProvider} from 'react-router-dom';
+// import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <React.StrictMode>
-      <App/>
+      {/* <LocalizationProvider dateAdapter={AdapterDateFns}> */}
+        <App/>
+      {/* </LocalizationProvider> */}
     </React.StrictMode>
   </BrowserRouter>
 );
