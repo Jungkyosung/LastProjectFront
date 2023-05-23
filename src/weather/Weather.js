@@ -1,27 +1,38 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Weather.css";
-import winter from './img/winter.jpg';
-import earlyWinter from './img/earlyWinter.jpg';
-import beginWinter from './img/beginWinter.jpg';
-import earlySpring from './img/earlySpring.jpg';
-import spring from './img/spring.jpg';
-import earlySummer from './img/earlySummer.jpg';
-import beginSummer from './img/beginSummer.jpg';
-import summer from './img/summer.jpg';
-import hotSummer from './img/hotSummer.jpg';
+import winter from './img/coordiWinter.jpg';
+import earlyWinter from './img/coordiEarlyWinter.jpg';
+import beginWinter from './img/coordiBeginWinter.jpg';
+import earlySpring from './img/coordiEarlySpring.jpg';
+import spring from './img/coordiSpring.jpg';
+import earlySummer from './img/coordiEarlySummer.jpg';
+import beginSummer from './img/coordiBeginSummer.jpg';
+import summer from './img/coordiSummer.jpg';
+import hotSummer from './img/coordiHotSummer.jpg';
+import busanImg from './img/img_place_busan.jpg';
+import chungcheongImg from './img/img_place_chungcheong.jpg';
+import gangwonImg from './img/img_place_gangwon.jpg';
+import gyeongsangImg from './img/img_place_gyeongsang.jpg';
+import incheonImg from './img/img_place_incheon.jpg';
+import jejuImg from './img/img_place_jeju.jpg';
+import jeollaImg from './img/img_place_jeolla.jpg';
+import seoulImg from './img/img_place_seoul.jpg';
 import Frame from "../main/Frame";
 import CircularProgress from '@mui/material/CircularProgress';
+
+
 
 const Weather = () => {
 
   const [weatherResult, setWeatherResult] = useState({});
-  const [cities, setCities] = useState([]);
+  const [cities, setCities] = useState(['Seoul', 'Busan', 'Inchon', 'Daegu', 'Gwangju', 'Daejeon', 'Ulsan', 'Jeju', 'Sejong']);
   const [temperature, setTemperature] = useState(0);
   const [units, setUnits] = useState('metric');
   const [clothesImg, setClothesImg] = useState(null);
-
   const [loading, setLoading] = useState(true);
+  const [selectedCity, setSelectedCity] = useState('Seoul');
+
 
   // 현재 날짜
   const today = new Date();
@@ -111,15 +122,6 @@ const Weather = () => {
     return celsius.toFixed(0);
   }
 
-  // // weatherResult에서 받아 온 현재 온도 값
-  // useEffect(() => {
-  //   if (weatheResult.main) {
-  //     const temperature = weatheResult.main.temp.toFixed(0);
-  //     setTemperature(temperature);
-  //   }
-  // }, [weatheResult]);
-
-
   // 도시 클릭 (지도 이미지로 변경 예정)
   const searchWeather = async (cities) => {
     try {
@@ -130,6 +132,7 @@ const Weather = () => {
       });
       data.main.temp = Math.floor(data.main.temp, 1);
       setWeatherResult(data);
+      setSelectedCity(cities);
     } catch (error) {
       console.log(`Error: ${error}`);
     }
@@ -137,9 +140,19 @@ const Weather = () => {
 
   // 도시 별 기온 가져 옴
   useEffect(() => {
-    setCities(['Seoul', 'Busan', 'Jeonju', 'Inchon', 'Daegu', 'Gwangju', 'Daejeon', 'Ulsan', 'Jeju', 'Sejong'])
-   
+    setCities(['Seoul', 'Busan', 'Inchon', 'Daegu', 'Gwangju', 'Daejeon', 'Jeju', 'Chuncheon'])
   }, []);
+
+  const cityImgMap = {
+    Seoul: seoulImg,
+    Busan: busanImg,
+    Daejeon: chungcheongImg,
+    Chuncheon: gangwonImg,
+    Daegu: gyeongsangImg,
+    Inchon: incheonImg,
+    Jeju: jejuImg,
+    Gwangju: jeollaImg
+  };
 
   // 버튼 클릭 시 temperature 값을 변환한 값으로 변경
   const handleConvertTemperature = () => {
@@ -156,16 +169,12 @@ const Weather = () => {
     }
   }
 
-
   // 날씨 아이콘  => 이미지 변경
-  //WeatherResult.weater[0].icon
   const weathericonUrl = <img src={`http://openweathermap.org/img/wn/${weatherResult.weather && weatherResult.weather[0].icon}.png`}
     alt={`${weatherResult.weather && weatherResult.weather[0].description}`} />;
 
-
   // 온도에 따른 옷차림
   const selectClothes = (temperature) => {
-
     if (temperature <= 0) {
       setClothesImg(<img src={winter} />);
     } else if (temperature >= 0 && temperature <= 5) {
@@ -186,15 +195,6 @@ const Weather = () => {
       setClothesImg(<img src={hotSummer} />);
     }
   };
-
-  // useEffect(() => {
-  //   if (weatheResult.main) {
-  //     const temperature = weatheResult.main.temp;
-  //     setTemperature(temperature);
-  //     selectClothes(temperature);
-  //   }
-  // }, [weatheResult]);
-
 
   return (
     <Frame>
@@ -222,7 +222,7 @@ const Weather = () => {
                 </div>
                 <div className="temperature">
                   {/* 현재 온도 */}
-                  현재 기온 : {temperature}
+                  {temperature}
                   <button onClick={handleConvertTemperature}>
                     {/* 섭씨/화씨 버튼 */}
                     {units === 'metric' ? '°C' : '°F'}
@@ -230,17 +230,21 @@ const Weather = () => {
                 </div>
                 <div className="clothesImg">
                   {/* 옷차림 이미지 */}
-                  추천 옷차림 : {clothesImg}
+                  {clothesImg}
                 </div>
               </div>
             )
           }
           <div className="cityButtons">
-            {cities.map((city) => (
+            <div className="citiesImg">
+              <img src={cityImgMap[selectedCity]} alt={selectedCity} style={{ width: '300px' }} />
+            </div>
+            <div>{cities.map((city) => (
               <button className="cityBtn" key={city} onClick={() => searchWeather(city)}>
                 {city}
               </button>
             ))}
+            </div>
           </div>
         </div>
       </div>
