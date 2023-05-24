@@ -1,14 +1,14 @@
-import { Route, Routes, Outlet } from 'react-router-dom';
+import { Route, Routes, Outlet, useParams } from 'react-router-dom';
 import './App.css';
 import Regist from './regist/Regist';
 import NotFound from './not_found/NotFound';
 import Main from './main/Frame';
 import LoginPage from './login/LoginPage';
+import TriedList from './tried/TriedList';
 import TriedWrite from './tried/TriedWrite';
 import TriedDetail from './tried/TriedDetail';
 import TriedUpdate from './tried/TriedUpdate.js';
 import TriedMain from './tried/TriedMain';
-import Weather from './weather/Weather';
 
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
         <Route path="/tried/write" element={<TriedWrite/>} />
         <Route path="/tried/detail/:triedIdx" element={<TriedDetail/>} />
         <Route path="/tried/update/:triedIdx" element={<TriedUpdate/>} />
-        <Route path="/weather" element={<Weather/>} />
+        {/* <Route path="/tried/:triedCategoryIdx" element={<TriedList />} /> */}
       </Routes>
     </>
   );
