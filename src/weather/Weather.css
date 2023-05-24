@@ -52,6 +52,8 @@
   box-shadow: 2px 2px 5px 3px rgb(197, 198, 201);
 }
 
+
+
 .clothesImg {
   height: 250px;
   width: 250px;
@@ -95,6 +97,7 @@
   background-color: rgb(17, 81, 207);
   box-shadow: 2px 2px 5px 3px rgb(197, 198, 201);
 }
+
 
 @media (min-width : 800px) {
   .clothesImg {
