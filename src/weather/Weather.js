@@ -81,8 +81,8 @@ const Weather = () => {
     try {
       const { data } = await axios({
         method: 'get',
-        url: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=a14996009fd1cec14f59d1e28fb8f628&units=${units}`
-        // url: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_OPENWEATHERMAP_API_KEY}&units=${units}`
+        // url: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid={apiKey}}&units=${units}`
+        url: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_OPENWEATHERMAP_API_KEY}&units=${units}`
       });
       data.main.temp = Math.floor(data.main.temp, 1);
       setWeatherResult(data);
@@ -127,8 +127,8 @@ const Weather = () => {
     try {
       const { data } = await axios({
         method: 'get',
-        url: `https://api.openweathermap.org/data/2.5/weather?q=${cities}&appid=a14996009fd1cec14f59d1e28fb8f628`
-        // url: `https://api.openweathermap.org/data/2.5/weather?q=${cities}&appid=${process.env.REACT_APP_OPENWEATHERMAP_API_KEY}&units=${units}`
+        // url: `https://api.openweathermap.org/data/2.5/weather?q=${cities}&appid=${apiKey}`
+        url: `https://api.openweathermap.org/data/2.5/weather?q=${cities}&appid=${process.env.REACT_APP_OPENWEATHERMAP_API_KEY}&units=${units}`
       });
       data.main.temp = Math.floor(data.main.temp, 1);
       setWeatherResult(data);
