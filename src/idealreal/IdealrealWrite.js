@@ -180,27 +180,27 @@ function IdealrealWrite() {
 
           <div className={styles.imgBox1} >
             {
-              idealrealIdealImg.length !== 0
-                ?
-                <>
-                  {idealrealIdealImg.map((image, id) => (
-                    <><div key={id} className={styles.imgWidth}>
-                      <img src={image} className={styles.imgHi} />
-                      <label htmlFor="fileSltLeft" className={styles.label}>Select File</label>
-                      <input
-                        id="fileSltLeft" 
-                        className={styles.input}
-                        type='file'
-                        name='idealrealIdealImg'
-                        ref={inputFiles1}
-                        onChange={handlerChangeFile}
-                      />
-                      </div></>
-                  ))}
-                </>
-                :
-                <>
-                  <label htmlFor="fileSltLeft" className={styles.imgSelect} >Select File</label>
+            idealrealIdealImg.length !== 0
+              ?
+              <>
+                {idealrealIdealImg.map((image, id) => (
+                  <><div key={id} className={styles.imgWidth}>
+                    <img src={image} className={styles.imgHi} />
+                    <label htmlFor="fileSltLeft" className={styles.label}>Select File</label>
+                    <input
+                      id="fileSltLeft"
+                      className={styles.input}
+                      type='file'
+                      name='idealrealIdealImg'
+                      ref={inputFiles1}
+                      onChange={handlerChangeFile}
+                    />
+                  </div></>
+                ))}
+              </>
+              :
+              <>
+                <label htmlFor="fileSltLeft" className={styles.imgSelect} >Select File</label>
                   <input 
                     id="fileSltLeft"
                     type='file'

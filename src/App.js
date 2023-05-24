@@ -23,6 +23,7 @@ import IdealrealRetouch from './idealreal/IdealrealRetouch'
 import Accompany from './accompany/Accompany';
 import AccompanyDetail from './accompany/AccompanyDetail';
 import AccompanyWrite from './accompany/AccompanyWrite';
+import AccompanyUpdate from './accompany/AccompanyUpdate';
 
 
 
@@ -54,7 +55,7 @@ function App() {
         <Route path="/accompany" Component={Accompany} exact={true} />
         <Route path="/accompany/detail/:accompanyIdx" Component={AccompanyDetail} exact={true} />
         <Route path="/accompany/write" Component={AccompanyWrite} exact={true} />
-        {/* <Route path="/accompany/update/:accompanyIdx" Component={AccompanyWrite} exact={true} /> */}
+        <Route path="/accompany/update/:accompanyIdx" Component={AccompanyUpdate} exact={true} />
       </Routes>
     </>
   );

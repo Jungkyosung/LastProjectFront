@@ -7,78 +7,174 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import styles from "./AccompanyWrite.module.css";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
+
+
 
 
 const ariaLabel = { 'aria-label': 'description' };
 
 const AccompanyWrite = () => {
 
+    let today = new Date();
+
     const navigate = useNavigate();
 
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
-    const [startTime, setStartTime] = useState('');
-    const [endTime, setEndTime] = useState('');
-    const [image, setImage] = useState('');
-    const [numbers, setNumbers] = useState('');
-    const [region, setRegion] = useState('');
+    const [accompanyTitle, setAccompanyTitle] = useState('');
+    const [accompanyContent, setAccompanyContent] = useState('');
+    const [accompanyStartTime, setAccompanyStartTime] = useState(today);
+    const [accompanyEndTime, setAccompanyEndTime] = useState(today);
+    const [accompanyImage, setAccompanyImage] = useState([]);
+    const [accompanyNumbers, setAccompanyNumbers] = useState('');
+    const [accompanyRegion, setAccompanyRegion] = useState('');
 
-    const regions = [
-        { name: "서울", value: "category1" },
-        { name: "강원도", value: "category2" },
-        { name: "제주도", value: "category3" },
-        { name: "부산", value: "category4" },
-        { name: "경기도", value: "category5" },
-        { name: "인천", value: "category6" },
-        { name: "충청도", value: "category7" },
-        { name: "경상도", value: "category8" },
-        { name: "전라도", value: "category9" }
-    ];
+    // 
+    const [imageFiles, setImageFiles] = useState([]);
 
-    const handleChangeTitle = (e) => {
-        setTitle(e.target.value);
-    };
-
-    const handleChangeStartTime = (e) => {
-        setStartTime(e);
-    };
-
-    const handleChangeEndTime = (e) => {
-        setEndTime(e);
-    };
-
-    const handleChangeNumbers = (e) => {
-        setNumbers(e.target.value);
-    };
-
-    // const handleChangeRegion = (e) => {
-    //     setRegion(e.target.value);
-    // };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        axios.post(`http://localhost:8080/api/accompany/write`,
-            { "accompanyTitle": title, "accompanyContent": content, "accompanyStartTime": startTime, "accompanyEndtTime": endTime, "accompanyImage": image, "accompanyNumbers": numbers, "accompanyRegion": region },
-            // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
-        )
-            .then(response => {
-                console.log(response)
-                alert("정상처리 되었습니다");
-                navigate('/accompany')
-            })
-            .catch(error => {
-                console.log(error);
-                alert(error.message);
-            })
-
-    };
+    const inputFile = useRef();
 
     const handlerChangeFile = (e) => {
         const name = e.target.name;
         const files = e.target.files;
+
+        if (e.target.name == 'accompanyImg') {
+            const imageArr = e.target.files;
+            let imageURLs = [];
+            let image;
+            let imagesLength = imageArr.length > 6 ? 6 : imageArr.length;
+
+            for (let i = 0; i < imagesLength; i++) {
+                image = imageArr[i];
+
+                // 이미지 미리보기
+                const reader = new FileReader();
+                reader.onload = () => {
+                    console.log(reader.result);
+                    imageURLs[i] = reader.result;
+                    setAccompanyImage([...imageURLs]);
+                };
+                reader.readAsDataURL(image);
+            }
+        }
+        const unchangedImageFiles = imageFiles.filter(file => file.name !== name)
+        setImageFiles([...unchangedImageFiles, { name, files }]);
     }
+
+    // FORM DATA를 저장할 상태 변수를 변수 이름: 값 형식으로 설정
+    let datas = {
+        accompanyTitle: accompanyTitle,
+        accompanyContent: accompanyContent,
+        accompanyStartTime: accompanyStartTime,
+        accompanyEndTime: accompanyEndTime,
+        accompanyNumbers: accompanyNumbers,
+        accompanyRegion: accompanyRegion
+    };
+
+    // 서버로 전달할 폼 데이터를 작성
+    const formData = new FormData();
+    formData.append(
+        'data',
+        new Blob([JSON.stringify(datas)], { type: 'application/json' })
+    );
+
+    console.log(imageFiles);
+    Object.values(imageFiles).forEach(
+        file => Object.values(file.files).forEach(
+            f => formData.append(file.name, f)));
+
+    // multipart/form-data 형식으로 서버로 전달
+    const handleSubmit = (e) => {
+        console.log(datas);
+        console.log(formData.values().next());
+        e.preventDefault();
+
+        axios({
+            method: 'POST',
+            url: `http://localhost:8080/api/accompany/write`,
+            headers: { 'Content-Type': 'multipart/form-data' },
+            data: formData
+            // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
+        })
+            .then(response => {
+                console.log("xxxxxxxxxxxxx")
+                console.log(response)
+                alert(`${response.data}\n 등록 성공`)
+                navigate('/accompany')
+            })
+            .catch(error => {
+                console.log(error)
+                alert(`${error.message} 아니왜 안돼!`)
+            })
+    };
+
+    // 
+    const [regions, setRegions] = useState([
+        { name: "서울", check: false },
+        { name: "강원도", check: false },
+        { name: "제주도", check: false },
+        { name: "부산", check: false },
+        { name: "경기도", check: false },
+        { name: "인천", check: false },
+        { name: "충청도", check: false },
+        { name: "경상도", check: false },
+        { name: "전라도", check: false }
+    ]);
+
+    const handlerFilterSelect = (region) => {
+
+        let regionClickCheck = [...regions];
+        let tempRegion = '';
+
+        for (let i = 0; i < regionClickCheck.length; i++) {
+            if (regionClickCheck[i].name == region) {
+                regionClickCheck[i].check = true;
+                tempRegion = regionClickCheck[i].name;
+            } else {
+                regionClickCheck[i].check = false;
+            }
+        }
+        // console.log(regionClickCheck);
+        setRegions(regionClickCheck);
+        setAccompanyRegion(tempRegion);
+        console.log(region);
+    }
+
+    const handleChangeTitle = (e) => {
+        setAccompanyTitle(e.target.value);
+    };
+
+    const handleChangeStartTime = (e) => {
+        setAccompanyStartTime(e);
+    };
+
+    const handleChangeEndTime = (e) => {
+        setAccompanyEndTime(e);
+    };
+
+    const handleChangeNumbers = (e) => {
+        setAccompanyNumbers(e.target.value);
+    };
+
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     axios.post(`http://localhost:8080/api/accompany/write`,
+    //         { "accompanyTitle": title, "accompanyContent": content, "accompanyStartTime": startTime, "accompanyEndtTime": endTime, "accompanyImage": image, "accompanyNumbers": numbers, "accompanyRegion": region },
+    //         // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
+    //     )
+    //         .then(response => {
+    //             console.log(response)
+    //             alert("정상처리 되었습니다");
+    //             navigate('/accompany')
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //             alert(error.message);
+    //         })
+
+    // };
+
+
 
     return (
         <Frame>
@@ -87,41 +183,75 @@ const AccompanyWrite = () => {
             </div>
             <div id="accompany-write-wrap">
                 <ul id="accompany-write-area-ul">
-                    {/* <li>서울</li>
-                    <li>강원도</li>
-                    <li>제주도</li>
-                    <li>부산</li>
-                    <li>경기도</li>
-                    <li>인천</li>
-                    <li>충청도</li>
-                    <li>경상도</li>
-                    <li>전라도</li> */}
+                    {regions.map((region) => (
+                        <li className={region.check == true ? "active" : ""}
+                            onClick={() => handlerFilterSelect(region.name)}
+                            value={region.name}
+                        >
+                            {region.name}
+                        </li>
+                    ))}
+                    {/* <li><button onChange={handleChangeRegion}>서울</button></li>
+                    <li><button onChange={handleChangeRegion}>강원도</button></li>
+                    <li><button onChange={handleChangeRegion}>제주도</button></li>
+                    <li><button onChange={handleChangeRegion}>부산</button></li>
+                    <li><button onChange={handleChangeRegion}>경기도</button></li>
+                    <li><button onChange={handleChangeRegion}>인천</button></li>
+                    <li><button onChange={handleChangeRegion}>충청도</button></li>
+                    <li><button onChange={handleChangeRegion}>경상도</button></li>
+                    <li><button onChange={handleChangeRegion}>전라도</button></li> */}
                 </ul>
                 <div id="accompany-date-pick">
                     <div>시작 날짜</div>
-                    <DatePicker value={startTime} onChange={handleChangeStartTime} />
+                    <DatePicker disablePast value={accompanyStartTime} onChange={handleChangeStartTime} />
+
                     <div>종료 날짜</div>
-                    <DatePicker value={endTime} onChange={handleChangeEndTime} />
+                    <DatePicker disablePast value={accompanyEndTime} onChange={handleChangeEndTime} />
                 </div>
                 <div id="accompany-img">
-                    <img src="https://hanok.seoul.go.kr/images/sub/hanok_definition1.jpg" />
-                    {/* <div key={id} className={styles.imgWidth}>
-                      <img src={image} className={styles.imgHi} />
-                      <label htmlFor="fileSltRight" className={styles.label}>Select File</label>
-                      <input id="fileSltRight" type='file' name='idealrealRealImg' ref={inputFiles2} onChange={handlerChangeFile} className={styles.input} />
-                    </div> */}
+                    {/* <img src="https://hanok.seoul.go.kr/images/sub/hanok_definition1.jpg" />
                 </div>
                 <div id="accompany-upload-btn">
                     <Button variant="contained">
-                        {/* <label htmlFor="fileSltLeft" className={styles.imgSelect} >Select File</label>
-                  <input id="fileSltLeft"  type='file' name='idealrealIdealImg' ref={inputFiles1} onChange={handlerChangeFile} className={styles.input} /> */}
                         IMG UPLOAD
                     </Button>
-                    {/* <Button variant="contained">IMG UPLOAD</Button> */}
+                    <Button variant="contained">IMG UPLOAD</Button> */}
+                    {
+                        accompanyImage.length !== 0
+                            ?
+                            <>
+                                {accompanyImage.map((image) => (
+                                    <div className={styles.imgWidth}>
+                                        <img src={image} className={styles.imgHi} />
+                                        <label htmlFor="fileSlt" className={styles.label}>Select File</label>
+                                        <input
+                                            id="fileSlt"
+                                            className={styles.input}
+                                            type='file'
+                                            name='accompanyImg'
+                                            ref={inputFile}
+                                            onChange={handlerChangeFile}
+                                        />
+                                    </div>
+                                ))}
+                            </>
+                            :
+                            <>
+                                <label htmlFor="fileSlt" className={styles.imgSelect}>Select File</label>
+                                <input
+                                    id="fileSlt"
+                                    type='file'
+                                    name='accompanyImg'
+                                    ref={inputFile}
+                                    onChange={handlerChangeFile}
+                                    className={styles.input}
+                                />
+                            </>
+                    }
                 </div>
                 <div id="accompany-title-write">
                     <div>TITLE</div>
-                    <Input placeholder="Placeholder" inputProps={ariaLabel} value={title} onChange={handleChangeTitle} />
+                    <Input placeholder="Placeholder" inputProps={ariaLabel} value={accompanyTitle} onChange={handleChangeTitle} />
                 </div>
                 <div id="accompany-content-write">
                     <div>CONTENTS</div>
@@ -137,7 +267,7 @@ const AccompanyWrite = () => {
                             onChange={(event, editor) => {
                                 const data = editor.getData();
                                 console.log({ event, editor, data });
-                                setContent(data);
+                                setAccompanyContent(data);
                             }}
                         // onBlur={ ( event, editor ) => {
                         //     console.log( 'Blur.', editor );
@@ -148,18 +278,12 @@ const AccompanyWrite = () => {
                         />
                     </div>
                 </div>
-                <div className={styles.accompanySubWrite}>
-                    <div className={styles.member}>
-                        <div>Member</div>
-                        <Input placeholder="Placeholder" inputProps={ariaLabel} value={numbers} onChange={handleChangeNumbers} />
-                    </div>
-                    {/* <div className={styles.region}>
-                        <div>Region</div>
-                        <Input placeholder="Placeholder" inputProps={ariaLabel} value={region} />
-                    </div> */}
+                <div id="accompany-title-write">
+                    <div>Member</div>
+                    <Input placeholder="Placeholder" inputProps={ariaLabel} value={accompanyNumbers} onChange={handleChangeNumbers} />
                 </div>
                 <div id="accompany-write-btn">
-                    <Button variant="contained" onClick={handleSubmit}>WRITE</Button>
+                    <Button variant="contained" type="submit" onClick={handleSubmit}>WRITE</Button>
                 </div>
             </div>
         </Frame>

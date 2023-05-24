@@ -1,6 +1,5 @@
 import Frame from '../main/Frame';
 import './Accompany.css';
-import AccompanyEach from './AccompanyEach';
 import Input from '@mui/material/Input';
 import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/material/Button';
@@ -8,7 +7,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import Pagination from '@mui/material/Pagination';
-import './AccompanyEach.css';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 
 
@@ -20,42 +18,63 @@ const Accompany = () => {
   const [datas, setDatas] = useState([]);
   const [pages, setPages] = useState(1);
   const [search, setSearch] = useState('');
+  const [accompanyRegion, setAccompanyRegion] = useState('');
   const [pageCount, setPageCount] = useState(0);
   const [region, setRegion] = useState('');
+  const [accompanyImage, setAccompanyImage] = useState([]);
 
-  // 
-  const regions = [
-    {name : "서울", value : "category1"},
-    {name : "강원도", value : "category2"},
-    {name : "제주도", value : "category3"},
-    {name: "부산", value: "category4" },
-    {name: "경기도", value: "category5" },
-    { name: "인천", value: "category6" },
-    { name: "충청도", value: "category7" },
-    { name: "경상도", value: "category8" },
-    { name: "전라도", value: "category9" }
-  ];
+  const [regions, setRegions] = useState([
+    { name: "서울", check: false },
+    { name: "강원도", check: false },
+    { name: "제주도", check: false },
+    { name: "부산", check: false },
+    { name: "경기도", check: false },
+    { name: "인천", check: false },
+    { name: "충청도", check: false },
+    { name: "경상도", check: false },
+    { name: "전라도", check: false }
+  ]);
+ 
+  const handlerFilterSelect = (region) => {
+    const params = {
+      pages: 1,
+      search: '',
+      accompanyRegion: region
+    };
+    axios.get(`http://localhost:8080/api/accompanylistbypage`, { params })
+      .then(response => {
+        console.log(response.data);
+        setDatas(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      })
 
-  const categories = ["All", ...new Set(regions.map((item) => item.name))];
-  console.log(categories);
+    axios.get(`http://localhost:8080/api/accompanypagecount`, { params })
+      .then(response => {
+        console.log(response.data);
+        setPageCount(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      })
 
-  const [activeCat, setActiveCat] = useState(categories);
-  const [data, setData] = useState(regions);
 
-  const activeCategory = (btn) => {
-    if (btn === "All") {
-      setData(regions);
-      return;
-    }
+      let regionClickCheck = [...regions];
 
-    const filteredData = regions.filter((item) => item.name === btn);
-    setData(filteredData);
-  };
+      for (let i=0; i < regionClickCheck.length ; i ++){
+        if(regionClickCheck[i].name == region){
+          regionClickCheck[i].check = true;
+        } else {
+          regionClickCheck[i].check = false;
+        }
+      }
+      console.log(regionClickCheck)
+      setRegions(regionClickCheck);
+      setAccompanyRegion(region);
+  }
 
-// 
   const refSearchInput = useRef();
-
-  const lengthDifference = 9 - datas.length;
 
   const navigate = useNavigate();
 
@@ -77,7 +96,8 @@ const Accompany = () => {
   useEffect(() => {
     const params = {
       pages: pages,
-      search: search
+      search: search,
+      accompanyRegion: accompanyRegion
     };
     axios.get(`http://localhost:8080/api/accompanylistbypage`, { params })
       .then(response => {
@@ -99,17 +119,19 @@ const Accompany = () => {
 
   }, [pages])
 
+  
   const handlerSubmitSearch = async () => {
     console.log("클릭");
     const params = {
       pages: pages,
-      search: search
+      search: search,
+      accompanyRegion: accompanyRegion
     }
     try {
       const response = await axios.get(`http://localhost:8080/api/accompanylistbypage`, { params });
       console.log(response.data);
       setDatas(response.data);
-      navigate(`/accompany`);
+      // navigate(`/accompany`);
     } catch (e) {
       console.log(e);
     }
@@ -118,7 +140,7 @@ const Accompany = () => {
       const response = await axios.get(`http://localhost:8080/api/accompanypagecount`, { params });
       console.log(response.data);
       setPageCount(response.data);
-      navigate(`/accompany`);
+      // navigate(`/accompany`);
     } catch (e) {
       console.log(e);
     }
@@ -132,33 +154,20 @@ const Accompany = () => {
       </div>
       <div id="accompany-list-wrap">
         <ul id="accompany-list-area-ul">
-        {activeCat.map((cate) => {
-            return (
-              <li
-                // className="cat_btn hover"
-                onClick={() => activeCategory(cate)}
-              >
-                {cate}
-              </li>
-            );
-          })}
-          {/* <li>서울</li>
-          <li>강원도</li>
-          <li>제주도</li>
-          <li>부산</li>
-          <li>경기도</li>
-          <li>인천</li>
-          <li>충청도</li>
-          <li>경상도</li>
-          <li>전라도</li> */}
+          {regions.map((region) => (
+            <li className={region.check == true ? "active" : ""}
+              onClick={() => handlerFilterSelect(region.name)}>{region.name}</li>
+          ))}
         </ul>
         <div id="accompany-list-search-write">
-          {/* <Input placeholder="Search" inputProps={ariaLabel}  /> */}
-          <Input placeholder="Search" variant="outlined" color="primary" onChange={handlerChangeSearch} value={search} ref={refSearchInput} onKeyDown={e => { if (e.key === "Enter") { handlerSubmitSearch(e); } }} />
-          <SearchIcon color='secondary' onClick={handlerSubmitSearch} />
           <Link to="/accompany/write">
-            <Button variant="contained">WRITE</Button>
+            <Button sx={{  color: "white", background:"#5E8FCA", ":hover": { background: "#2d6ebd"}}} variant="contained">WRITE</Button>
           </Link>
+          {/* <Input placeholder="Search" inputProps={ariaLabel}  /> */}
+          <div className="right">
+            <Input placeholder="Search" variant="outlined" color="primary" onChange={handlerChangeSearch} value={search} ref={refSearchInput} onKeyDown={e => { if (e.key === "Enter") { handlerSubmitSearch(e); } }} />
+            <SearchIcon  onClick={handlerSubmitSearch} />
+          </div>
         </div>
         <div id="accompany-list-each">
           {
@@ -168,10 +177,10 @@ const Accompany = () => {
                   <div id="accompany-each-title">
                     <span id="accompany-each-area">{accompany.accompanyRegion}</span>
                     <span id="accompany-each-duration">{accompany.accompanyNumbers}</span>
-                    <span id="accompany-each-date"><DateRangeIcon fontSize='small' />{accompany.accompanyStartTime}-{accompany.accompanyEndTime}</span>
+                    <span id="accompany-each-date"><DateRangeIcon style={{verticalAlign:"middle"}} fontSize='small' />{accompany.accompanyStartTime}-{accompany.accompanyEndTime}</span>
                   </div>
                   <div id="accompany-each-img">
-                    <img src="https://i.pinimg.com/564x/30/dc/f9/30dcf99d076e79e55e519ad4240d2f6c.jpg" />
+                    <img src={`http://localhost:8080/api/getImage/${accompany.accompanyImage}`}/>
                   </div>
                   <div id="accompany-each-content">
                     {accompany.accompanyTitle}

@@ -30,6 +30,9 @@ const AccompanyDetail = () => {
 
     const { accompanyIdx } = useParams();
 
+    const [imageUrl, setImageUrl] = useState('');
+    const [filename, setFilename] = useState('');
+    const [accompanyImage, setAccompanyImage] = useState([]);
     const [datas, setDatas] = useState({});
 
     useEffect(() => {
@@ -41,6 +44,7 @@ const AccompanyDetail = () => {
         axios.get(`http://localhost:8080/api/accompany/${accompanyIdx}`)
             .then(response => {
                 console.log(response.data)
+                setFilename(response.data.accompanyImage);
                 setDatas(response.data);
                 // let str = response.data.accompanyContent;
                 // console.log(typeof str);
@@ -51,10 +55,46 @@ const AccompanyDetail = () => {
 
     }, []);
 
+    // 이미지 가져오기
+    useEffect(() => {
+        if (filename) {
+            const imageUrl = `http://localhost:8080/api/getImage/${filename}`;
+            axios.get(imageUrl, { responseType: 'arraybuffer' })
+                .then(response => {
+                    const imageBlob = new Blob([response.data], { type: response.headers['content-type'] })
+                    const imageUrl = URL.createObjectURL(imageBlob);
+                    setImageUrl(imageUrl);
+                    console.log(imageUrl);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+    }, [filename, accompanyImage]);
+
     const handlerToList = () => {
         navigate(`/accompany`);
     };
 
+    const handlerUpdate = () => {
+        navigate(`/accompany/update/${accompanyIdx}`);
+    }
+
+    const handlerDelete = () => {
+        axios.delete(`http://localhost:8080/api/accompany/${accompanyIdx}`
+            // ,{ headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
+        )
+            .then(response => {
+                alert('정상적으로 삭제되었습니다.');
+                navigate('/accompany');				// 정상적으로 삭제되면 목록으로 이동
+
+            })
+            .catch(error => {
+                console.log(error);
+                alert(`삭제에 실패했습니다. (${error.message})`);
+                return;
+            });
+    };
 
     return (
         <Frame>
@@ -63,8 +103,8 @@ const AccompanyDetail = () => {
             </div>
             <div id="accompany-detail-wrap">
                 <div id="accompany-detail-img">
-                    <img src="https://cdn.traveltimes.co.kr/news/photo/202212/403574_25364_1916.jpg" />
-                    {/* {datas.accompanyImage/> */}
+                    {/* <img src="https://cdn.traveltimes.co.kr/news/photo/202212/403574_25364_1916.jpg" /> */}
+                    <img src={imageUrl} />
                 </div>
                 <div id="accompany-detail-duration-box">
                     <div id="accompany-detail-duration">
@@ -95,13 +135,13 @@ const AccompanyDetail = () => {
                     </div>
                 </div>
                 <div id="accomapny-detail-btn">
-                    <Button variant="contained" onClick={handlerToList}><ListIcon /><span>LIST</span></Button>
+                    <Button  sx={{  color: "white", background:"#5E8FCA", ":hover": { background: "#2d6ebd"}}}variant="contained" onClick={handlerToList}><ListIcon /><span>LIST</span></Button>
                     {!(writer == userId) ?
-                        <Button variant="contained"><MessageIcon /><span>채팅연결</span></Button>
+                        <Button  sx={{  color: "white", background:"#5E8FCA", ":hover": { background: "#2d6ebd"}}}variant="contained"><MessageIcon /><span>채팅연결</span></Button>
                         :
                         <>
-                            <Button variant="contained"><EditIcon /><span>수정하기</span></Button>
-                            <Button variant="contained"><DeleteForeverIcon /><span>삭제하기</span></Button>
+                            <Button  sx={{  color: "white", background:"#5E8FCA", ":hover": { background: "#2d6ebd"}}}variant="contained" onClick={handlerUpdate}><EditIcon /><span>수정하기</span></Button>
+                            <Button sx={{  color: "white", background:"#5E8FCA", ":hover": { background: "#2d6ebd"}}} onClick={handlerDelete} variant="contained"><DeleteForeverIcon /><span>삭제하기</span></Button>
                         </>
                     }
                 </div>
