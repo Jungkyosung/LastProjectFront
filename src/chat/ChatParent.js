@@ -81,7 +81,7 @@ function ChatParent(props) {
                 <div id="chatParentTitle">
                     {!(isChatroom) ? <ArrowBackIcon id="ArrowBackIcon" onClick={handlerArrowBack} /> :
                     <span id="ArrowBackIconTemp"></span>}
-                    <em>Chat Room</em>
+                    <em>채팅방 목록</em>
                     <CloseIcon id="CloseIcon" onClick={()=>handlerOutBtn()}/>
                 </div>
                 {isChatroom ? <Chatroom

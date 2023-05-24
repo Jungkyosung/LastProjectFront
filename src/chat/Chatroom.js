@@ -107,7 +107,7 @@ function Chatroom(props) {
         setIsChatroom(false);
     };
 
-
+    
     //{콜백함수: 연결 실패시}  오류 로그출력 
     const onError = useCallback((error) => {
         console.log('연결실패', error);

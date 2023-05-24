@@ -1,9 +1,30 @@
+import './TriedWrite.css';
 import { useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Frame from '../main/Frame';
+import Input from '@mui/material/Input';
+import { Button } from "@mui/material";
+import jwt_decode from 'jwt-decode';
+
+const ariaLabel = { 'aria-label': 'description' };
 
 const TriedWrite = () => {
     const navigate = useNavigate();
+
+    let nickName = null;
+    let userId = null;
+    let jwtToken = null;
+    if (sessionStorage.getItem('token') != null) {
+        jwtToken = sessionStorage.getItem('token');
+        userId = jwt_decode(jwtToken).sub;
+        nickName = jwt_decode(jwtToken).nickname;
+    }
+
+    const header = {
+        'Authorization': `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json'
+    };
 
     const [triedTitle, setTriedTitle] = useState('');
     const [triedContent, setTriedContent] = useState('');
@@ -11,7 +32,7 @@ const TriedWrite = () => {
     const [triedImg, setTriedImg] = useState([]);
     const [imageFiles, setImageFiles] = useState([]);
 
-    
+
     const handlerChangeTitle = e => setTriedTitle(e.target.value);
     const handlerChangeContent = e => setTriedContent(e.target.value);
     const handlerClick = e => {
@@ -52,7 +73,8 @@ const TriedWrite = () => {
     let datas = {
         triedTitle: triedTitle,
         triedContent: triedContent,
-        triedCategoryIdx: triedCategoryIdx
+        triedCategoryIdx: triedCategoryIdx,
+        userId: userId
     };
 
     // 서버로 전달할 폼 데이터를 작성
@@ -87,21 +109,27 @@ const TriedWrite = () => {
     };
 
     return (
-        <>
+        <Frame>
+            <div id="travelcourse-list-img">
+                <img src="https://i.pinimg.com/564x/67/1b/ba/671bba36fccbc46d70f7e2631b781c61.jpg" />
+            </div>
             <div className="write-container">
                 <h2>글쓰기 페이지</h2>
                 <form
                     id="frm" name="frm" onSubmit={handlerSubmit}>
                     <div className="write-detail">
-                        <div>
-                            <div>제목</div>
-                            <div>
-                                <input type="text" id="title" name="title"
+                        <>
+                            <div className='write-detail-title'>
+                                <Input placeholder="제목"
+                                    inputProps={ariaLabel}
+                                    value={triedTitle}
+                                    onChange={handlerChangeTitle} />
+                            </div>
+                            {/* <input type="text" id="title" name="title"
                                     value={triedTitle}
                                     onChange={handlerChangeTitle}
-                                />
-                            </div>
-                            <div>
+                                /> */}
+                            <div className='write-detail-select'>
                                 <select
                                     value={triedCategoryIdx}
                                     onChange={handlerClick}>
@@ -116,8 +144,8 @@ const TriedWrite = () => {
                                     ?
                                     <>
                                         {triedImg.map((image, id) => (
-                                            <div key={id}>
-                                                <img src={image} style={{ width: '300px' }} />
+                                            <div className="tried-write-img" key={id}>
+                                                <img src={image} />
                                             </div>
                                         ))}
                                     </>
@@ -129,21 +157,17 @@ const TriedWrite = () => {
                                         />
                                     </>
                             }
-                        </div>
-                        <div>
-                            <div colSpan="2">
-                                <textarea
-                                    id="content" name="content"
-                                    value={triedContent} onChange={handlerChangeContent} />
-                            </div>
+                        </>
+                        <div className='tried-write-content'>
+                            <textarea
+                                id="content" name="content" placeholder='내용을 작성해주세요'
+                                value={triedContent} onChange={handlerChangeContent} />
                         </div>
                     </div>
-                    <input
-                        className="btn" type="submit" id="submit" value="완료"
-                    />
+                    <Button id="submit" type='submit' variant="contained">완료</Button>
                 </form>
             </div>
-        </>
+        </Frame>
     );
 };
 

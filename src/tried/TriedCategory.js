@@ -2,7 +2,7 @@ import React from "react";
 import './TriedCategory.css';
 
 const TriedCategory = ({ triedCategoryIdx, setTriedCategoryIdx, order, setOrder, year, setYear }) => {
-    
+
     const handleClick = (triedCategoryIdx) => {
         setTriedCategoryIdx(triedCategoryIdx);
     }
@@ -23,21 +23,23 @@ const TriedCategory = ({ triedCategoryIdx, setTriedCategoryIdx, order, setOrder,
                     onClick={() => handleClick(3)}> 문화
                 </button>
             </div>
-            <div className="category-order">
-                <select value={order}
-                    onChange={(e) => setOrder(e.target.value)}>
-                    <option value="recent">최신순</option>
-                    <option value="rcmd">추천순</option>
-                    <option value="count">조회순</option>
-                </select>
-            </div>
-            <div className="category-year">
-                <select type="number" value={year}
-                    onChange={(e) => setYear(e.target.value)} >
-                    <option value="2023">2023</option>
-                    <option value="2022">2022</option>
-                    <option value="2021">2021</option>
-                </select>
+            <div className="category-order-year">
+                <div className="category-order">
+                    <select value={order}
+                        onChange={(e) => setOrder(e.target.value)}>
+                        <option value="recent">최신순</option>
+                        <option value="rcmd">추천순</option>
+                        <option value="count">조회순</option>
+                    </select>
+                </div>
+                <div className="category-year">
+                    <select type="number" value={year}
+                        onChange={(e) => setYear(e.target.value)} >
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                    </select>
+                </div>
             </div>
         </div >
     );

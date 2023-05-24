@@ -10,6 +10,11 @@ import MapIcon from '@mui/icons-material/Map';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import jwt_decode from 'jwt-decode';
+import NavigateBeforeRoundedIcon from '@mui/icons-material/NavigateBeforeRounded';
+import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import MapDetailComment from './MapDetailComment';
+
 
 function MapDetail(props) {
 
@@ -83,21 +88,6 @@ function MapDetail(props) {
         return 담을배열;
     }
 
-    //중복제거 함수
-    // const removeDuplicates = (array, key) => {
-    //     const uniqueArray = [];
-    //     const uniqueKeys = [];
-
-    //     array.forEach((item) => {
-    //         const value = item[key];
-    //         if (!uniqueKeys.includes(value)) {
-    //             uniqueKeys.push(value);
-    //             uniqueArray.push(item);
-    //         }
-    //     });
-
-    //     return uniqueArray;
-    // };
 
     //days를 사용해서 DAY별 객체로 담음. days는 day중복있는 데이터.
     const 필터day = 객체배열담기(days)
@@ -233,8 +223,11 @@ function MapDetail(props) {
                             src="https://i.pinimg.com/564x/38/eb/7a/38eb7a74270f3e480224ffe26cb9d7d3.jpg" />
                         <span id="mapdetail-userid">{userNickname}</span>
                         <div id="mapdetail-img-list">
+                            <NavigateBeforeRoundedIcon/>
                             <img src="https://i.pinimg.com/564x/46/c3/3e/46c33e15ecd057f3e80cf55ad3651ae8.jpg" />
+                            <NavigateNextRoundedIcon/>
                         </div>
+                        <MapDetailComment/>
                         <span id="mapdetail-date">{startDate}~{endDate}</span>
                     </div>
 

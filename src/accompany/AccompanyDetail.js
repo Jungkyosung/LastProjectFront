@@ -23,6 +23,8 @@ const AccompanyDetail = () => {
     let jwtToken = null;
     const writer = "jksin1992@gmail.com";
 
+    
+
     const navigate = useNavigate();
 
     useEffect(() => {

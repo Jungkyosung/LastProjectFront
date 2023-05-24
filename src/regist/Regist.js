@@ -286,7 +286,7 @@ const Regist = () => {
                             renderInput={(params) => <TextField {...params} label='Country'
                             />} />
                         <span id="regist-btn">
-                            {lastConfrimState ? <Button type="submit" variant="contained">REGIST</Button> : <Button type="submit" disabled={!lastConfrimState} variant="contained">REGIST</Button>}
+                            {lastConfrimState ? <Button type="submit" variant="contained">REGIST</Button> : <Button type="submit" variant="contained">REGIST</Button>}
                         </span>
                     </form>
                 </div>

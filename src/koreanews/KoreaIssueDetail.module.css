@@ -17,7 +17,8 @@
 
 .contentsWrap h3 {
   font-size:25px;
-  font-weight: 600;
+  font-weight: bold;
+  width : 70%;
 }
 
 .contentsWrap em {
@@ -31,12 +32,17 @@
   width: 60%;
 }
 
-.contentsWrap p {
+.contentsWrap pre {
   width: 60%;
   line-height: 1.4;
+  /* overflow: auto; */
+  white-space: pre-wrap;
 }
 
-.contentsWrap p::before {
+
+
+
+.contentsWrap pre::before {
   content:"";
   display:block;
   clear:both;
@@ -47,7 +53,7 @@
   margin-bottom: 30px;
 }
 
-.contentsWrap p::after {
+.contentsWrap pre::after {
   content:"";
   display:block;
   clear:both;

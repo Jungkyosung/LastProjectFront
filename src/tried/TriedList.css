@@ -6,7 +6,28 @@
 
 .triedList-container{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
     justify-items: center;
     margin-bottom: 60px;
+    /* max-width: 840px; */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (min-width: 600px ){
+    .triedList-container{
+
+        grid-template-columns: 1fr 1fr;
+        max-width: 600px;
+    }
+}
+
+
+
+@media (min-width: 1200px ){
+    .triedList-container{
+
+        grid-template-columns: 1fr 1fr 1fr;
+        max-width: 840px;
+    }
 }

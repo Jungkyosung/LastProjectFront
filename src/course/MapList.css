@@ -1,8 +1,15 @@
+#travelcourse-list-img {
+  width : 100%;
+  height: 80px;
+  overflow: hidden;
+  margin-bottom: 50px;
+}
+
 #travelcourse-list-img > img{
   width : 100%;
   height: 80px;
   object-fit: cover;
-  margin-bottom: 50px;
+
 }
 
 #travelcourse-list-wrap{
@@ -38,6 +45,10 @@
 
 @media ( min-width : 600px ){
 
+  #travelcourse-list-img {
+    height: 150px;
+  }
+
   #travelcourse-list-img > img{
     height: 150px;
   }
@@ -58,6 +69,11 @@
 
 
 @media ( min-width : 1000px ){
+
+  #travelcourse-list-img {
+    height: 200px;
+  }
+
   #travelcourse-list-img > img{
     height: 200px;
   }

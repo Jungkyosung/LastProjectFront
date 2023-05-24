@@ -40,6 +40,7 @@ import AboutUs from './aboutus/AboutUs';
 import TriedMain from './tried/TriedMain';
 import TriedWrite from './tried/TriedWrite';
 import TriedDetail from './tried/TriedDetail';
+import TriedUpdate from './tried/TriedUpdate';
 
 
 function App() {
@@ -72,6 +73,7 @@ function App() {
         <Route path="/tried"                          element={<TriedMain/>}       />
         <Route path="/tried/write"                    element={<TriedWrite/>}      />
         <Route path="/tried/detail/:triedIdx"         element={<TriedDetail/>}     />
+        <Route path="/tried/update/:triedIdx"         element={<TriedUpdate/>}     />
         <Route path="/accompany"                      element={<Accompany/>}       />
         <Route path="/accompany/detail/:accompanyIdx" element={<AccompanyDetail/>} />
         <Route path="/accompany/write"                element={<AccompanyWrite/>}  />

@@ -4,19 +4,29 @@ import "./SubMenu.css";
 import MenuIcon from '@mui/icons-material/Menu';
 import Drawer from '@mui/material/Drawer';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MobileMainMenu from "./MobileMainMenu";
 import LogoutIcon from '@mui/icons-material/Logout';
 import Swal from "sweetalert2";
+import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded';
+import axios from "axios";
+
 
 const SubMenu = (props) => {
 
-    let nickName = null;
+    let userId = null;
     let jwtToken = null;
     if (sessionStorage.getItem('token') != null) {
         jwtToken = sessionStorage.getItem('token');
-        nickName = jwt_decode(jwtToken).nickname;
+        userId = jwt_decode(jwtToken).sub;
     }
+
+    const header = {
+        'Authorization': `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json'
+    };
+
+    const [ userNickname, setUserNickname ] = useState('');
 
     const navigate = useNavigate();
 
@@ -31,6 +41,25 @@ const SubMenu = (props) => {
 
         setState({ ...state, [anchor]: open });
     };
+
+    //
+    useEffect(()=>{
+
+        const params = {
+            userId: userId
+        }
+
+        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/submenu/nickname`, { params: params, headers: header })
+            .then((response) => {
+                console.log(response);
+                setUserNickname(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+                setUserNickname(null);
+            })
+    },[userNickname])
+    
 
 
     //[로그아웃 핸들러]
@@ -84,7 +113,7 @@ const SubMenu = (props) => {
                 </Link>
                 <div className="mobile-submenu">
 
-                    {nickName == null ?
+                    {userNickname == null ?
                         <AccountCircleRoundedIcon onClick={handlerLoginpage} />
                         :
                         <AccountCircleRoundedIcon onClick={handlerMobileMypage} />
@@ -95,7 +124,7 @@ const SubMenu = (props) => {
                     <Link to="/noticeList" ><li className="submenu-li">NOTICE</li></Link>
                     <Link to="/qnalist"><li className="submenu-li">HELP</li></Link>
                     {
-                        nickName == null ?
+                        userNickname == null ?
                             <>
                                 <Link to="/regist">
                                     <li className="submenu-li">REGIST</li>
@@ -106,7 +135,7 @@ const SubMenu = (props) => {
                             </>
                             :
                             <>
-                                <p onClick={handlerMypage}>Hello {nickName}</p>
+                                <p onClick={handlerMypage}><AccountBoxRoundedIcon/>{userNickname}</p>
                                 <LogoutIcon id="logout-icon" onClick={handlerLogout} />
                             </>
                     }

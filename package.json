@@ -37,6 +37,7 @@
     "styled-components": "^5.3.10",
     "styled-reset": "^4.4.6",
     "sweetalert2": "^11.7.5",
+    "swiper": "^9.3.2",
     "web-vitals": "^2.1.4",
     "websocket": "^1.0.34"
   },

@@ -21,7 +21,8 @@ const TriedMain = () => {
         Authorization: `Bearer ${jwtToken}`
     };
 
-    let totalPage = 0;
+    // let totalPage = 0;
+
 
     const [data, setData] = useState([]);
     const [triedCategoryIdx, setTriedCategoryIdx] = useState(1);
@@ -32,6 +33,8 @@ const TriedMain = () => {
     const [isAllPagesLoaded, setIsAllPagesLoaded] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
+    console.log(totalPages);
+    //{핸들러}무한스크롤링
     const handlerScroll = () => {
         //현재 스크롤 높이
         const scrolledHeight =
@@ -42,65 +45,40 @@ const TriedMain = () => {
         const scrollThreshold = 0.8;
 
         //풀화면 높이 보다 스크롤한 높이가 더 크다면 페이지를 +1 씩 증가시켜라
-
         if (scrolledHeight >= fullHeight * scrollThreshold && !isLoading) {
             //페이지 1씩 증가
             console.log('현재페이지', pages);
-            console.log('총페이지', totalPage);
-
-            if (pages >= totalPage) {
+            console.log('총페이지', totalPages);
+            if (pages >= totalPages) {
                 setIsAllPagesLoaded(true);
                 return
+
             } else {
-                
                 setPages(pages + 1);
-                console.log('바뀐 페이지수',pages+1)
             }
         }
     };
 
-    // 카테고리가 변경되면 axios를 1페이지로 초기값 날림
+    //초기데이터
     useEffect(() => {
-
-        axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/${triedCategoryIdx}/${order}/${year}-01-01/${year}-12-31/${pages}`,
-            { headers: header })
-            .then((response) => {
-                setData(response.data);
-                console.log(response.data);
-                setIsLoading(false);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-
-        axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/totalpage/${triedCategoryIdx}/${order}/${year}-01-01/${year}-12-31/${pages}`,
-            { headers: header })
-            .then((response) => {
-                console.log(response.data);
-                setTotalPages(response.data);
-                totalPage = response.data;
-            })
-            .catch((error) => {
-                console.error(error);
-            })
-
-
         window.addEventListener("scroll", handlerScroll)
 
         return () => {
             window.removeEventListener("scroll", handlerScroll)
         };
-    }, []);
+    }, [pages, totalPages]);
 
 
     // 페이지 수 가져오는 axios 요청
     const totalPageRequest = async () => {
+
+        console.log(">>>>>>>>>>>>>>>>")
+
         try {
             const response = await
                 axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/totalpage/${triedCategoryIdx}/${order}/${year}-01-01/${year}-12-31/${pages}`, { headers: header });
-            //console.log(response);
-            //totalPages = response.data;
-            setTotalPages(response.data);
+            setTotalPages(() => (response.data));
+            console.log('총 페이지수', response.data)
         } catch (error) {
             console.error(error);
         }
@@ -108,6 +86,7 @@ const TriedMain = () => {
 
     //카테고리 변경되면 1페이지로 조회
     const fetchData = async () => {
+        setPages(1);
         try {
             const response = await
                 axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/${triedCategoryIdx}/${order}/${year}-01-01/${year}-12-31/1`, { headers: header });
@@ -128,13 +107,21 @@ const TriedMain = () => {
 
     //페이지 변경되면 해당 카테고리의 페이지대로 조회
     const fetchDataByPage = async () => {
+        console.log(pages);
+
         try {
             const response = await
                 axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/${triedCategoryIdx}/${order}/${year}-01-01/${year}-12-31/${pages}`, { headers: header });
-            let updateData = [...data];
+            let updateData = [];
+            if (pages == 1) {
+                updateData = [];
+            } else {
+                updateData = [...data];
+            }
             for (let i = 0; i < response.data.length; i++) {
                 updateData.push(response.data[i])
             }
+            console.log(updateData)
             setData(updateData);
             setIsLoading(false);
         } catch (error) {
@@ -147,12 +134,8 @@ const TriedMain = () => {
 
     //카테고리 변경시 데이터 조회
     useEffect(() => {
-
-        if (triedCategoryIdx == triedCategoryIdx)
-
-            fetchData();
+        fetchData();
         totalPageRequest();
-        console.log("궁금 첫 렌더링에 작업이 되나?")
     }, [triedCategoryIdx, order, year]);
 
 
@@ -160,13 +143,15 @@ const TriedMain = () => {
     useEffect(() => {
         fetchDataByPage();
         totalPageRequest();
-        console.log("넌 왜 렌더링 되지 않니?? 페이지가 증가했잖니??")
+        console.log("페이지변경")
+        return () => {
+        };
     }, [pages]);
 
 
-const handlerWrite = () =>{
-    navigate(`/tried/write`);
-}
+    const handlerWrite = () => {
+        navigate(`/tried/write`);
+    }
 
     return (
         <Frame>
@@ -181,7 +166,9 @@ const handlerWrite = () =>{
                     order={order} setOrder={setOrder}
                     year={year} setYear={setYear}
                 />
-                <Button type='button' variant="contained" onClick={handlerWrite}>글쓰기</Button>
+                <div id="tried-write-btn">
+                    <Button type='button' variant="contained" onClick={handlerWrite}>글쓰기</Button>
+                </div>
                 <div className="triedMain">
                     <TriedList
                         data={data}
@@ -191,7 +178,7 @@ const handlerWrite = () =>{
                     />
                 </div>
                 <div id="scroll" style={{ height: "1px" }}></div>
-                {isAllPagesLoaded && data.length > 0 && <div>재미있으셨나요? 글이 바닥났어요 ㅠㅠ 글을 써보시는건 어떠신가요?</div>}
+                {isAllPagesLoaded && data.length > 0 && <div>글이 바닥났어요. 글을 써보시는건 어떠신가요?</div>}
             </div>
         </Frame>
     );
