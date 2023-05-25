@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 
 function MapObject(props) {
 
-  const { lat, setLat, lng, setLng, placeName, setPlaceName, data, setDate } = props;
+  const { lat, setLat, lng, setLng, setPlaceName } = props;
 
 
   //컴포넌트 마운트 됐을 때 실행하는 함수
@@ -72,8 +72,11 @@ function MapObject(props) {
       //핀 위치 저장을 어떻게 할까?
       setLat(place.geometry.location.lat());
       setLng(place.geometry.location.lng());
+      setPlaceName(place.name);
       console.log(place.name);
       console.log(place.formatted_address);
+      console.log(place.geometry.location.lat());
+      console.log(place.geometry.location.lng());
       console.log(lat);
       console.log(lng);
 
@@ -119,39 +122,11 @@ function MapObject(props) {
     });
   };
 
-  const handlerSaveLocation = () => {
-
-    //장소 정보 입력 요청
-    axios.post(`http://localhost:8080/api/map/laction/${lat},${lng}`,)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    // {formatdate(props.data)}
-
-
-
-    //인풋창 존나 안나와서 새로 만들어 줌.
-    const newInput = document.body.appendChild(document.createElement("input"))
-    newInput.id = "pac-input";
-
-    initMakeMarker();
-
-  };
-
-
-
-  //투두리스트 같은 입력된 장소가 다시 나오는 컴포넌트 생성
-  // axios.get(`http://localhost:8080/api/map/laction/id) 배열로 정보를 받아서 
-  // 
   return (
     <>
       <div id="map-wrap">
         <input id="pac-input" type="text" placeholder="Search Box" />
         <div id="map"></div>
-        <Button variant="contained" onClick={handlerSaveLocation}>장소저장</Button>
       </div>
     </>
   );

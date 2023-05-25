@@ -1,14 +1,14 @@
 .course-date-pick-wrap{
   border-radius: 10px;
-  border-width: 1px;
-  border-color: black;
+  border-width: 3px;
+  border-color: rgb(100, 100, 100);
   border-style: solid;
   width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding-top: 20px;
+  padding-top: 0px;
   padding-left: 5px;
   padding-right: 5px;
   box-sizing: border-box;
@@ -16,9 +16,66 @@
 
 }
 
-.course-date-pick-wrap > h2{
+.course-date-pick-wrap-choice{
+  border-radius: 10px;
+  border-width: 3px;
+  border-color: rgb(89, 161, 255);
+  background-color: rgb(249, 252, 255);;
+  border-style: solid;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-top: 0px;
+  padding-left: 5px;
+  padding-right: 5px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+.course-date-pick-wrap-choice > div > svg{
+  color: rgb(89, 161, 255);
+}
+
+.course-date-pick-black{
+  height: 26px;
+}
+
+
+.course-date-pick-delete-btn{
+  cursor: pointer;
+}
+
+.course-date-pick-delete-btn:hover{
+  color: rgb(255, 104, 104);
+}
+
+.course-date-pick-up-btn{
+  cursor: pointer;
+}
+
+.course-date-pick-up-btn:hover{
+  color: rgb(255, 104, 104);
+}
+
+.course-date-pick-down-btn{
+  cursor: pointer;
+}
+
+.course-date-pick-down-btn:hover{
+  color: rgb(255, 104, 104);
+}
+
+
+/* .course-date-pick-wrap > h2{
   margin-bottom : 30px;
 }
+
+.course-date-pick-wrap-choice > h2{
+  margin-bottom : 30px;
+} */
+
 
 .course-date-pick-chips {
   display: flex;
@@ -36,9 +93,14 @@
 }
 
 .course-date-pick-description{
+  width: 80%;
   margin-top:20px;
   margin-bottom: 20px;
   font-size: 0.8rem;
+}
+
+.course-date-pick-description > div{
+  width: 100%;
 }
 
 #course-date-wrap{

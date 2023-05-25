@@ -1,11 +1,88 @@
 import './Koreaprice.css';
 import Frame from "../main/Frame";
 import KoreapriceEachItem from './KoreapriceEachItem';
-import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault';
+import KoreapriceCart from './KoreapriceCart';
+import KoreapriceExchange from './KoreapriceExchange';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import apple from "./img/apple.jpg";
+import bigmac from "./img/bigmac.jpg";
+import garlic from "./img/garlic.jpg";
+import salt from "./img/salt.jpg";
+import rice from "./img/rice.jpg";
+import egg from "./img/egg.jpg";
+import chicken from "./img/chicken.jpg";
+import pork from "./img/pork.jpg";
+import beef from "./img/beef.jpg";
+import cheese from "./img/cheese.jpg";
 
 const Koreaprice = () => {
 
-  const items = [1, 2, 3, 4, 4, 5, 6, 7, 8, 9, 10];
+  let jwtToken = null;
+  if (sessionStorage.getItem("token") != null) {
+    jwtToken = sessionStorage.getItem("token");
+  }
+
+  const header = {
+    Authorization: `Bearer ${jwtToken}`,
+  };
+
+  const imgArray = [
+    apple,
+    garlic,
+    bigmac,
+    salt,
+    rice,
+    egg,
+    chicken,
+    pork,
+    beef,
+    cheese,
+  ];
+  
+  //상품 리스트 변수
+  const [productLists, setProductLists] = useState([]);
+
+  const [ sum ,setSum] = useState(0);
+
+  //컴포넌트 마운트시 상품리스트에 이미지 이름 추가하기
+  useEffect(() => {
+    axios
+      .get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/koreaprice`, 
+      // { headers: header }
+      )
+      .then((response) => {
+        console.log(response.data);
+        let rsp = response.data;
+        for (let i = 0; i < rsp.length; i++) {
+          rsp[i] = { ...rsp[i], img: imgArray[i] };
+        }
+        console.log(rsp);
+        setProductLists(rsp);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+
+  const [nameAndPrice, setNameAndPrice] = useState([{ price: 0 }]);
+
+  const handlerSetNameAndPrice = (name, price, capacity) => {
+    if (nameAndPrice[0].price == 0) {
+      setNameAndPrice(() => [{ name, price, capacity, count: 0 }]);
+    } else {
+      // 중복 확인
+      const isDuplicate = nameAndPrice.some((item) => item.name === name);
+
+      // 중복되지 않은 경우에만 추가
+      if (!isDuplicate) {
+        setNameAndPrice((prevNameAndPrice) => [
+          ...prevNameAndPrice,
+          { name, price, capacity, count: 0 },
+        ]);
+      }
+    }
+  };
+
 
   return (
     <Frame>
@@ -15,33 +92,14 @@ const Koreaprice = () => {
       <div id="koreaprice-wrap">
         <p id="koreaprice-title">물가체험</p>
         <div id="koreaprice-price-window">
-          <div id="koreaprice-cart">
-            <div id="koreaprice-cart-coltitle">
-              <span className='koreaprice-cart-coltitle-1'>상품명</span>
-              <span className='koreaprice-cart-coltitle-2'>수량</span>
-              <span className='koreaprice-cart-coltitle-3'>단가</span>
-              <span className='koreaprice-cart-coltitle-4'>금액</span>
-            </div>
-            <div className='koreaprice-cart-col-products'>
-
-              <span className='koreaprice-cart-1'>상품명</span>
-              <span className='koreaprice-cart-2'>수량</span>
-              <span className='koreaprice-cart-3'>단가</span>
-              <span className='koreaprice-cart-4'>금액</span>
-              <span className='koreaprice-cart-5'>
-                <DisabledByDefaultIcon />
-              </span>
-            </div>
-          </div>
-          <div id="koreaprice-exchange">
-            <div id="koreaprice-exchange-won">WON</div>
-            <div>YOUR</div>
-          </div>
+          {/* 인포 */}
+          <KoreapriceCart sum={sum} setSum={setSum} nameAndPrice={nameAndPrice} setNameAndPrice={setNameAndPrice}/>
+          <KoreapriceExchange sum={sum} setSum={setSum}/>
         </div>
         <div id="koreaprice-items-list">
-          {items.map((item) => {
+          {productLists.map((item) => {
             return (
-              <KoreapriceEachItem item={item} />)
+              <KoreapriceEachItem item={item} handlerSetNameAndPrice={handlerSetNameAndPrice}/>)
           })}
         </div>
       </div>

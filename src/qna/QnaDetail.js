@@ -6,8 +6,24 @@ import Textarea from '@mui/joy/Textarea';
 import Parser from "html-react-parser";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 
 const QnaDetail = () => {
+
+    let nickName = null;
+    let userId = null;
+    let jwtToken = null;
+    if (sessionStorage.getItem('token') != null) {
+        jwtToken = sessionStorage.getItem('token');
+        userId = jwt_decode(jwtToken).sub;
+        nickName = jwt_decode(jwtToken).nickname;
+    }
+
+    const header = {
+        'Authorization': `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json'
+    };
+
 
     const navigate = useNavigate();
 
@@ -19,7 +35,7 @@ const QnaDetail = () => {
     const [contents, setContents] = useState('');
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/qna/${qnaIdx}`)
+        axios.get(`http://${process.env.REACT_APP_JYS_IP}:8080/api/qna/${qnaIdx}`, {headers : header})
             .then(response => {
                 console.log(response.data)
                 setQna(response.data.selectQnaInfo);
@@ -35,8 +51,7 @@ const QnaDetail = () => {
     const handlerClickList = () => navigate('/qnalist');
 
     const handlerClickDelete = () => {
-        axios.delete(`http://localhost:8080/api/qna/${qnaIdx}`
-            // ,{ headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
+        axios.delete(`http://${process.env.REACT_APP_JYS_IP}:8080/api/qna/${qnaIdx}`, {headers : header}
         )
             .then(response => {
                 alert('정상적으로 삭제되었습니다.');
@@ -57,8 +72,8 @@ const QnaDetail = () => {
     const handlerSubmit = e => {
         e.preventDefault();
 
-        axios.post(`http://localhost:8080/api/qna/comments/write/${qnaIdx}`, 
-            { "qnaCommentContent": contents })
+        axios.post(`http://${process.env.REACT_APP_JYS_IP}:8080/api/qna/comments/write/${qnaIdx}`, 
+            { "qnaCommentContent": contents }, {headers : header})
             .then(response => {
                 console.log(response);
                 alert('코맨트가 정상적으로 등록되었습니다');

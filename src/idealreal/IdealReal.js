@@ -8,9 +8,23 @@ import { Pagination } from "@mui/material";
 import Frame from "../main/Frame";
 import styles from "./IdealReal.module.css"
 import Button from '@mui/joy/Button';
-
+import jwt_decode from 'jwt-decode';
 
 function Idealreal() {
+
+    let nickName = null;
+    // let userId = null;
+    let jwtToken = null;
+    if (sessionStorage.getItem('token') != null) {
+        jwtToken = sessionStorage.getItem('token');
+        // userId = jwt_decode(jwtToken).sub;
+        nickName = jwt_decode(jwtToken).nickname;
+    }
+
+    const header = {
+        'Authorization': `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json'
+    };
 
     const navigate = useNavigate();
 
@@ -27,8 +41,14 @@ function Idealreal() {
     const lengthDifference = 10 - data.length;
 
     useEffect(() => {
+        if (!sessionStorage.getItem('token')) {
+            alert("로그인이 필요합니다.")
+            navigate(`/login`);
+            return
+        }
+
         //1페이지 리스트 조회
-        axios.get(`http://localhost:8080/api/listidealreal/${page}`)
+        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal/${page}`, {headers:header})
             .then(response => {
                 console.log(response.data)
                 setData(response.data);
@@ -38,7 +58,7 @@ function Idealreal() {
             })
 
         //페이지수 조회
-        axios.get(`http://localhost:8080/api/listidealrealpagecount`)
+        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealrealpagecount`, {headers:header})
             .then(response => {
                 console.log(response.data)
                 // let pageCount = response.data;
@@ -57,7 +77,7 @@ function Idealreal() {
 
     useEffect(() => {
         //1페이지 리스트 조회
-        axios.get(`http://localhost:8080/api/listidealreal/${page}`)
+        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal/${page}`,{headers:header})
             .then(response => {
                 console.log(response.data)
                 setData(response.data);
@@ -67,7 +87,7 @@ function Idealreal() {
             })
 
         //페이지수 조회
-        axios.get(`http://localhost:8080/api/listidealrealpagecount`)
+        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealrealpagecount`,{headers:header})
             .then(response => {
                 console.log(response.data)
                 // let pageCount = response.data;
@@ -84,8 +104,8 @@ function Idealreal() {
 
 
     // 원본이 없어도 사진 보이고 싶었는데 잘 안됩니다
-    const idealImg = `http://localhost:8080/api/getimage/${idealrealIdealImg}`;
-    const realImg = `http://localhost:8080/api/getimage/${idealrealRealImg}`;
+    // const idealImg = `http://${process.env.REACT_APP_KTG_IP}:8080/api/getimage/${idealrealIdealImg}`;
+    // const realImg = `http://${process.env.REACT_APP_KTG_IP}:8080/api/getimage/${idealrealRealImg}`;
 
 
     // 페이징
@@ -107,7 +127,7 @@ function Idealreal() {
     }
 
     const handlerInpage = (idealrealIdx) => {
-        navigate(`/listidealreal/detail/${idealrealIdx}`);
+        navigate(`/idealreal/detail/${idealrealIdx}`);
     }
 
 
@@ -148,11 +168,11 @@ function Idealreal() {
                                                     <div className={styles.imgBox}>
                                                         <img
                                                             className={styles.image}
-                                                            src={`http://localhost:8080/api/getimage/${idealreal.idealrealRealImg}`}
+                                                            src={`http://192.168.0.4:8080/api/getimage/${idealreal.idealrealRealImg}`}
                                                         />
                                                         <img
                                                             className={styles.image}
-                                                            src={`http://localhost:8080/api/getimage/${idealreal.idealrealIdealImg}`}
+                                                            src={`http://192.168.0.4:8080/api/getimage/${idealreal.idealrealIdealImg}`}
                                                         />
                                                     </div>
                                                 </td>

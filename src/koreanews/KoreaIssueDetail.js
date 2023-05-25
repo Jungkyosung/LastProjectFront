@@ -1,9 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
 import Frame from "../main/Frame";
-import styles from "./KoreaIssueDtail.module.css";
+import styles from "./KoreaIssueDetail.module.css";
 import Button from '@mui/material/Button';
 
 const KoreaIssueDetail = (props) => {
+    //Link to 로 프랍스 받는 변수 
     const location = useLocation();
     // const title = location.state.title;
     // const content = location.state.content;
@@ -22,7 +23,7 @@ const KoreaIssueDetail = (props) => {
                 <h2>한국 이슈</h2>
 
                 <h3>{title}</h3>
-                <em>{broadcast_date}</em>
+                <em>{broadcast_date.substr(0,10)}</em>
                 <img src={thum_url}></img>
                 <p>{content}</p>
                 <Link to="/koreaissue/"><Button variant="contained">목록으로</Button></Link>

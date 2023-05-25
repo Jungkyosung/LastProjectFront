@@ -3,11 +3,23 @@ import { useEffect, useRef, useState } from "react";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Button from '@mui/joy/Button';
-
-
+import jwt_decode from 'jwt-decode';
 
 function Thumb(props) {
 
+  let nickName = null;
+  let loginUserId = null;
+  let jwtToken = null;
+  if (sessionStorage.getItem('token') != null) {
+      jwtToken = sessionStorage.getItem('token');
+      loginUserId = jwt_decode(jwtToken).sub;
+      nickName = jwt_decode(jwtToken).nickname;
+  }
+
+  const header = {
+      'Authorization': `Bearer ${jwtToken}`,
+      'Content-Type': 'application/json'
+  };
 
   const [idealrealIdx, setIdealrealIdx] = useState(props.idealrealIdx);
   const [userId, setUserId] = useState(props.userId);
@@ -24,7 +36,7 @@ function Thumb(props) {
 
 
     //해당 글 좋아요 수 조회
-    axios.get(`http://localhost:8080/api/listidealreal/detail/getlike/${idealrealIdx}`)
+    axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/${idealrealIdx}/getlike`, {headers:header})
       .then(response => {
         console.log(response);
         setLikeCount(response.data);
@@ -32,10 +44,7 @@ function Thumb(props) {
       .catch(error => console.log(error));
 
     //이 사람이 좋아요를 눌른 놈인지 아닌지
-    //추후 로그인 토큰 값으로 변경 필요!!!
-    let loginId = 'jks@jks.com';
-
-    axios.get(`http://localhost:8080/api/listidealreal/detail/likecheck/${idealrealIdx}/${loginId}`)
+    axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal/detail/likecheck/${idealrealIdx}/${loginUserId}`, {headers:header})
       .then(response => {
         console.log(response);
         setLikeCheck(response.data);
@@ -50,21 +59,22 @@ function Thumb(props) {
   const LikeCountHandler = () => {
 
     //추후 로그인 토큰 값으로 변경 필요!!!
-    let loginId = 'jks@jks.com';
+    // let loginId = 'jks@jks.com';
 
     let data = {
-      userId: loginId,
+      userId: loginUserId,
       idealrealIdx: idealrealIdx
     }
 
     let headers = {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${jwtToken}`,
     };
 
     if (likeCheck == 0) {
 
       setLikeCount(prev => prev + 1)
-      axios.post(`http://localhost:8080/api/${idealrealIdx}/like`,
+      axios.post(`http://${process.env.REACT_APP_KTG_IP}:8080/api/${idealrealIdx}/like`,
         data, headers)
         .then(response => {
           console.log(response);
@@ -76,8 +86,8 @@ function Thumb(props) {
         });
     } else if (likeCheck == 1) {
       setLikeCount(prev => prev - 1)
-      axios.delete(`http://localhost:8080/api/${idealrealIdx}/unlike`,
-        { data })
+      axios.delete(`http://${process.env.REACT_APP_KTG_IP}:8080/api/${idealrealIdx}/unlike`,
+        { data }, {headers})
         .then(response => {
           console.log(response);
           setLikeCheck(0);

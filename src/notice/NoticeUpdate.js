@@ -18,15 +18,16 @@ const NoticeUpdate = () => {
 
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [notice, setNotice] = useState({});
+
+    const [ notice, setNotice ] = useState({});
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/notice/${noticeIdx}`)
+        axios.get(`http://${process.env.REACT_APP_JYS_IP}:8080/api/notice/${noticeIdx}`)
             .then(response => {
                 console.log(response.data);
-                setNotice(response.data);
-                setTitle(response.data.noticeTitle);
-                setContent(response.data.noticeContent);
+                let rsp = response.data;
+                setTitle(rsp.noticeTitle);
+                setContent(rsp.noticeContent);
             })
             .catch(error => {
                 console.log(error);
@@ -34,7 +35,7 @@ const NoticeUpdate = () => {
     }, [])
 
     const handlerClickUpdate = () => {
-        axios.put(`http://localhost:8080/api/notice/update/${noticeIdx}`,
+        axios.put(`http://${process.env.REACT_APP_JYS_IP}:8080/api/notice/update/${noticeIdx}`,
             { "noticeTitle": title, "noticeContent": content })
             .then(response => {
                 console.log(response)
@@ -43,7 +44,7 @@ const NoticeUpdate = () => {
             })
             .catch(error => {
                 console.log(error);
-                alert(`${error.message}`);
+                alert(`요기서 에러 ${error.message}`);
             })
 
     };
@@ -52,16 +53,16 @@ const NoticeUpdate = () => {
         setTitle(e.target.value);
     };
 
-    // const handleChangeConnent = (e) => {
-    //     setContent(e.target.value);
-    // };
+    const handleChangeConnent = (e) => {
+        setContent(e.target.value);
+    };
 
     return (
         <Frame>
             <div className={styles.contentsWrap}>
                 <h2 className={styles.noticeTitle}>공지사항</h2>
                 <h3 className={styles.subTitle}>공지사항 제목</h3>
-                <Input placeholder="제목을 입력해 주세요"  id="title" name="title" value={title} onChange={handleChangeTitle} style={{ border: "none", borderBottom: "1px solid #5E8FCA", borderRadius: 0, width: "60%" }} />
+                <Input placeholder="제목을 적어주세요" id="notice-title" name="title" value={title} onChange={handleChangeTitle} style={{ border: "none", borderBottom: "1px solid #5E8FCA", borderRadius: 0, width: "60%" }} />
                 <h3 className={styles.subTitle}>공지사항 내용</h3>
                 {/* <Textarea id="comment" name="comment" value={content} placeholder="내용을 적어주세요" onChange={handleChangeComment} variant="plain" style={{ borderBottom: "1px solid rgba(94, 143, 202, 0.2)", borderTop: "1px solid #5E8FCA", borderRadius: 0, width: "1180px", height: "363px" }} /> */}
                 <div className={styles.editor}>
@@ -70,7 +71,7 @@ const NoticeUpdate = () => {
                         data={content}
                         onReady={editor => {
                             // You can store the "editor" and use when it is needed.
-                            //console.log('Editor is ready to use!', editor);
+                            console.log('Editor is ready to use!', editor);
                         }}
                         onChange={(event, editor) => {
                             const data = editor.getData();

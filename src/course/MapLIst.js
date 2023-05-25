@@ -12,9 +12,11 @@ import MapDetail from './MapDetail';
 const MapList = () => {
 
     let nickName = null;
+    let userId = null;
     let jwtToken = null;
     if (sessionStorage.getItem('token') != null) {
         jwtToken = sessionStorage.getItem('token');
+        userId = jwt_decode(jwtToken).sub;
         nickName = jwt_decode(jwtToken).nickname;
     }
 
@@ -23,22 +25,101 @@ const MapList = () => {
         'Content-Type': 'application/json'
     };
 
-    //배열로 변경해야 함.
+    //모달을 배열로 변경
+    const [modalState, setModalState] = useState([]);
     const [modal, setModal] = useState(false);
-
-    const modalOpen = () => {
-        setModal(true);
+    const modalOpen = (index) => {
+        let updateArray = [...modalState];
+        updateArray[index] = true;
+        console.log('몇번째 모달 켜진거지?', updateArray)
+        setModalState(updateArray);
     }
 
+    const modalStateClose = (index) => {
+        let updateArray = [...modalState];
+        updateArray[index] = false;
+        setModalState(updateArray);
+        document.body.style.cssText = `
+        position: static;`
+    }
     const [datas, setDatas] = useState([]);
+    const [filterDatas, setFilterDatas] = useState([]);
+    const [days, setDays] = useState([]);
 
+    //시작하면 리스트 가져오는 함수
     useEffect(() => {
-        axios.get('http://localhost:8080/api/course', { headers: header })
+        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/course`, 
+        // { headers: header }
+        )
             .then(response => {
                 console.log(response);
+                let array = response.data;
+                array = removeDuplicates(array, "travelcourseIdx");
+                setFilterDatas(array);
+
+                //모달배열만들기 ( 글 개수만큼 )
+                let updateModalArray = [...array];
+                for (let i = 0; i < array.length; i++) {
+                    updateModalArray[i] = false;
+                }
+                console.log(updateModalArray);
+                setModalState(updateModalArray);
+
+                console.log(array);
                 setDatas(response.data);
+                let 데이정보 = 객체배열담기(array, response.data);
+                console.log(데이정보);
+                setDays(데이정보);
             })
     }, []);
+
+    const 객체배열담기 = (filter, origin) => {
+        const 필터배열 = filter;
+        const 원본배열 = origin;
+        const 담을배열 = [];
+        let 임시객체 = [];
+
+        for (let i = 0; i < 필터배열.length; i++) {
+            for (let j = 0; j < 원본배열.length; j++) {
+                if (필터배열[i].travelcourseIdx == 원본배열[j].travelcourseIdx) {
+                    임시객체 = [
+                        ...임시객체, {
+                            travelcourseIdx: 원본배열[j].travelcourseIdx,
+                            day: 원본배열[j].day,
+                            dayDescription: 원본배열[j].dayDescription,
+                            lat: 원본배열[j].lat,
+                            lng: 원본배열[j].lng,
+                            orders: 원본배열[j].orders,
+                            placeName: 원본배열[j].placeName
+                        }
+                    ]
+                }
+            }
+            if (임시객체 != 0) {
+                담을배열.push(임시객체);
+            }
+            임시객체 = [];//초기화
+        }
+        return 담을배열;
+    }
+
+
+    //중복제거 함수
+    const removeDuplicates = (array, key) => {
+        const uniqueArray = [];
+        const uniqueKeys = [];
+
+        array.forEach((item) => {
+            const value = item[key];
+            if (!uniqueKeys.includes(value)) {
+                uniqueKeys.push(value);
+                uniqueArray.push(item);
+            }
+        });
+
+        return uniqueArray;
+    };
+
 
     return (
         <Frame>
@@ -53,38 +134,42 @@ const MapList = () => {
                     </Link>
                 </div>
                 <div id="travelcourse-list-lists">
-                    <MapEach modalOpen={modalOpen} />
-                    <MapEach />
-                    <MapEach />
-                    <MapEach />
-                    <MapEach />
-                    <MapEach />
-                    <MapEach />
+                    {filterDatas && filterDatas.map((course, index) => (
+                        <>
+                            <MapEach
+                                modalOpen={() => modalOpen(index)}
+                                userNickname={course.userNickname}
+                                startDate={course.travelcourseStartDate.substr(0, 10)}
+                                endDate={course.travelcourseEndDate.substr(0, 10)}
+                                title={course.travelcourseTitle}
+                                days={days[index]}
+                                modal={modal}
+                                setModal={setModal}
+                            />
+                            {modalState[index] &&
+                                <MapDetail
+                                    modal={modal}
+                                    setModal={setModal}
+                                    userId={course.userId}
+                                    userNickname={course.userNickname}
+                                    startDate={course.travelcourseStartDate.substr(0, 10)}
+                                    endDate={course.travelcourseEndDate.substr(0, 10)}
+                                    title={course.travelcourseTitle}
+                                    days={days[index]}
+                                    modalStateClose={() => modalStateClose(index)}
+                                    removeDuplicates={removeDuplicates}
+                                />
+                            }
+                        </>
+                    ))}
                 </div>
-                {modal &&
-                    <MapDetail modal={modal} setModal={setModal} />
-                }
                 {
                     datas.length === 0 && (
                         <div>
-                            <span>일치하는 지도가 없다.</span>
+                            <span> 데이터가 없다.</span>
                         </div>
                     )
                 }
-                {
-                    datas && datas.map(course => (
-                        <div key={course.travelcourseIdx}>
-                            <span>{course.travelcourseIdx}</span>
-                            <span className="title">
-                                <Link to={`/course/detail/${course.travelcourseIdx}`}>{course.travelcourseTitle}</Link></span>
-                            <span>{course.travelcourseCnt}</span>
-                            <span>{course.travelcourseCreatedtime}</span>
-                        </div>
-                    ))
-                }
-
-
-                <Link to="/course/mapwrite" className="btn">글쓰기</Link>
             </div>
         </Frame>
     );

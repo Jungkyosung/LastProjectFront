@@ -6,9 +6,25 @@ import Frame from "../main/Frame";
 import styles from "./IdealrealDetail.module.css";
 import Parser from "html-react-parser";
 import Button from '@mui/joy/Button';
-
+import jwt_decode from 'jwt-decode';
 
 function IdealrealDetail() {
+
+    let nickName = null;
+    // let userId = null;
+    let jwtToken = null;
+    if (sessionStorage.getItem('token') != null) {
+        jwtToken = sessionStorage.getItem('token');
+        // userId = jwt_decode(jwtToken).sub;
+        nickName = jwt_decode(jwtToken).nickname;
+    }
+
+    const header = {
+        'Authorization': `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json'
+    };
+
+
     const [data, setData] = useState([]);
     const [idealrealTitle, setIdealrealTitle] = useState('');
     const [idealrealContent, setIdealrealContent] = useState('');
@@ -25,7 +41,6 @@ function IdealrealDetail() {
     const { idealrealIdx } = useParams();
     const navigate = useNavigate();
 
-
     useEffect(() => {
         // if (!sessionStorage.getItem('token')) {
         //     alert("로그인 했어?")
@@ -33,8 +48,8 @@ function IdealrealDetail() {
         //     return
         // }
 
-        axios.get(`http://localhost:8080/api/listidealreal/detail/${idealrealIdx}`
-            // ,{ headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
+        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal/detail/${idealrealIdx}`
+            ,{ headers: header }
         )
             .then(response => {
                 console.log(response);
@@ -52,33 +67,28 @@ function IdealrealDetail() {
 
     //목록 수정 삭제 버튼 클릭시 이동
     const hanlderClickList = () => navigate('/idealreal')
-    const handlerClickRetouch = () => navigate(`/idealrealretouch/${idealrealIdx}`)
+    
+    
+    const handlerClickRetouch = () => navigate(`/idealrealretouch/${idealrealIdx}`, {state : { idealImg: idealImg, realImg: realImg }})
+
+
     const handlerClickDelete = () => {
-        axios.delete(`http://localhost:8080/api/listidealreal/${idealrealIdx}`,
-            // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
+        axios.delete(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal/${idealrealIdx}`,
+            {headers:header}
         )
             .then(response => {
                 console.log(response)
-                alert('헤어진 다음날 전화기를 켜보니')
+                alert('삭제되었습니다.')
                 navigate('/idealreal');
             })
-            .catch(erorr => {
-                console.log('안되나용')
+            .catch(error => {
+                console.log(error)
                 return
             })
     };
     // 이미지를 가져오는 주소를 설정
-    const idealImg = `http://localhost:8080/api/getimage/${idealrealIdealImg}`;
-    const realImg = `http://localhost:8080/api/getimage/${idealrealRealImg}`;
-
-    // const container = {
-    //     display: 'flex',
-    //     flexDirection: 'comlum',
-    //     width: '1180px',
-    //     margin: '0 auto',
-    //     position: 'relative'
-    // }
-
+    const idealImg = `http://${process.env.REACT_APP_KTG_IP}:8080/api/getimage/${idealrealIdealImg}`;
+    const realImg = `http://${process.env.REACT_APP_KTG_IP}:8080/api/getimage/${idealrealRealImg}`;
 
 
     return (
@@ -107,77 +117,12 @@ function IdealrealDetail() {
                     </div>
                         <div style={{margin:"20px 0"}}><Thumb idealrealIdx={idealrealIdx}/></div>
                 </div>
-                {/* <form action="" method="POST" id="frm" name="frm">
-
-                    <input type="hidden" name="idealrealIdx" />
-
-                    <table className="idealreal_detail" style={{
-                        width: '800px',
-                        margin: '0 auto',
-                        border: '1px solid yellow',
-                        borderCollapse: 'collapse'
-                    }}>
-                        <colgroup>
-                            <col width="15px" />
-                            <col width="35%" />
-                            <col width="15%" />
-                            <col width="35%" />
-                        </colgroup>
-                        <tbody>
-                            <tr style={{ width: '100%' }}>
-                                <th scope="row">글번호</th>
-                                <td>{idealrealIdx}</td>
-                                <th scope="row">조회수</th>
-                                <td>{idealrealCnt}</td>
-                                <th scope="row"><Thumb idealrealIdx={idealrealIdx}/> </th>
-                            </tr>
-                            <tr>
-                                <th scope="row">작성자</th>
-                                <td>{userId}</td>
-                                <th scope="row">작성일</th>
-                                <td>{idealrealCreatedTime}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">제목</th>
-                            
-                                <td colSpan="4">
-                                    <h2>{idealrealTitle}</h2>
-                                </td>
-                            </tr>
-                            
-                            <tr>
-                                <th scope="row"></th>
-                                <td>
-                                    <div style={{
-                                        display: 'flex', flexDirection: 'row', alignContent: 'center',
-                                        height: '300px', border: '1px solid yellow'
-                                    }} >
-                                        <img src={idealImg} style={{ width: 'auto' }} />
-                                        <img src={realImg} style={{ width: 'auto' }} />
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colSpan="4" className="view_text" style={{
-                                    width: 'calc(100% - 6px)',
-                                    height: '200px', border: '1px solid purple'
-                                }}>
-                                    {idealrealContent}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </form> */}
                 <div className={styles.buttonWrap}>
                     <Button sx={{ color: "white", background: "#5E8FCA", ":hover": { background: "#2d6ebd" } }} id="edit" value="수정하기" onClick={handlerClickRetouch}>수정하기</Button>
                     <Button sx={{ color: "white", background: "#5E8FCA", ":hover": { background: "#2d6ebd" } }} style={{ marginLeft: "20px", marginRight: "20px" }} id="list" value="목록으로" onClick={hanlderClickList}>목록보기</Button>
                     <Button sx={{ color: "white", background: "#5E8FCA", ":hover": { background: "#2d6ebd" } }} id="delete" value="삭제하기" onClick={handlerClickDelete} >삭제하기</Button>
                 </div>
-                {/* <div>
-                    <input type="button" id="list" className="btn" value="목록으로" onClick={hanlderClickList} />
-                    <input type="button" id="edit" className="btn" value="수정하기" onClick={handlerClickRetouch} />
-                    <input type="button" id="delete" className="btn" value="삭제하기" onClick={handlerClickDelete} />
-                </div> */}
+
             </div>
         </Frame>
     );

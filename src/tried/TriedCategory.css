@@ -1,0 +1,33 @@
+.triedCategory{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 40%;
+
+}
+
+.category-idx > button{
+    background-color: white;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.category-idx > button:hover{
+    background-color: rgb(236, 170, 252);
+}
+
+.category-idx > .active{
+    color:rgb(224, 53, 224)
+}
+
+.category-order > select{
+    font-size: 1.2rem;
+}
+
+.category-year > select{
+    font-size: 1.2rem;
+
+}

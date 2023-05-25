@@ -69,8 +69,8 @@
 }
 
 /* 채팅방리스트 */
-.chatroomList{
-
+#chatroomList{
+  height: 100%;
 }
 
 /* 채팅대화창 */
@@ -78,5 +78,9 @@
   height : 20%;
   max-height: 300px;
   overflow: auto;
+}
+
+#chat{
+  height: 550px;
 }
 

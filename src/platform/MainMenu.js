@@ -11,15 +11,33 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-
+import i18n from "i18next";
+import { useTranslation } from 'react-i18next';
  
 
 
 const MainMenu = () => {
 
-    const [lang, setLang] = useState('');
+    const { t } = useTranslation();
+
+    const onChangeLang = (lang) => {
+        let a="";
+        switch(lang){
+            case 10 : a = 'en'
+            break;
+            case 15 : a = 'ko'
+            break;
+            case 20 : a = 'jp'
+            break;
+        }
+        i18n.changeLanguage(a);
+    }
+
+    const [lang, setLang] = useState(15);
     
     const handleChange = (event) => {
+      onChangeLang(event.target.value);
+
       setLang(event.target.value);
     };
     
@@ -33,32 +51,20 @@ const MainMenu = () => {
             </div>
             <nav className={styles.dropmenu}>
                 <ul>
-                    <li ><Link to="/" className={styles.main}>ABOUT_US</Link></li>
-                    <li ><Link to="/" className={styles.main}>지금 한국은</Link>
+                    <li ><Link to="/aboutus" className={styles.main}>{t('page:aboutUs')}</Link></li>
+                    <li ><Link to="/" className={styles.main}>{t('page:nowKorea')}</Link>
                         <ul>
-                            <li className={styles.sub}><DetailMenu1 /></li>
-                            {/* <li ><Link to="/" className={styles.sub}>패션</Link></li>
-                            {/* <li ><Link to="/" className={styles.sub}>음식</Link></li>
-                            <li ><Link to="/" className={styles.sub}>문화</Link></li> */}
+                            <li className={styles.sub}><DetailMenu1 t={t}/></li>
                         </ul>
                     </li>
-                    <li ><Link to="/" className={styles.main}>여행정보</Link>
+                    <li ><Link to="/" className={styles.main}>{t('page:travelInfo')}</Link>
                         <ul>
-                            <li className={styles.sub}><DetailMenu2 /></li>
-                            {/* <li ><Link to="/" className={styles.sub}>날씨</Link></li>
-                            <li ><Link to="/" className={styles.sub}>여행코스</Link></li>
-                            <li ><Link to="/" className={styles.sub}>카드뉴스</Link></li> */}
+                            <li className={styles.sub}><DetailMenu2 t={t}/></li>
                         </ul>
                     </li>
-                    <li ><Link to="/" className={styles.main}>커뮤니티</Link>
+                    <li ><Link to="/" className={styles.main}>{t('page:community')}</Link>
                         <ul>
-                            <li className={styles.sub}><DetailMenu3 /></li>
-                            {/* <li ><Link to="/" className={styles.sub}>글로벌 채팅</Link></li>
-                            <li ><Link to="/" className={styles.sub}>웹 만화</Link></li>
-                            <li ><Link to="/" className={styles.sub}>어디까지</Link></li>
-                            <li ><Link to="/" className={styles.sub}>여행 친구</Link></li>
-                            <li ><Link to="/" className={styles.sub}>이상과 현실</Link></li>
-                            <li><Link to="/"  className={styles.sub}>물가 체험</Link></li> */}
+                            <li className={styles.sub}><DetailMenu3 t={t}/></li>
                         </ul>
                     </li>
                 </ul>
@@ -66,11 +72,11 @@ const MainMenu = () => {
             <div className={styles.language}>
                 <LanguageIcon style={{ fontSize: "30px" }} />
                 <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                    <InputLabel id="demo-simple-select-standard-label">Korea</InputLabel>
                     <Select
                         labelId="demo-simple-select-standard-label"
                         id="demo-simple-select-standard"
                         value={lang}
+                        defaultValue={15}
                         onChange={handleChange}
                         label="lang"
                     >
@@ -79,7 +85,6 @@ const MainMenu = () => {
                         </MenuItem>
                         <MenuItem value={10}>Eng</MenuItem>
                         <MenuItem value={20}>Jap</MenuItem>
-                        {/* <MenuItem value={30}></MenuItem> */}
                     </Select>
                 </FormControl>
             </div>

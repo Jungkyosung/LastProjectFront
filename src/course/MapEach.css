@@ -85,6 +85,11 @@
   align-items: center;
 }
 
+.map-each-course-blank-btn{
+  width:24px;
+  height: 1px;
+}
+
 #map-each-course-wrap>svg {
   cursor: pointer;
   height: 13px;
@@ -101,6 +106,7 @@
   flex-direction: column;
   font-size: 0.8rem;
   line-height: 20px;
+  width: 100%;
 }
 
 #map-each-course-day {

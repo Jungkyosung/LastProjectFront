@@ -1,0 +1,18 @@
+
+
+#travelcourse-list-img>img{
+    width : 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+#tried-wrap{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.triedMain{
+    width: 50%;
+}
