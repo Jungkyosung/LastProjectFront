@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+// import styled from "styled-worldcup";
 import { FlexBox } from "./Style";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -16,7 +16,7 @@ const Game3 = () => {
     const [winners, setWinners] = useState([]);
     // const [ winpage, setWinpage ] = useState([]);
 
-    const triedCategoryIdx = 2;
+    const triedCategoryIdx = 3;
     const [ tournament, setTournament ] = useState([]);
   
     useEffect(() => {

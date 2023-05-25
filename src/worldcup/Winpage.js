@@ -1,7 +1,7 @@
 import './Winpage.css';
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams , Link } from 'react-router-dom';
 import {PieChart, Pie, Cell, ResponsiveContainer,Legend} from 'recharts';
 
 
@@ -102,6 +102,17 @@ const Winpage = () => {
 
         return (
         <>
+            <div>
+               <Link to="/">홈으로</Link>
+            </div>
+            <div>
+               <Link to="/1">음식</Link>
+            </div>
+            <div>
+               <Link to="/2">장소</Link>
+            </div>
+               <Link to="/3">문화</Link>
+               
                 <div className='win'>WINNER</div>            
                 <div style={{height: 800 }}>  
                     <ResponsiveContainer width="100%" height="100%"  >

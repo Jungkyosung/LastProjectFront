@@ -5,11 +5,11 @@ import NotFound from './not_found/NotFound';
 import Main from './main/Frame';
 import LoginPage from './login/LoginPage';
 import MapList from './course/MapList';
-import Game2 from "./components/Game2";
-import Game1 from "./components/Game1";
-import Game3 from "./components/Game3";
+import Game2 from "./worldcup/Game2";
+import Game1 from "./worldcup/Game1";
+import Game3 from "./worldcup/Game3";
 import { createGlobalStyle } from 'styled-components';
-import Winpage from "./components/Winpage";
+import Winpage from "./worldcup/Winpage";
 
 const GlobalStyle = createGlobalStyle`
 * { 

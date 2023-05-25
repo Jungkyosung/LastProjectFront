@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+// import styled from "styled-worldcup";
 import { FlexBox } from "./Style";
 import { useState, useEffect } from "react";
 import axios from "axios";
