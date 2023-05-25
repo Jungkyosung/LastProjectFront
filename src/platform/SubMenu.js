@@ -65,8 +65,8 @@ const SubMenu = (props) => {
     //[로그아웃 핸들러]
     const handlerLogout = () => {
         Swal.fire({
-            title: "log out",
-            text: "Are you sure you want to log out?",
+            title: "로그아웃",
+            text: "로그아웃 하시겠습니까?",
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -109,7 +109,7 @@ const SubMenu = (props) => {
                     </Drawer>
                 </div>
                 <Link to="/">
-                    <img id="submenu-logo" src="https://via.placeholder.com/150x60" />
+                    <img id="submenu-logo" src={process.env.PUBLIC_URL+'/KADA.png'} />
                 </Link>
                 <div className="mobile-submenu">
 

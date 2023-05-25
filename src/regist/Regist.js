@@ -218,7 +218,7 @@ const Regist = () => {
             <div id="regist-wrap">
                 <h2 id="regist-title">회원가입</h2>
                 <div id="logo-box">
-                    <Link to="/"><span>LOGO</span></Link>
+                    <Link to="/"><img src={process.env.PUBLIC_URL+'/KADA.png'}/></Link>
                 </div>
                 <div id="regist-input">
                     <form onSubmit={handlerSubmit}>

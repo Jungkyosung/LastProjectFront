@@ -53,10 +53,7 @@ const MobileMainMenu = () => {
                         </Select>
                     </FormControl>
                 </div>
-
-                <div id="mobile-mainmenu-logo"><Link to="/" >LOGO</Link></div>
-
-
+                <div id="mobile-mainmenu-logo"><Link to="/" ><img src={process.env.PUBLIC_URL+'/KADA.png'}/></Link></div>
                 <p><Link to="/aboutus" >{t('page:aboutUs')}</Link></p>
 
                 <ul>

@@ -61,6 +61,7 @@ const loadItem = async (pageNo, numOfRows) => {
                     let prevArrIssueItem = [...responseData];
                     const issueItems = response.data.items;
 
+                    
                     for (let i = 0; i < issueItems.length; i++) {
                         arrIssueItem[i] = { ...issueItems[i], index: i }
                     }

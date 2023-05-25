@@ -8,7 +8,14 @@
 
 #mobile-mainmenu-logo{
     margin-top:20px;
+    width:150px;
+    height: 60px;
     margin-bottom: 20px;
+}
+
+#mobile-mainmenu-logo > a > img{
+    width:150px;
+    height: 60px;
 }
 
 #mobile-mainmenu-window > p{

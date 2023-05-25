@@ -3,6 +3,7 @@ import { useCallback, useEffect } from "react";
 import { useRef, useState } from "react";
 import './Chat.css';
 import ChattingTranslate from "./ChattingTranslate";
+import SendRoundedIcon from '@mui/icons-material/SendRounded';
 
 function ChattingWindow(props) {
 
@@ -145,15 +146,16 @@ function ChattingWindow(props) {
                     </div>
 
                     <div id="divMessage">
-                        <label>메시지</label>
+                        {/* <label>메시지</label> */}
+                        <div id="blank"></div>
                         <textarea id="messageInput" value={message} ref={refMessageInput}
                             // 값이 바뀌면 메시지 상태변수 수정해주고, 엔터 누르면 메시지 전송 함수 실행
                             onChange={e => setMessage(e.target.value)}
                             onKeyDown={e => { if (e.key === "Enter") { sendMessage(e); } }}>
                         </textarea>
 
-                        <button type="button" value="Send" id="btnSend" onClick={sendMessage}>전송</button>
-                        <button type="button" onClick={handlerDisconnect}>나가기</button>
+                        <button type="button" value="Send" id="btnSend" onClick={sendMessage}><SendRoundedIcon/></button>
+                        {/* <button type="button" onClick={handlerDisconnect}>나가기</button> */}
                     </div>
                 </div>
             </div>

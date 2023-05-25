@@ -58,6 +58,7 @@
 
 #map-each-main-img>img:hover {
   filter: opacity(0.8) drop-shadow(0 0 0 rgb(175, 175, 175));
+  transform: scale(1.05);
 }
 
 #map-each-course-info {

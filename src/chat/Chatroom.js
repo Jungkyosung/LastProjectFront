@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import SockJS from "sockjs-client";
 import "./Chat.css";
 import ChatroomBox from "./ChatroomBox";
+import PublicRoundedIcon from '@mui/icons-material/PublicRounded';
 
 
 function Chatroom(props) {
@@ -44,8 +45,6 @@ function Chatroom(props) {
                 console.log(error);
             })
     }, [])
-
-
 
     const joinChatting = () => {
         //sender없으면 실행안함.
@@ -107,7 +106,7 @@ function Chatroom(props) {
         setIsChatroom(false);
     };
 
-    
+
     //{콜백함수: 연결 실패시}  오류 로그출력 
     const onError = useCallback((error) => {
         console.log('연결실패', error);
@@ -170,7 +169,7 @@ function Chatroom(props) {
             <div id="chat-wrap">
                 <div id="chat">
                     <div id="chatroomlist">
-                        <div className="chatroomList-global" onClick={()=>handlerJoinGlobalChat()}>글로벌 채팅방</div>
+                        <div className="chatroomList-global" onClick={()=>handlerJoinGlobalChat()}><PublicRoundedIcon/>글로벌 채팅방</div>
                         {chatroomList && chatroomList.map((chatroom, idx) => (
                             <div className="chatroombox">
                                 <ChatroomBox

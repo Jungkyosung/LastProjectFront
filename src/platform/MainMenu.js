@@ -46,7 +46,7 @@ const MainMenu = () => {
             <div></div>
             <div className={styles.logo}>
                 <Link to="/">
-                    <img src="https://via.placeholder.com/150x60" alt="샘플이미지"></img>
+                <img className={styles.logoImg} src={process.env.PUBLIC_URL+'/KADA.png'} alt="샘플이미지"></img>
                 </Link>
             </div>
             <nav className={styles.dropmenu}>

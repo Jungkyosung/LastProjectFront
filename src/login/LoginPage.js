@@ -79,7 +79,7 @@ const LoginPage = () => {
             <div id="login-wrap">
                 <h2 id="login-title">로그인</h2>
                 <div id="logo-box">
-                    <Link to="/"><span>LOGO</span></Link>
+                    <Link to="/"><img src={process.env.PUBLIC_URL+'/KADA.png'}/></Link>
                 </div>
                 <form onSubmit={handlerSubmit}>
                     <div id="login-input" >

@@ -54,6 +54,17 @@
   min-height: 150px;
 }
 
+.triedDetail-comnt-wrap{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.triedDetail-comnt-write{
+  width : 80%;
+}
+
 .triedDetail-btns{
   display: flex;
   justify-content: space-between;

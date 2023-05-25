@@ -7,7 +7,15 @@
     grid-template-columns: 2fr 1fr 4fr 1fr 2fr;
 }
 
-.logo {}
+.logo {
+    width: 150px;
+    height: 60px;
+}
+
+.logoImg{
+    width: 150px;
+    height: 60px;
+}
 
 .dropmenu {
     display: flex;

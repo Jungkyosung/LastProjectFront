@@ -41,6 +41,7 @@ import TriedMain from './tried/TriedMain';
 import TriedWrite from './tried/TriedWrite';
 import TriedDetail from './tried/TriedDetail';
 import TriedUpdate from './tried/TriedUpdate';
+import AccompanyUpdate from './accompany/AccompanyUpdate';
 
 
 function App() {
@@ -76,6 +77,7 @@ function App() {
         <Route path="/tried/update/:triedIdx"         element={<TriedUpdate/>}     />
         <Route path="/accompany"                      element={<Accompany/>}       />
         <Route path="/accompany/detail/:accompanyIdx" element={<AccompanyDetail/>} />
+        <Route path="/accompany/update/:accompanyIdx" element={<AccompanyUpdate/>} />
         <Route path="/accompany/write"                element={<AccompanyWrite/>}  />
         <Route path="/adminpage"                      element={<Admin/>}           />
         <Route path="/mypage"                         element={<Mypage/>}          />

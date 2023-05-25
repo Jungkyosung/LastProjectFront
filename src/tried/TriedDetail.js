@@ -7,6 +7,10 @@ import { Button } from "@mui/material";
 import TriedThumb from "./TriedThumb";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import TriedComment from "./TriedComment";
+import styles from "../qna/QnaDetail.module.css";
+import Textarea from '@mui/joy/Textarea';
+
 
 const TriedDetail = () => {
 
@@ -38,7 +42,7 @@ const TriedDetail = () => {
             .catch(error =>
                 console.log(error)
             );
-                //마지막 글 여부 확인하기 만약 마지막 글이라면 다음글 버튼이 안보이도록 처리
+        //마지막 글 여부 확인하기 만약 마지막 글이라면 다음글 버튼이 안보이도록 처리
 
 
     }, []);
@@ -88,13 +92,13 @@ const TriedDetail = () => {
         }
     };
 
-    const handlerMoveToBeforeCont = () =>{
+    const handlerMoveToBeforeCont = () => {
         let beforeContIdx = triedIdx - 1;
         navigate(`/tried/detail/${beforeContIdx}`);
         window.location.reload();
     }
 
-    const handlerMoveToAfterCont = () =>{
+    const handlerMoveToAfterCont = () => {
         let afterContIdx = parseInt(triedIdx) + 1;
         navigate(`/tried/detail/${afterContIdx}`);
         window.location.reload();
@@ -126,18 +130,45 @@ const TriedDetail = () => {
                             <div>{tried.triedContent}</div>
                         </div>
                     </div>
+                    <div className="triedDetail-comnt-wrap">
+                        댓글
+
+                        <TriedComment />
+                        <TriedComment />
+                        <TriedComment />
+                        <TriedComment />
+                        <div className="triedDetail-comnt-write">
+                            <div className={styles.comment}>
+                                <Textarea
+                                    style={{ borderRadius: "10px 0 0 10px", width: "90%" }}
+                                    sx={{ color: "#333", }}
+                                    color="primary"
+                                    placeholder="Type in here…"
+                                    minRows={3}
+                                    // maxRows={4}
+                                    //value={contents}
+                                    //onChange={handlerChangeContents}
+                                />
+                                <Button sx={{ color: "white", background: "#5E8FCA", ":hover": { background: "#2d6ebd" } }} style={{ borderRadius: "0 10px 10px 0", width: "10%" }}  >등록</Button>
+                            </div>
+                        </div>
+                    </div>
                 </form>
+
+
                 <div className="triedDetail-btns">
-                { triedIdx == 1 ? <div className="triedDetail-nextCont-btn"></div> :
-                    <div onClick={handlerMoveToBeforeCont}><ArrowBackIcon/>이전글</div>
-                }
+                    {triedIdx == 1 ? <div className="triedDetail-nextCont-btn"></div> :
+                        <div onClick={handlerMoveToBeforeCont}><ArrowBackIcon />이전글</div>
+                    }
                     <div>
                         <Button type='button' variant="contained" onClick={handlerClickList}>목록</Button>
                         <Button type='button' variant="contained" onClick={() => handlerClickUpdate(imageUrl)}>수정</Button>
                         <Button type='button' variant="contained" onClick={handlerClickDelete}>삭제</Button>
                     </div>
-                    <div onClick={handlerMoveToAfterCont}>다음글<ArrowForwardIcon/></div>
+                    <div onClick={handlerMoveToAfterCont}>다음글<ArrowForwardIcon /></div>
                 </div>
+
+
                 {/* <input type="button" id="list" className="btn" value="목록" onClick={handlerClickList} />
                 <input type="button" id="edit" className="btn" value="수정" onClick={() => handlerClickUpdate(imageUrl)} />
                 <input type="button" id="delete" className="btn" value="삭제" onClick={handlerClickDelete} /> */}

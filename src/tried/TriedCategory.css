@@ -33,6 +33,11 @@
 
 .category-idx>button:hover {
     color: rgb(96, 174, 247);
+    transition: 0.3s ease-out;
+}
+
+.category-idx>button:not(:hover) {
+    transition: 0.3s ease-out;
 }
 
 .category-idx>.active {

@@ -62,7 +62,7 @@ const Frame = ({ children }) => {
                 </>
             }
             {isLogin && !isChatModal &&
-                <ChatParent handlerChatModal={handlerChatModal} />
+                <ChatParent handlerChatModal={handlerChatModal} isChatModal={isChatModal}/>
             }
             <div id="top-arrow" onClick={handlerTopMove}>
                 <VerticalAlignTopRoundedIcon />

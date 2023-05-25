@@ -23,6 +23,7 @@ function ChatParent(props) {
     const handlerChatModal = props.handlerChatModal;
 
     const [isChatroom, setIsChatroom] = useState(true);
+    const [ visible, setVisible] = useState(true);
 
     //굳이 parent에서 관리할 필요 없을 듯
     const [isGlobalAccompany, setIsGlobalAccompany] = useState(false);
@@ -50,7 +51,7 @@ function ChatParent(props) {
     };
 
     //뒤로 가기(연결끊기)
-    const handlerArrowBack =()=>{
+    const handlerArrowBack = () => {
         stompClient.current.disconnect(function () {
             alert("see you");
             setIsChatroom(true);
@@ -58,14 +59,18 @@ function ChatParent(props) {
         });
     }
 
-    const handlerOutBtn = () =>{
-        if (isChatroom) {
-            handlerChatModal();
-            return
-        } else {
-        handlerArrowBack();
-        handlerChatModal();
-        }
+    const handlerOutBtn = () => {
+        setVisible(false);
+
+        setTimeout(() => {
+            if (isChatroom) {
+                handlerChatModal();
+                return
+            } else {
+                handlerArrowBack();
+                handlerChatModal();
+            }
+        },200)
     }
 
     //{핸들러} 동행글Idx 설정
@@ -76,13 +81,13 @@ function ChatParent(props) {
 
     return (
         <>
-            <div className="chatParent">
-                
+            <div className={visible ? "chatParent" : "chatParent-closing"}>
+
                 <div id="chatParentTitle">
                     {!(isChatroom) ? <ArrowBackIcon id="ArrowBackIcon" onClick={handlerArrowBack} /> :
-                    <span id="ArrowBackIconTemp"></span>}
-                    <em>채팅방 목록</em>
-                    <CloseIcon id="CloseIcon" onClick={()=>handlerOutBtn()}/>
+                        <span id="ArrowBackIconTemp"></span>}
+                    <em>MESSENGER</em>
+                    <CloseIcon id="CloseIcon" onClick={() => handlerOutBtn()} />
                 </div>
                 {isChatroom ? <Chatroom
                     stompClient={stompClient}

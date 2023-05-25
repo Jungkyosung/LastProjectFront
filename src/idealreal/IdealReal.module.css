@@ -47,12 +47,15 @@
   width: 50%;
   height: 300px;
   border-radius: 10px;
-  /* object-fit: scale-down; */
+  object-fit: cover;
 }
 
 .imgBox {
   display:flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
 }
 
 .flexTitle {
