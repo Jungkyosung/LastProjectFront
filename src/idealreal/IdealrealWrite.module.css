@@ -96,6 +96,10 @@
     align-items:center;
 }
 
+.ck-editor__editable {
+    height:400px;
+}
+
 .contentsWrap .editor {
     width: 60%;
     margin-bottom: 30px;

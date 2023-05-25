@@ -132,6 +132,10 @@
     width: 120px;
 }
 
+.ck-editor__editable {
+    height:400px;
+}
+
 @media (max-width : 1200px) {
     #accompany-main-write-img > img{
         height: 150px;

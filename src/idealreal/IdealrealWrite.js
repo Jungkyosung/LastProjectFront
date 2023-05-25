@@ -265,7 +265,7 @@ function IdealrealWrite() {
           <div className={styles.editor}>
                     <CKEditor
                         editor={ClassicEditor}
-                        data="</br></br></br></br></br></br></br></br></br></br></br></br>"
+                        data=""
                         onReady={editor => {
                             // You can store the "editor" and use when it is needed.
                             console.log('Editor is ready to use!', editor);

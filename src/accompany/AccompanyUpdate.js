@@ -16,7 +16,6 @@ const AccompanyUpdate = () => {
 
     const { accompanyIdx } = useParams();
 
-
     const navigate = useNavigate();
 
     const [accompanyTitle, setAccompanyTitle] = useState('');
@@ -31,30 +30,6 @@ const AccompanyUpdate = () => {
     const [imageUrl, setImageUrl] = useState('');
 
     const [imageFiles, setImageFiles] = useState([]);
-
-
-    useEffect(() => {
-        axios.get(
-            `http://localhost:8080/api/accompany/${accompanyIdx}`)
-            // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
-            .then(response => {
-                console.log(response.data);
-                // 초기값 설정
-                setData(response.data);
-                let startTime = new Date(response.data.accompanyStartTime.replace(".", "-"));
-                let endTime = new Date(response.data.accompanyEndTime.replace(".", "-"));
-                setAccompanyTitle(response.data.accompanyTitle);
-                setAccompanyContent(response.data.accompanyContent);
-                setAccompanyStartTime(startTime);
-                setAccompanyEndTime(endTime);
-                setAccompanyNumbers(response.data.accompanyNumbers);
-                setAccompanyRegion(response.data.accompanyRegion);
-                setFilename(response.data.accompanyImage);
-            })
-            .catch(error =>
-                console.log(error));
-    }, []);
-
     const [regions, setRegions] = useState([
         { name: "서울", check: false },
         { name: "강원도", check: false },
@@ -66,6 +41,41 @@ const AccompanyUpdate = () => {
         { name: "경상도", check: false },
         { name: "전라도", check: false }
     ]);
+
+    useEffect(() => {
+        axios.get(
+            `http://localhost:8080/api/accompany/${accompanyIdx}`)
+            // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
+            .then(response => {
+                // console.log(response.data);
+                let originRegionName = response.data.accompanyRegion;
+                let regionClickCheck = [...regions];
+                for (let i = 0; i < regionClickCheck.length; i++) {
+                    if (regionClickCheck[i].name == originRegionName) {
+                        regionClickCheck[i].check = true;
+                    } else {
+                        regionClickCheck[i].check = false;
+                    }
+                }
+                setRegions(regionClickCheck);
+
+
+                // 초기값 설정
+                setData(response.data);
+                let startTime = new Date(response.data.accompanyStartTime.replace(".", "-"));
+                let endTime = new Date(response.data.accompanyEndTime.replace(".", "-"));
+                setAccompanyTitle(response.data.accompanyTitle);
+                setAccompanyContent(response.data.accompanyContent);
+                setAccompanyStartTime(startTime);
+                setAccompanyEndTime(endTime);
+                setAccompanyNumbers(response.data.accompanyNumbers);
+                setFilename(response.data.accompanyImage);
+            })
+            .catch(error =>
+                console.log(error));
+    }, []);
+
+    
 
     const handlerFilterSelect = (region) => {
 
@@ -111,7 +121,7 @@ const AccompanyUpdate = () => {
                     const imageBlob = new Blob([response.data], { type: response.headers['content-type'] })
                     const imageUrl = URL.createObjectURL(imageBlob);
                     setImageUrl(imageUrl);
-                    console.log(imageUrl);
+                    // console.log(imageUrl);
                 })
                 .catch(error => {
                     console.log(error);

@@ -27,6 +27,10 @@
     margin-top: 60px;
 }
 
+.ck-editor__editable {
+    height:400px;
+}
+
 .contentsWrap .editor {
     width: 60%;
 }
