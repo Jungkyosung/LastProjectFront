@@ -1,8 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Regist from './regist/Regist';
-import NotFound from './not_found/NotFound';
-import Main from './main/Frame';
+import NotFound from './not_found/NotFound';  
 import LoginPage from './login/LoginPage';
 import { useState } from "react";
 import KoreaNews from './koreanews/KoreaNews';
@@ -24,6 +23,7 @@ import Accompany from './accompany/Accompany';
 import AccompanyDetail from './accompany/AccompanyDetail';
 import AccompanyWrite from './accompany/AccompanyWrite';
 import AccompanyUpdate from './accompany/AccompanyUpdate';
+import MainPage from './main/MainPage';
 
 
 
@@ -32,7 +32,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" Component={Main} />
+        <Route path="/" Component={MainPage} />
         <Route path="/login" Component={LoginPage} exact={true} />
         {/* <Route path="/login" Component={(props) => <LoginPage {...props} setIsLogin={setIsLogin} />} exact={true} /> */}
         <Route path="/regist" Component={Regist} exact={true} />

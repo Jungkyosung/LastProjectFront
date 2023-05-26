@@ -1,0 +1,278 @@
+/* 0. 메인틀 */
+.main_page{
+    margin-top: 50px;
+    width: 70%;
+    margin-left:15%;
+}
+
+
+/* 1. 한국뉴스 */
+
+.main_koreaissue{
+    display: flex;
+    padding: 0 60px;
+    flex-direction: column;
+}
+
+.newsMain_section_title {
+    width:100%;
+    font-size: 24px;
+    font-weight: 400;
+    margin: 0 auto 16px;
+}
+
+.style_font {
+    font-weight: 600;
+}
+
+.main_koreaissue_ul{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 20px 0;  
+}
+
+.main_koreaissue_li:nth-child(1) {
+    width: 550px;
+    /* height: 500px; */
+    overflow: hidden;
+}
+
+.main_koreaissue_li:nth-child(1) a div img {
+    width: 550px;
+    /* height: 340px; */
+}
+
+.main_koreaissue_li:nth-child(1) a h3 {
+    padding: 0 8px;
+    margin-bottom: 24px;
+    display: -webkit-box;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    height: auto;
+    overflow: hidden;
+    word-break: keep-all;
+
+    font-size: 24px;
+    letter-spacing: -.4px;
+    -webkit-line-clamp: 2;
+    max-height: 58px;
+}
+
+.main_koreaissue_li:nth-child(1) a p {
+    padding: 0 8px;
+    margin-bottom: 24px;
+    display: -webkit-box;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    height: auto;
+    overflow: hidden;
+    word-break: keep-all;
+    
+    font-size: 16px;
+    letter-spacing: -.2px;
+    white-space: pre-wrap;
+    line-height: 1.4;
+    -webkit-line-clamp: 5;
+    max-height: 116px;
+}
+
+.main_koreaissue_li:nth-child(2) {
+    width: 290px;
+    /* height: 500px; */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between
+}
+
+.main_koreaissue_li:nth-child(2) a div img {
+    width: 290px;
+    /* height: 340px; */
+}
+
+.main_koreaissue_li:nth-child(2) a h3 {
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 8px;
+    padding: 0 8px;
+    letter-spacing: -.2px;
+    display: -webkit-box;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    height: 58px;
+    max-height: 58px;
+    overflow: hidden;
+    word-break: keep-all;
+}
+
+.main_koreaissue_li:nth-child(2) a p {
+    padding: 0 8px;
+    font-size: 15px;
+}
+
+.main_koreaissue_li:nth-child(3) {
+    display: flex;
+    width: 340px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    border: 1px solid #333;
+    border-right: none;
+    border-left: none;
+}
+
+.main_koreaissue_li:nth-child(3) a {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    padding: 16px 0;
+    border-bottom: 1px solid #c4c4c4;
+}
+
+.main_koreaissue_li:nth-child(3) a h3 {
+    line-height: 1.2;
+    display: -webkit-box;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    height: auto;
+    max-height: 48px;
+    overflow: hidden;
+    margin-bottom: 4px;
+    word-break: keep-all;
+}
+
+.main_koreaissue_li:nth-child(3) a p {
+    font-size: 15px;
+}
+
+@media (max-width: 1240px){
+    .main_page{
+        width: 100%;
+        margin-left:0%;
+    }
+
+    .main_koreaissue{
+        display: flex;
+        padding: 0 40px;
+        
+    }
+
+    .main_koreaissue_li{
+        width: 48%;
+    }
+}
+
+@media (max-width: 800px){
+    .main_koreaissue{
+        display: flex;
+        padding: 0 40px;
+        
+    }
+
+    .main_koreaissue_li{
+        width: 100%;
+    }
+}
+
+
+/* 2. 동행찾기 */
+.main_accompany{
+    display: flex;
+    padding: 0 60px;
+    flex-direction: column;
+    background-image: url(../../public/images/bg_title.png);
+}
+
+.main_accompany_ul{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 20px 0;
+
+    background-color: pink;
+}
+
+.main_accompany_li{
+    width: 23%;
+    height: 300px;
+    background-color: rgb(246, 246, 246);
+    margin: 10px 0;
+}
+
+
+
+@media (max-width: 1240px){
+    .main_accompany{
+        display: flex;
+        padding: 0 40px;
+        
+    }
+
+    .main_accompany_li{
+        width: 48%;
+    }
+}
+
+@media (max-width: 800px){
+    .main_accompany{
+        display: flex;
+        padding: 0 40px;
+        
+    }
+
+    .main_accompany_li{
+        width: 100%;
+    }
+}
+
+/* 3. 공지사항 */
+.main_notice{
+    display: flex;
+    padding: 0 60px;
+    flex-direction: column;
+}
+
+.main_notice_ul{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 20px 0;  
+}
+
+.main_notice_li{
+    width: 48%;
+    height: 300px;
+    background-color: rgb(246, 246, 246);
+    margin: 10px 0;
+}
+
+
+
+@media (max-width: 1240px){
+    .main_notice{
+        display: flex;
+        padding: 0 40px;
+        
+    }
+
+    .main_notice_li{
+        width: 48%;
+    }
+}
+
+@media (max-width: 800px){
+    .main_notice{
+        display: flex;
+        padding: 0 40px;
+        
+    }
+
+    .main_notice_li{
+        width: 100%;
+    }
+}
