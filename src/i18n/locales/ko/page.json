@@ -11,5 +11,10 @@
   "travelCourse":"여행코스",
   "tried":"어디까지",
   "accompany":"여행친구",
-  "idealreal":"이상과현실"
+  "idealreal":"이상과현실",
+
+  "notice":"공지사항",
+  "help":"문의사항",
+  "regist":"회원가입",
+  "login":"로그인"
 }

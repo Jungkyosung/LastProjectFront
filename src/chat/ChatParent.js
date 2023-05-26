@@ -10,16 +10,21 @@ function ChatParent(props) {
 
     let nickName = null;
     let jwtToken = null;
+    let userImg = null;
     if (sessionStorage.getItem('token') != null) {
         jwtToken = sessionStorage.getItem('token');
+        userImg = jwt_decode(jwtToken).userImg;
         nickName = jwt_decode(jwtToken).nickname;
     }
+
+    console.log(jwt_decode(jwtToken));
 
     const header = {
         'Authorization': `Bearer ${jwtToken}`,
         'Content-Type': 'application/json'
     };
 
+    // const handlerJoinChat = props.handlerJoinChat;
     const handlerChatModal = props.handlerChatModal;
 
     const [isChatroom, setIsChatroom] = useState(true);
@@ -92,17 +97,21 @@ function ChatParent(props) {
                 {isChatroom ? <Chatroom
                     stompClient={stompClient}
                     userId={userId}
+                    nickName={nickName}
+                    userImg={userImg}
                     setIsGlobalAccompany={setIsGlobalAccompany}
                     header={header}
                     handler동행글Idx={handler동행글Idx}
                     onMessageReceived={onMessageReceived}
-                    setIsChatroom={setIsChatroom} />
+                    setIsChatroom={setIsChatroom}
+                     />
                     : <ChattingWindow
                         stompClient={stompClient}
                         userId={userId}
                         isGlobalAccompany={isGlobalAccompany}
                         header={header}
                         nickName={nickName}
+                        userImg={userImg}
                         동행글Idx={동행글Idx}
                         chatHistory={chatHistory}
                         setChatHistory={setChatHistory}

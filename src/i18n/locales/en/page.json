@@ -11,5 +11,12 @@
   "travelCourse":"TRAVEL COURSE",
   "tried":"TRIED",
   "accompany":"TRAVEL PARTNER",
-  "idealreal":"IDEAL & REAL"
+  "idealreal":"IDEAL & REAL",
+
+  "notice":"NOTICE",
+  "help":"QNA",
+  "regist":"REGIST",
+  "login":"LOGIN",
+
+  "snsLogin" : "SNS LOGIN"
 }

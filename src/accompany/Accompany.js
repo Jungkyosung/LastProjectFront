@@ -53,7 +53,7 @@ const Accompany = () => {
       search: '',
       accompanyRegion: region
     };
-    axios.get(`http://localhost:8080/api/accompanylistbypage`, { params, headers : header})
+    axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/accompanylistbypage`, { params, headers : header})
       .then(response => {
         console.log(response.data);
         setDatas(response.data);
@@ -62,7 +62,7 @@ const Accompany = () => {
         console.log(error);
       })
 
-    axios.get(`http://localhost:8080/api/accompanypagecount`, { params, headers : header })
+    axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/accompanypagecount`, { params, headers : header })
       .then(response => {
         console.log(response.data);
         setPageCount(response.data);

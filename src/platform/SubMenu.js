@@ -10,9 +10,12 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import Swal from "sweetalert2";
 import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded';
 import axios from "axios";
-
+import i18n from "i18next";
+import { useTranslation } from 'react-i18next';
 
 const SubMenu = (props) => {
+
+    const { t } = useTranslation();
 
     let userId = null;
     let jwtToken = null;
@@ -26,7 +29,7 @@ const SubMenu = (props) => {
         'Content-Type': 'application/json'
     };
 
-    const [ userNickname, setUserNickname ] = useState('');
+    const [userNickname, setUserNickname] = useState('');
 
     const navigate = useNavigate();
 
@@ -43,7 +46,7 @@ const SubMenu = (props) => {
     };
 
     //
-    useEffect(()=>{
+    useEffect(() => {
 
         const params = {
             userId: userId
@@ -58,8 +61,8 @@ const SubMenu = (props) => {
                 console.log(error);
                 setUserNickname(null);
             })
-    },[userNickname])
-    
+    }, [userNickname])
+
 
 
     //[로그아웃 핸들러]
@@ -71,8 +74,8 @@ const SubMenu = (props) => {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'confirm',
-            cancelButtonText: 'cancel'
+            confirmButtonText: '확인',
+            cancelButtonText: '취소'
         })
             .then((result) => {
                 if (result.isConfirmed) {
@@ -109,7 +112,7 @@ const SubMenu = (props) => {
                     </Drawer>
                 </div>
                 <Link to="/">
-                    <img id="submenu-logo" src={process.env.PUBLIC_URL+'/KADA.png'} />
+                    <img id="submenu-logo" src={process.env.PUBLIC_URL + '/KADA.png'} />
                 </Link>
                 <div className="mobile-submenu">
 
@@ -121,21 +124,21 @@ const SubMenu = (props) => {
                 </div>
                 <span id="blank-submenu"></span>
                 <ul id="submenu-ul">
-                    <Link to="/noticeList" ><li className="submenu-li">NOTICE</li></Link>
-                    <Link to="/qnalist"><li className="submenu-li">HELP</li></Link>
+                    <Link to="/noticeList" ><li className="submenu-li">{t('page:notice')}</li></Link>
+                    <Link to="/qnalist"><li className="submenu-li">{t('page:help')}</li></Link>
                     {
                         userNickname == null ?
                             <>
                                 <Link to="/regist">
-                                    <li className="submenu-li">REGIST</li>
+                                    <li className="submenu-li">{t('page:regist')}</li>
                                 </Link>
                                 <Link to="/login">
-                                    <li className="submenu-li">LOGIN</li>
+                                    <li className="submenu-li">{t('page:login')}</li>
                                 </Link>
                             </>
                             :
                             <>
-                                <p onClick={handlerMypage}><AccountBoxRoundedIcon/>{userNickname}</p>
+                                <p onClick={handlerMypage}><AccountCircleRoundedIcon />{userNickname}</p>
                                 <LogoutIcon id="logout-icon" onClick={handlerLogout} />
                             </>
                     }

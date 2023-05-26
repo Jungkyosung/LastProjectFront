@@ -11,7 +11,7 @@ const TriedItem = ({ tried, imageUrl }) => {
 
                 <div className="trieditem-title">{tried.triedTitle}</div>
             </Link>
-            <div className="trieditem-writer">{tried.userId}</div>
+            <div className="trieditem-writer">{tried.userNickname}</div>
 
             <div className="trieditem-cnt-rcmd">
                 <div>조회수 {tried.triedCnt}</div>

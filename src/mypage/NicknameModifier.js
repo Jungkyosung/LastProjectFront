@@ -4,7 +4,7 @@ import Input from '@mui/material/Input';
 import Swal from "sweetalert2";
 import axios from "axios";
 import { Button } from "@mui/joy";
-
+import styles from "./NicknameModifier.module.css";
 
 const ariaLabel = { 'aria-label': 'description' };
 
@@ -99,15 +99,17 @@ const NicknameModifier = (props) => {
 
     return (
         <Modal modal={modal} setModal={setModal}>
-            <p>닉네임 변경 관련 정보</p>
-            <div>{userNickname}</div>
-            <Input placeholder="변경할 닉네임"
-                inputProps={ariaLabel}
-                value={changeNickname}
-                onChange={handlerChange} />
-            <Button id="duplicateCheck" type='button' variant="contained" onClick={handlerDuplicateCheck}>중복확인</Button>
-            <Button id="nicknameChangeBtn" type='button' variant="contained" onClick={handlerUpdateNickname} disabled={isDuplicate}>닉네임변경</Button>
-
+            <p className={styles.head}>닉네임 변경</p>
+            <div className={styles.Nickname}>{userNickname}</div>
+            <div className={styles.nicknameInputs}>
+                <Input className={styles.changeNicknameInput}
+                    placeholder="변경할 닉네임"
+                    inputProps={ariaLabel}
+                    value={changeNickname}
+                    onChange={handlerChange} />
+                <Button className={styles.duplicateCheckbtn} id="duplicateCheck" type='button' variant="contained" onClick={handlerDuplicateCheck}>중복확인</Button>
+                <Button className={styles.nicknameChangebtn} id="nicknameChangeBtn" type='button' variant="contained" onClick={handlerUpdateNickname} disabled={isDuplicate}>닉네임변경</Button>
+            </div>
         </Modal>
     )
 };

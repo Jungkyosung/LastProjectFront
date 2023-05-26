@@ -16,9 +16,11 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { useTranslation } from 'react-i18next';
 
 const Regist = () => {
 
+    const { t } = useTranslation();
 
     const navigate = useNavigate();
 
@@ -216,7 +218,7 @@ const Regist = () => {
     return (
         <Frame>
             <div id="regist-wrap">
-                <h2 id="regist-title">회원가입</h2>
+                <h2 id="regist-title">{t('page:regist')}</h2>
                 <div id="logo-box">
                     <Link to="/"><img src={process.env.PUBLIC_URL+'/KADA.png'}/></Link>
                 </div>

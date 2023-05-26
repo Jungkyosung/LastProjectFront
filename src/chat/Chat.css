@@ -147,7 +147,27 @@
   background-color: rgb(243, 243, 243);
 }
 
-#chat{
-  height: 550px;
+.dialog-board::-webkit-scrollbar{
+  width: 5px;
+  background-color: rgb(230, 230, 230);
 }
 
+.dialog-board::-webkit-scrollbar-thumb{
+  width: 5px;
+  background-color: rgb(197, 197, 197);
+}
+
+#chat{
+  height: 550px;
+  overflow-y: scroll;
+}
+
+#chat::-webkit-scrollbar{
+  width: 5px;
+  background-color: rgb(230, 230, 230);
+}
+
+#chat::-webkit-scrollbar-thumb{
+  width: 5px;
+  background-color: rgb(197, 197, 197);
+}

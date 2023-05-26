@@ -16,9 +16,11 @@ const ariaLabel = { 'aria-label': 'description' };
 const AccompanyWrite = () => {
 
     let nickName = null;
+    let userId = null;
     let jwtToken = null;
     if (sessionStorage.getItem('token') != null) {
         jwtToken = sessionStorage.getItem('token');
+        userId = jwt_decode(jwtToken).sub;
         nickName = jwt_decode(jwtToken).nickname;
     }
   
@@ -78,7 +80,8 @@ const AccompanyWrite = () => {
         accompanyStartTime: accompanyStartTime,
         accompanyEndTime: accompanyEndTime,
         accompanyNumbers: accompanyNumbers,
-        accompanyRegion: accompanyRegion
+        accompanyRegion: accompanyRegion,
+        userId: userId
     };
 
     // 서버로 전달할 폼 데이터를 작성
@@ -101,7 +104,7 @@ const AccompanyWrite = () => {
 
         axios({
             method: 'POST',
-            url: `http://localhost:8080/api/accompany/write`,
+            url: `http://${process.env.REACT_APP_JKS_IP}:8080/api/accompany/write`,
             headers: { 'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${jwtToken}`},
             data: formData
         })
@@ -109,6 +112,9 @@ const AccompanyWrite = () => {
                 console.log("xxxxxxxxxxxxx")
                 console.log(response)
                 alert(`${response.data}\n 등록 성공`)
+
+                //스프링에서 채팅방 등록처리 해주면 될 듯?
+                
                 navigate('/accompany')
             })
             .catch(error => {

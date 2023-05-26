@@ -60,7 +60,7 @@ const AccompanyDetail = () => {
     // 이미지 가져오기
     useEffect(() => {
         if (filename) {
-            const imageUrl = `http://localhost:8080/api/getimage/${filename}`;
+            const imageUrl = `http://${process.env.REACT_APP_JKS_IP}:8080/api/getimage/${filename}`;
             axios.get(imageUrl, { responseType: 'arraybuffer' })
                 .then(response => {
                     const imageBlob = new Blob([response.data], { type: response.headers['content-type'] })
@@ -98,12 +98,34 @@ const AccompanyDetail = () => {
             });
     };
 
-    const handlerJoinChat = () => {
+    const handlerJoinChat = (accompanyIdx) => {
+        let 채팅UUID = '';
+        //chatController로직
+        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/chatroom/${accompanyIdx}`, { headers: header })
+        .then((response) => {
+            console.log(response.data);
+            채팅UUID = response.data;
+            let param = {
+                userId : userId,
+                chatroomId : 채팅UUID
+            }
+            axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/addchatuser`, 
+            { params: param, headers: header})
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+        })
+        .catch((error) => {
+            console.log(error);
+        })
 
-    }    
+    }
 
     return (
-        <Frame >
+        <Frame>
             <div id="accompany-main-detail-img">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Bukchon_Hanok_Village_%EB%B6%81%EC%B4%8C_%ED%95%9C%EC%98%A5%EB%A7%88%EC%9D%84_October_1_2020_15.jpg/1280px-Bukchon_Hanok_Village_%EB%B6%81%EC%B4%8C_%ED%95%9C%EC%98%A5%EB%A7%88%EC%9D%84_October_1_2020_15.jpg" />
             </div>
@@ -140,7 +162,7 @@ const AccompanyDetail = () => {
                 <div id="accomapny-detail-btn">
                     <Button  sx={{  color: "white", background:"#5E8FCA", ":hover": { background: "#2d6ebd"}}}variant="contained" onClick={handlerToList}><ListIcon /><span>LIST</span></Button>
                     {!(datas.userId == userId) ?
-                        <Button  sx={{  color: "white", background:"#5E8FCA", ":hover": { background: "#2d6ebd"}}}variant="contained" onClick={ handlerJoinChat } ><MessageIcon /><span>채팅연결</span></Button>
+                        <Button  sx={{  color: "white", background:"#5E8FCA", ":hover": { background: "#2d6ebd"}}}variant="contained" onClick={()=> handlerJoinChat(datas.accompanyIdx) } ><MessageIcon /><span>채팅연결</span></Button>
                         :
                         <>
                             <Button  sx={{  color: "white", background:"#5E8FCA", ":hover": { background: "#2d6ebd"}}}variant="contained" onClick={handlerUpdate}><EditIcon /><span>수정하기</span></Button>

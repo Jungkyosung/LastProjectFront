@@ -81,6 +81,23 @@
   line-height: 25px;
 }
 
+.koreaprice-cart-col-products:hover{
+  background-color: rgb(243, 243, 243);
+}
+
+.koreaprice-cart-col-products > svg{
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+
+.koreaprice-cart-col-products > svg:hover{
+  background-color: rgb(197, 197, 197);
+  border-radius: 10px;
+}
+
+
+
 .koreaprice-cart-1{
   width: 40%;
 }
@@ -108,6 +125,10 @@
 
 .koreaprice-cart-6>svg{
   color: rgb(80, 176, 255);
+}
+
+.koreaprice-cart-6>svg:hover{
+  color: rgb(255, 80, 80);
 }
 
 /* 환율 금액 창 */

@@ -47,6 +47,7 @@ const loadItem = async (pageNo, numOfRows) => {
                 let arrIssueItem = [];
                 //1페이지라면 
                 if (pageNo == 1) {
+                    console.log(response)
                     //응답데이터에서 index번호 추가
                     const issueItems = response.data.items;
 

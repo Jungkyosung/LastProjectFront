@@ -16,6 +16,7 @@ function ChattingWindow(props) {
     const userId = props.userId;
     const header = props.header;
     const nickName = props.nickName;
+    const userImg = props.userImg;
     const chatHistory = props.chatHistory;
     const setChatHistory = props.setChatHistory;
     const onMessageReceived = props.onMessageReceived;
@@ -40,7 +41,7 @@ function ChattingWindow(props) {
             console.log('여기까지 되나?')
             if (props.stompClient) {
                 props.stompClient.current.send('/app/chat.sendMessage', {},
-                    JSON.stringify({ userId, message, type: 'CHAT' }));  //sender : sender, message : message, type : 'CHAT'       
+                    JSON.stringify({ userId, message, userNickname: nickName, userImg, type: 'CHAT' }));  //sender : sender, message : message, type : 'CHAT'       
             }
 
             //메시지 보냈으면 초기화 해주고, 다시 인풋 태그 가리킴.
@@ -48,6 +49,7 @@ function ChattingWindow(props) {
             refMessageInput.current.focus();
         }
 
+        console.log(nickName);
         //true라면(동행)
         if (isGlobalAccompany) {
             let 채팅방UUID = '';
@@ -62,7 +64,7 @@ function ChattingWindow(props) {
                     //구독을 시도하고, Chat 메시지를 보냄 JSON객체로.
                     if (props.stompClient) {
                         props.stompClient.current.send(`/app/chat.sendMessage/${채팅방UUID}`, {},
-                            JSON.stringify({ chatroomId: 채팅방UUID, userId, message, type: 'CHAT' }));  //sender : sender, message : message, type : 'CHAT'       
+                            JSON.stringify({ chatroomId: 채팅방UUID, userNickname: nickName, userImg, userId, message, type: 'CHAT' }));  //sender : sender, message : message, type : 'CHAT'       
                     }
 
                     //메시지 보냈으면 초기화 해주고, 다시 인풋 태그 가리킴.
@@ -81,6 +83,7 @@ function ChattingWindow(props) {
         props.stompClient.current.disconnect(function () {
             alert("see you");
             setIsChatroom(true);
+            //채팅내역 초기화
             setChatHistory([]);
         });
     }
@@ -112,11 +115,13 @@ function ChattingWindow(props) {
         setTranslateState(translatelist);
         console.log(translatelist)
     }
+    console.log(userImg);
+    console.log(chatHistory);
 
     return (
         <>
             <div id="chat-wrap">
-                <div id="chat">
+                <div id="chat-window">
                     <div id="dialog">
                         <div className="dialog-board"  ref={refDialogDiv}>
                             {chatHistory ?
@@ -124,9 +129,9 @@ function ChattingWindow(props) {
                                     <>
                                         <div key={idx} className={item.userId === userId ? "dialog-me" : "dialog-other"}>
                                             <div id="dialog-box">
-                                                <img id="dialog-profile-img" src="https://i.pinimg.com/564x/38/eb/7a/38eb7a74270f3e480224ffe26cb9d7d3.jpg" />
+                                                <img id="dialog-profile-img" src={`http://${process.env.REACT_APP_JKS_IP}:8080/api/getimage/${item.userImg}`} />
                                                 <div id={item.type=="CHAT"? "dialog-message-box": "dialog-message-box-other"}>
-                                                    <span id="dialog-profile-nickname">닉네임</span>
+                                                    <span id="dialog-profile-nickname">{item.userNickname}</span>
                                                     {/* <span><b>{item.userId}</b></span> */}
                                                     <div id="dialog-message" onClick={()=>translateOpen(idx)} >{item.message}</div>
                                                     {/* 번역되면 메시지 아래에 번역문 보이도록 */}
