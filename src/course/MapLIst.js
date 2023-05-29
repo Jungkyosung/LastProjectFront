@@ -7,7 +7,9 @@ import MapEach from "./MapEach";
 import Button from '@mui/material/Button';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import MapDetail from './MapDetail';
-
+import Input from '@mui/material/Input';
+import SearchIcon from '@mui/icons-material/Search';
+import throttle from 'lodash/throttle';
 
 const MapList = () => {
 
@@ -45,80 +47,131 @@ const MapList = () => {
     const [datas, setDatas] = useState([]);
     const [filterDatas, setFilterDatas] = useState([]);
     const [days, setDays] = useState([]);
+    const [pages, setPages] = useState(1);
+    const [search, setSearch] = useState('');
+    const [totalPages, setTotalPages] = useState(1);
+    const [isAllPagesLoaded, setIsAllPagesLoaded] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-    //시작하면 리스트 가져오는 함수
+    //{핸들러} 스크롤 감지해서 페이지 1씩 증가, throttle사용해서 0.7초 동안 스크롤 안하면 작동
+    const handlerScroll = throttle(() => {
+        //현재 스크롤 높이
+        const scrolledHeight =
+            window.innerHeight + document.documentElement.scrollTop;
+        //현재 스크린 풀 높이
+        const fullHeight = document.documentElement.offsetHeight;
+        //비율
+        const scrollThreshold = 0.8;
+
+        //풀화면 높이 보다 스크롤한 높이가 더 크다면 페이지를 +1 씩 증가시켜라
+        if (scrolledHeight >= fullHeight * scrollThreshold && !isLoading) {
+            //페이지 1씩 증가
+            console.log('현재페이지', pages);
+            console.log('총페이지', totalPages);
+            if (pages >= totalPages) {
+                setIsAllPagesLoaded(true);
+                return
+
+            } else {
+                setPages(pages + 1);
+            }
+        }
+    },700);
+
+    //page바뀌면 스크롤 핸들러 작동 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/course`, 
-        // { headers: header }
+        window.addEventListener("scroll", handlerScroll)
+
+        return () => {
+            window.removeEventListener("scroll", handlerScroll)
+        };
+
+    }, [pages, totalPages]);
+
+    const fetchData = () =>{
+        const params = {
+            pages: pages,
+            search: search
+        }
+
+        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/course`, { params, headers: header }
         )
             .then(response => {
                 console.log(response);
-                let array = response.data;
-                array = removeDuplicates(array, "travelcourseIdx");
-                setFilterDatas(array);
+                let arrItem = [];
+                //페이지 1일 경우
+                if (pages == 1) {
+                    //기본 정보
+                    setFilterDatas(response.data);
 
-                //모달배열만들기 ( 글 개수만큼 )
-                let updateModalArray = [...array];
-                for (let i = 0; i < array.length; i++) {
-                    updateModalArray[i] = false;
+                    //모달배열만들기 ( 글 개수만큼 )
+                    let array = response.data;
+                    let updateModalArray = [...array];
+                    for (let i = 0; i < array.length; i++) {
+                        updateModalArray[i] = false;
+                    }
+                    console.log(updateModalArray);
+                    setModalState(updateModalArray);
+                    setIsLoading(false);
+                    //페이지 2 이상일 경우
+                } else {
+                    let prevArr = [...filterDatas];
+                    arrItem = response.data;
+                    prevArr = [...prevArr, ...arrItem];
+                    setFilterDatas(prevArr);
+
+                    //모달배열만들기 ( 글 개수만큼 )
+                    let array = prevArr
+                    let updateModalArray = [...array];
+                    for (let i = 0; i < array.length; i++) {
+                        updateModalArray[i] = false;
+                    }
+                    console.log(updateModalArray);
+                    setModalState(updateModalArray);
+                    setIsLoading(false);
                 }
-                console.log(updateModalArray);
-                setModalState(updateModalArray);
-
-                console.log(array);
-                setDatas(response.data);
-                let 데이정보 = 객체배열담기(array, response.data);
-                console.log(데이정보);
-                setDays(데이정보);
             })
-    }, []);
+            .catch(error => {
+                console.log(error);
+            })
+    };
 
-    const 객체배열담기 = (filter, origin) => {
-        const 필터배열 = filter;
-        const 원본배열 = origin;
-        const 담을배열 = [];
-        let 임시객체 = [];
-
-        for (let i = 0; i < 필터배열.length; i++) {
-            for (let j = 0; j < 원본배열.length; j++) {
-                if (필터배열[i].travelcourseIdx == 원본배열[j].travelcourseIdx) {
-                    임시객체 = [
-                        ...임시객체, {
-                            travelcourseIdx: 원본배열[j].travelcourseIdx,
-                            day: 원본배열[j].day,
-                            dayDescription: 원본배열[j].dayDescription,
-                            lat: 원본배열[j].lat,
-                            lng: 원본배열[j].lng,
-                            orders: 원본배열[j].orders,
-                            placeName: 원본배열[j].placeName
-                        }
-                    ]
-                }
-            }
-            if (임시객체 != 0) {
-                담을배열.push(임시객체);
-            }
-            임시객체 = [];//초기화
+    //현재 검색어 기준 총 페이지 수 요청
+    const fetchDataPageCount = () => {
+        const params = {
+            search: search
         }
-        return 담을배열;
+
+        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/course/totalpages`, { params , headers: header }
+        )
+            .then(response => {
+                console.log(response);
+                setTotalPages(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+    useEffect(()=>{
+        fetchData();
+        fetchDataPageCount();
+    },[pages])
+
+
+    const handlerChangeSearch = (e) => {
+        e.preventDefault();
+        console.log(e.target.value);
+        setSearch(e.target.value);
     }
 
 
-    //중복제거 함수
-    const removeDuplicates = (array, key) => {
-        const uniqueArray = [];
-        const uniqueKeys = [];
-
-        array.forEach((item) => {
-            const value = item[key];
-            if (!uniqueKeys.includes(value)) {
-                uniqueKeys.push(value);
-                uniqueArray.push(item);
-            }
-        });
-
-        return uniqueArray;
-    };
+    const handlerSubmitSearch = () => {
+        //검색시 페이지 1로 변경
+        setPages(1);
+        fetchData();
+        fetchDataPageCount();
+    }
 
 
     return (
@@ -128,6 +181,8 @@ const MapList = () => {
             </div>
             <div id='travelcourse-list-wrap'>
                 <div id="travelcourse-list-title">여행코스</div>
+                <Input placeholder="Search" variant="outlined" color="primary" onChange={handlerChangeSearch} value={search} onKeyDown={e => { if (e.key === "Enter") { handlerSubmitSearch(e); } }} />
+                <SearchIcon onClick={()=>handlerSubmitSearch()} />
                 <div id="travelcourse-list-write">
                     <Link to="/course/mapwrite">
                         <Button variant="contained">WRITE</Button>
@@ -139,10 +194,12 @@ const MapList = () => {
                             <MapEach
                                 modalOpen={() => modalOpen(index)}
                                 userNickname={course.userNickname}
+                                userImg={course.userImg}
                                 startDate={course.travelcourseStartDate.substr(0, 10)}
                                 endDate={course.travelcourseEndDate.substr(0, 10)}
                                 title={course.travelcourseTitle}
-                                days={days[index]}
+                                img={course.travelcourseImg}
+                                days={course.travelcourseDetailList}
                                 modal={modal}
                                 setModal={setModal}
                             />
@@ -151,13 +208,14 @@ const MapList = () => {
                                     modal={modal}
                                     setModal={setModal}
                                     userId={course.userId}
+                                    userImg={course.userImg}
                                     userNickname={course.userNickname}
                                     startDate={course.travelcourseStartDate.substr(0, 10)}
                                     endDate={course.travelcourseEndDate.substr(0, 10)}
                                     title={course.travelcourseTitle}
-                                    days={days[index]}
+                                    travelcourseIdx = {course.travelcourseIdx}
+                                    days={course.travelcourseDetailList}
                                     modalStateClose={() => modalStateClose(index)}
-                                    removeDuplicates={removeDuplicates}
                                 />
                             }
                         </>

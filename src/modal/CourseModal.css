@@ -19,7 +19,7 @@
   width: 95%;
   /* min-width:600px; */
   max-width: 800px;
-  height: calc(800px-20vw);
+  height: 90%;
   /* padding: 5px; */
   text-align: center;
   background-color: rgb(255, 255, 255);
@@ -56,6 +56,8 @@
  
 #course-modalCloseBtn:hover {
   cursor: pointer;
+  background-color: rgb(221, 221, 221);
+  border-radius: 10px;
 }
  
 
@@ -63,7 +65,7 @@
   /* modal창 */
 .course-modalBody {
   width: 80%;
-  height: 800px;
+  /* height: 800px; */
 
 }
 }

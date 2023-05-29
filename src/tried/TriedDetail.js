@@ -10,17 +10,20 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import TriedComment from "./TriedComment";
 import styles from "../qna/QnaDetail.module.css";
 import Textarea from '@mui/joy/Textarea';
-
+import jwt_decode from 'jwt-decode';
 
 const TriedDetail = () => {
 
     let jwtToken = null;
+    let userId = null;
     if (sessionStorage.getItem("token") != null) {
         jwtToken = sessionStorage.getItem("token");
+        userId = jwt_decode(jwtToken).sub;
     }
 
     const header = {
-        Authorization: `Bearer ${jwtToken}`
+        Authorization: `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json'
     };
 
     const navigate = useNavigate();
@@ -31,21 +34,44 @@ const TriedDetail = () => {
     const [filename, setFilename] = useState('');
     const [triedImg, setTriedImg] = useState([]);
     const [tried, setTried] = useState({});
+    const [commentList, setCommentList] = useState([]);
+    const [comment, setComment] = useState('');
 
     useEffect(() => {
+
+        //글정보 가져오기
         axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/detail/${triedIdx}`,
             { headers: header })
             .then(response => {
                 setFilename(response.data.triedImg);
                 setTried(response.data);
+
+
             })
             .catch(error =>
                 console.log(error)
             );
+
+        fetchCommentData();
+
+
         //마지막 글 여부 확인하기 만약 마지막 글이라면 다음글 버튼이 안보이도록 처리
 
 
     }, []);
+
+    const fetchCommentData = () => {
+        //댓글정보 가져오기
+        axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/comment/${triedIdx}`,
+            { headers: header })
+            .then(response => {
+                setCommentList(response.data);
+                console.log(response.data);
+            })
+            .catch(error =>
+                console.log(error)
+            );
+    }
 
     // 이미지 가져오기
     useEffect(() => {
@@ -77,9 +103,8 @@ const TriedDetail = () => {
     // 버튼 => 삭제
     const handlerClickDelete = () => {
         if (window.confirm('삭제하시겠습니까?')) {
-            axios
-                .delete(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/${triedIdx}`)
-                // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
+            axios.delete(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/${triedIdx}`,
+                { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } })
                 .then(response => {
                     console.log(response);
                     alert('삭제 완료')
@@ -92,16 +117,46 @@ const TriedDetail = () => {
         }
     };
 
+    //{핸들러}이전글로 이동 + 추가로 이전 글 번호를 알아와야 하지 않을까 싶음???
     const handlerMoveToBeforeCont = () => {
         let beforeContIdx = triedIdx - 1;
         navigate(`/tried/detail/${beforeContIdx}`);
         window.location.reload();
     }
 
+    //{핸들러}다음글로 이동 + 추가로 다음이 마지막 글인지 알아와야 하지 않을까 싶음???
     const handlerMoveToAfterCont = () => {
         let afterContIdx = parseInt(triedIdx) + 1;
         navigate(`/tried/detail/${afterContIdx}`);
         window.location.reload();
+    }
+
+    //{핸들러} 댓글 입력칸
+    const handlerChangeComment = (e) => {
+        setComment(e.target.value)
+        console.log(comment);
+    }
+
+    //{핸들러} 댓글 작성
+    const handlerCommentWrite = () => {
+
+        const data = {
+            userId: userId,
+            triedIdx: triedIdx,
+            triedCommentContent: comment
+        }
+
+        axios.post(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/comment/${triedIdx}`, data, { headers: header })
+            .then((response) => {
+                console.log(response.data);
+                //작성 후 댓글 재 조회
+                fetchCommentData();
+                setComment('');
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+
     }
 
     return (
@@ -132,11 +187,11 @@ const TriedDetail = () => {
                     </div>
                     <div className="triedDetail-comnt-wrap">
                         댓글
-
-                        <TriedComment />
-                        <TriedComment />
-                        <TriedComment />
-                        <TriedComment />
+                        {commentList && commentList.map(comment => (
+                            <>
+                                <TriedComment comment={comment} commentList={commentList} setCommentList={setCommentList} />
+                            </>
+                        ))}
                         <div className="triedDetail-comnt-write">
                             <div className={styles.comment}>
                                 <Textarea
@@ -146,10 +201,10 @@ const TriedDetail = () => {
                                     placeholder="Type in here…"
                                     minRows={3}
                                     // maxRows={4}
-                                    //value={contents}
-                                    //onChange={handlerChangeContents}
+                                    value={comment}
+                                    onChange={handlerChangeComment}
                                 />
-                                <Button sx={{ color: "white", background: "#5E8FCA", ":hover": { background: "#2d6ebd" } }} style={{ borderRadius: "0 10px 10px 0", width: "10%" }}  >등록</Button>
+                                <Button sx={{ color: "white", background: "#5E8FCA", ":hover": { background: "#2d6ebd" } }} style={{ borderRadius: "0 10px 10px 0", width: "10%" }} onClick={handlerCommentWrite} >등록</Button>
                             </div>
                         </div>
                     </div>

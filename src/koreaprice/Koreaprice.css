@@ -1,6 +1,6 @@
 #koreaprice-img > img{
   width : 100%;
-  height: 200px;
+  height: 80px;
   object-fit: cover;
 }
 
@@ -8,8 +8,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 60px;
-  margin-bottom: 60px;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 #koreaprice-title {
@@ -24,21 +24,33 @@
 }
 
 #koreaprice-price-window {
+  display: none;
+}
+
+#koreaprice-price-window-mobile {
   display: flex;
-  width: 60%;
+  flex-direction: column;
+  width: 100%;
   justify-content: space-between;
-  height: 250px;
+  height: 350px;
   margin-bottom: 20px;
 }
 
+
 /* 장바구니 */
 #koreaprice-cart {
-  width: 68%;
+  display: none;
+}
+
+#koreaprice-cart-mobile {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
   /* border: 1px solid black; */
   border-radius: 10px;
   box-shadow: 0 0 10px 3px rgb(222, 237, 255);
   overflow: hidden;
-  font-size: 0.8rem;
+  font-size: 0.6rem;
 }
 
 #koreaprice-cart-coltitle {
@@ -71,7 +83,7 @@
 
 .koreaprice-cart-col-products-wrap{
   overflow: scroll;
-  height : 230px;
+  height : 200px;
 }
 
 .koreaprice-cart-col-products{
@@ -133,13 +145,28 @@
 
 /* 환율 금액 창 */
 #koreaprice-exchange {
-  width: 28%;
+  display: none;
+}
+
+#koreaprice-exchange-mobile {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100px;
   /* border: 1px solid black; */
   border-radius: 10px;
   box-shadow: 0 0 10px 3px rgb(222, 237, 255);
 }
 
 #koreaprice-exchange > div{
+  box-sizing: border-box;
+  padding-top: 5px;
+  height: 50%;
+  font-weight: bold;
+  color: rgb(80, 176, 255);
+}
+
+#koreaprice-exchange-mobile > div{
   box-sizing: border-box;
   padding-top: 5px;
   height: 50%;
@@ -161,15 +188,95 @@
   justify-content: center;
   align-items: center;
 }
+
 /* 상품 정보창 */
 #koreaprice-items-list {
   display: flex;
   flex-wrap: wrap;
-  width: 60%;
+  width: 90%;
   border-radius: 10px;
   box-shadow: 0 0 10px 3px rgb(222, 237, 255);
   overflow: hidden;
   box-sizing: border-box;
-  padding: 10px 5px 10px 5px;
+  padding: 10px 2px 10px 2px;
 }
 
+@media (min-width: 600px){
+  #koreaprice-img > img{
+    width : 100%;
+    height: 150px;
+    object-fit: cover;
+  }
+
+  #koreaprice-price-window-mobile {
+    display: flex;
+    width: 70%;
+    justify-content: space-between;
+    height: 350px;
+    margin-bottom: 20px;
+  }
+
+
+
+  #koreaprice-cart {
+    width: 68%;
+    /* border: 1px solid black; */
+    border-radius: 10px;
+    box-shadow: 0 0 10px 3px rgb(222, 237, 255);
+    overflow: hidden;
+    font-size: 0.8rem;
+  }
+
+  #koreaprice-items-list {
+    display: flex;
+    flex-wrap: wrap;
+    width: 60%;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 3px rgb(222, 237, 255);
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 10px 5px 10px 5px;
+  }
+
+}
+
+@media (min-width: 1200px){
+  #koreaprice-img > img{
+    width : 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  #koreaprice-cart {
+    width: 68%;
+    /* border: 1px solid black; */
+    border-radius: 10px;
+    box-shadow: 0 0 10px 3px rgb(222, 237, 255);
+    overflow: hidden;
+    font-size: 0.8rem;
+  }
+
+  #koreaprice-price-window {
+    display: flex;
+    width: 60%;
+    justify-content: space-between;
+    height: 250px;
+    margin-bottom: 20px;
+  }
+
+  #koreaprice-price-window-mobile {
+    display: none;
+  }
+
+  #koreaprice-exchange {
+    display: block;
+    width: 28%;
+    /* border: 1px solid black; */
+    border-radius: 10px;
+    box-shadow: 0 0 10px 3px rgb(222, 237, 255);
+  }
+
+  #koreaprice-exchange-mobile {
+    display: none;
+  }
+}

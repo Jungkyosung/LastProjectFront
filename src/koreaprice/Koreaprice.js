@@ -96,6 +96,11 @@ const Koreaprice = () => {
           <KoreapriceCart sum={sum} setSum={setSum} nameAndPrice={nameAndPrice} setNameAndPrice={setNameAndPrice}/>
           <KoreapriceExchange sum={sum} setSum={setSum}/>
         </div>
+        <div id="koreaprice-price-window-mobile">
+          {/* 인포 */}
+          <KoreapriceCart sum={sum} setSum={setSum} nameAndPrice={nameAndPrice} setNameAndPrice={setNameAndPrice}/>
+          <KoreapriceExchange sum={sum} setSum={setSum}/>
+        </div>
         <div id="koreaprice-items-list">
           {productLists.map((item) => {
             return (

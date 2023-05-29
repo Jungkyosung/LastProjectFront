@@ -42,6 +42,7 @@ import TriedWrite from './tried/TriedWrite';
 import TriedDetail from './tried/TriedDetail';
 import TriedUpdate from './tried/TriedUpdate';
 import AccompanyUpdate from './accompany/AccompanyUpdate';
+import Example from './mypage/example';
 
 
 function App() {
@@ -89,6 +90,7 @@ function App() {
         <Route path="/idealreal/detail/:idealrealIdx" element={<IdealrealDetail/>} />
         <Route path="/idealreal/write"                element={<IdealrealWrite />} />
         <Route path="/idealrealretouch/:idealrealIdx" element={<IdealrealRetouch/>}/>
+        <Route path="/example" element={<Example/>}/>
         <Route path="/*"                              element={<NotFound/>}        />
       </Routes>
     </>

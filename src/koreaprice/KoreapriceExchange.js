@@ -77,6 +77,31 @@ const KoreapriceExchange = (props) => {
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
           
         </div>
+      </div>
+      <div id="koreaprice-exchange-mobile">
+        <div id="koreaprice-exchange-won">
+        {!isNaN(sum) ? 
+            sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " WON" : "WON"}
+        </div>
+        <div id="koreaprice-exchange-others">YOUR
+          <select onChange={(e) => handlerSelect(e)} value={selectExchange}>
+            <option value="" disabled selected>
+              Choose your currency
+            </option>
+            {exchangeList.map((ex) => (
+              <option value={ex.exchangeNationShort} key={ex.exchangeIdx}>
+                {ex.exchangeNationShort}
+              </option>
+            ))}
+          </select>
+          {!isNaN(sum / totalExchange) &&
+            isFinite(sum / totalExchange) &&
+            (sum / totalExchange)
+              .toFixed(2)
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          
+        </div>
 
       </div>
 
