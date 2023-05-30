@@ -37,7 +37,7 @@ const QnaWrite = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post(`http://${process.env.REACT_APP_JYS_IP}:8080/api/qna/write`,
+        axios.post(`http://localhost:8080/api/qna/write`,
             { "qnaTitle": title, "qnaContent": content }, {haeders : header}
         )
             .then(response => {

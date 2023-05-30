@@ -40,7 +40,7 @@ const ChattingTranslate = (props) => {
       return
     }
     console.log(header);
-    axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/translate`,
+    axios.get(`http://localhost:8080/translate`,
     {params : params, headers: header})
       .then((response) => {
         console.log(response);

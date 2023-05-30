@@ -36,7 +36,7 @@ function Thumb(props) {
 
 
     //해당 글 좋아요 수 조회
-    axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/${idealrealIdx}/getlike`, {headers:header})
+    axios.get(`http://localhost:8080/api/${idealrealIdx}/getlike`, {headers:header})
       .then(response => {
         console.log(response);
         setLikeCount(response.data);
@@ -44,7 +44,7 @@ function Thumb(props) {
       .catch(error => console.log(error));
 
     //이 사람이 좋아요를 눌른 놈인지 아닌지
-    axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal/detail/likecheck/${idealrealIdx}/${loginUserId}`, {headers:header})
+    axios.get(`http://localhost:8080/api/listidealreal/detail/likecheck/${idealrealIdx}/${loginUserId}`, {headers:header})
       .then(response => {
         console.log(response);
         setLikeCheck(response.data);
@@ -74,7 +74,7 @@ function Thumb(props) {
     if (likeCheck == 0) {
 
       setLikeCount(prev => prev + 1)
-      axios.post(`http://${process.env.REACT_APP_KTG_IP}:8080/api/${idealrealIdx}/like`,
+      axios.post(`http://localhost:8080/api/${idealrealIdx}/like`,
         data, headers)
         .then(response => {
           console.log(response);
@@ -86,7 +86,7 @@ function Thumb(props) {
         });
     } else if (likeCheck == 1) {
       setLikeCount(prev => prev - 1)
-      axios.delete(`http://${process.env.REACT_APP_KTG_IP}:8080/api/${idealrealIdx}/unlike`,
+      axios.delete(`http://localhost:8080/api/${idealrealIdx}/unlike`,
         { data }, {headers})
         .then(response => {
           console.log(response);

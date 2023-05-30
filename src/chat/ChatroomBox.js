@@ -1,6 +1,8 @@
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import GroupIcon from '@mui/icons-material/Group';
+
 
 const ChatroomBox = (props) => {
     const header = props.header;
@@ -19,7 +21,7 @@ const ChatroomBox = (props) => {
 
         let tempUserId = userId.replace(".", "-");
 
-        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/chatroom/unreadmessage/${chatroomId}/${tempUserId}`,
+        axios.get(`http://localhost:8080/chatroom/unreadmessage/${chatroomId}/${tempUserId}`,
             { headers: header })
             .then((response) => {
                 console.log(response)
@@ -35,7 +37,7 @@ const ChatroomBox = (props) => {
             <div>
                 <div className="chatroombox-wrap">
                     <div className="chatroombox-title" onClick={handlerJoinAccompanyChat} >
-                        {chatroomTitle}
+                        <GroupIcon/>{chatroomTitle}
                     </div>
                     <div className="chatroombox-no-reading">
                         {unreadmsg}

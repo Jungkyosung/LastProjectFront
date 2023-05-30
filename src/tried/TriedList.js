@@ -18,7 +18,7 @@ useEffect(() => {
     for (const tried of data) {
       if (tried.triedCategoryIdx === triedCategoryIdx) {
         try {
-          const response = await axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/getImage/${tried.triedImg}`, {
+          const response = await axios.get(`http://localhost:8080/api/getimage/${tried.triedImg}`, {
             responseType: "arraybuffer",
           });
           const imageBlob = new Blob([response.data], {
@@ -27,7 +27,7 @@ useEffect(() => {
           const imageUrl = URL.createObjectURL(imageBlob);
           imageUrls[tried.triedIdx] = imageUrl;
         } catch (error) {
-          console.log(error);
+          //console.log(error);
         }
       }
     }

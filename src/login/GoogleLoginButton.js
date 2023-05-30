@@ -17,7 +17,7 @@ const GoogleLoginButton = () => {
             //base64 디코딩은 window.atob(), btoa() 함수 사용하면 됨. (참고)
             const decodeString = jwtDecode(response.credential);
             console.log(decodeString);
-            axios.post(`http://${process.env.REACT_APP_JKS_IP}:8080/api/login/google`, decodeString)
+            axios.post(`http://localhost:8080/api/login/google`, decodeString)
             .then((response)=> {
               console.log(response);
               //만약 1이 왔다면, 
@@ -26,7 +26,7 @@ const GoogleLoginButton = () => {
                   "userId" : decodeString.email,
                   "userPw" : tempPwKey
                 }
-                axios.post(`http://${process.env.REACT_APP_JKS_IP}:8080/login`, Data)
+                axios.post(`http://localhost:8080/login`, Data)
                 .then((response)=>{
                   sessionStorage.setItem("token",response.data);
                   console.log(response);

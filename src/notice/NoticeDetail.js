@@ -14,7 +14,7 @@ const NoticeDetail = () => {
     const [notice, setNotice] = useState({});
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_JYS_IP}:8080/api/notice/${noticeIdx}`)
+        axios.get(`http://localhost:8080/api/notice/${noticeIdx}`)
             .then(response => {
                 console.log(response.data)
                 setNotice(response.data);
@@ -29,7 +29,7 @@ const NoticeDetail = () => {
     const handlerClickList = () => navigate('/noticeList');
 
     const handlerClickDelete = () => {
-        axios.delete(`http://${process.env.REACT_APP_JYS_IP}:8080/api/notice/${noticeIdx}`
+        axios.delete(`http://localhost:8080/api/notice/${noticeIdx}`
             // ,{ headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
         )
             .then(response => {

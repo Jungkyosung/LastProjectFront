@@ -9,14 +9,15 @@ const TriedItem = ({ tried, imageUrl }) => {
             <Link to={`/tried/detail/${tried.triedIdx}`}>
                 <div className="img">{imageUrl && <img src={imageUrl} />}</div>
 
-                {tried.triedTitle}
+                <div className="trieditem-title">{tried.triedTitle}</div>
             </Link>
-            <div>작성자: {tried.userId}</div>
-            <div>작성일: {tried.triedCreatedTime}</div>
-            <div>
-                <div>조회수: {tried.triedCnt}</div>
-                <div>추천수: {tried.triedRcmd}</div>
+            <div className="trieditem-writer">{tried.userNickname}</div>
+
+            <div className="trieditem-cnt-rcmd">
+                <div>조회수 {tried.triedCnt}</div>
+                <div>추천수 {tried.triedRcmd}</div>
             </div>
+
         </div>
     );
 };

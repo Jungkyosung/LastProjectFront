@@ -44,7 +44,7 @@ const NoticeWrite = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post(`http://${process.env.REACT_APP_JYS_IP}:8080/api/notice/write`,
+        axios.post(`http://localhost:8080/api/notice/write`,
             { "noticeTitle": title, "noticeContent": content },
             // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
         )

@@ -42,7 +42,7 @@ const QnaList = () => {
             search: search
         }
 
-        axios.get(`http://${process.env.REACT_APP_JYS_IP}:8080/api/qnalistbypage`, { params : params , headers: header})
+        axios.get(`http://localhost:8080/api/qnalistbypage`, { params : params , headers: header})
             .then(response => {
                 console.log(response.data)
                 setDatas(response.data);
@@ -51,7 +51,7 @@ const QnaList = () => {
                 console.log(error);
             })
 
-        axios.get(`http://${process.env.REACT_APP_JYS_IP}:8080/api/qnapagecount`, { params : params , headers: header})
+        axios.get(`http://localhost:8080/api/qnapagecount`, { params : params , headers: header})
             .then(response => {
                 console.log(response.data)
                 // let pageCount = response.data;
@@ -85,7 +85,7 @@ const QnaList = () => {
             search: search
         }
         try {
-            const response = await axios.get(`http://${process.env.REACT_APP_JYS_IP}:8080/api/qnalistbypage`, { params : params , headers: header});
+            const response = await axios.get(`http://localhost:8080/api/qnalistbypage`, { params : params , headers: header});
             console.log(response.data);
             setDatas(response.data);
             navigate(`/qnalist`);
@@ -94,7 +94,7 @@ const QnaList = () => {
         }
 
         try {
-            const response = await axios.get(`http://${process.env.REACT_APP_JYS_IP}:8080/api/qnapagecount`, { params : params , headers: header});
+            const response = await axios.get(`http://localhost:8080/api/qnapagecount`, { params : params , headers: header});
             console.log(response.data);
             setPageCount(response.data);
             navigate(`/qnalist`);

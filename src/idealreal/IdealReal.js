@@ -48,7 +48,7 @@ function Idealreal() {
         }
 
         //1페이지 리스트 조회
-        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal/${page}`, {headers:header})
+        axios.get(`http://localhost:8080/api/listidealreal/${page}`, {headers:header})
             .then(response => {
                 console.log(response.data)
                 setData(response.data);
@@ -58,7 +58,7 @@ function Idealreal() {
             })
 
         //페이지수 조회
-        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealrealpagecount`, {headers:header})
+        axios.get(`http://localhost:8080/api/listidealrealpagecount`, {headers:header})
             .then(response => {
                 console.log(response.data)
                 // let pageCount = response.data;
@@ -77,7 +77,7 @@ function Idealreal() {
 
     useEffect(() => {
         //1페이지 리스트 조회
-        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal/${page}`,{headers:header})
+        axios.get(`http://localhost:8080/api/listidealreal/${page}`,{headers:header})
             .then(response => {
                 console.log(response.data)
                 setData(response.data);
@@ -87,7 +87,7 @@ function Idealreal() {
             })
 
         //페이지수 조회
-        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealrealpagecount`,{headers:header})
+        axios.get(`http://localhost:8080/api/listidealrealpagecount`,{headers:header})
             .then(response => {
                 console.log(response.data)
                 // let pageCount = response.data;
@@ -104,8 +104,8 @@ function Idealreal() {
 
 
     // 원본이 없어도 사진 보이고 싶었는데 잘 안됩니다
-    // const idealImg = `http://${process.env.REACT_APP_KTG_IP}:8080/api/getimage/${idealrealIdealImg}`;
-    // const realImg = `http://${process.env.REACT_APP_KTG_IP}:8080/api/getimage/${idealrealRealImg}`;
+    // const idealImg = `http://localhost:8080/api/getimage/${idealrealIdealImg}`;
+    // const realImg = `http://localhost:8080/api/getimage/${idealrealRealImg}`;
 
 
     // 페이징

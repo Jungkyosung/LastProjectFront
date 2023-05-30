@@ -22,7 +22,7 @@ const NoticeUpdate = () => {
     const [ notice, setNotice ] = useState({});
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_JYS_IP}:8080/api/notice/${noticeIdx}`)
+        axios.get(`http://localhost:8080/api/notice/${noticeIdx}`)
             .then(response => {
                 console.log(response.data);
                 let rsp = response.data;
@@ -35,7 +35,7 @@ const NoticeUpdate = () => {
     }, [])
 
     const handlerClickUpdate = () => {
-        axios.put(`http://${process.env.REACT_APP_JYS_IP}:8080/api/notice/update/${noticeIdx}`,
+        axios.put(`http://localhost:8080/api/notice/update/${noticeIdx}`,
             { "noticeTitle": title, "noticeContent": content })
             .then(response => {
                 console.log(response)

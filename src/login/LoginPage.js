@@ -14,6 +14,7 @@ import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useTranslation } from 'react-i18next';
 // const googleAuthUrl = 'https://oauth2.googleapis.com';
 // const googleLoginUrl = 'https://accounts.google.com';
 // const googleRedirectUrl = 'http://localhost:8080/google/login/redirect';
@@ -22,6 +23,8 @@ import Swal from "sweetalert2";
 
 
 const LoginPage = () => {
+
+    const { t } = useTranslation();
 
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
@@ -46,7 +49,7 @@ const LoginPage = () => {
 
     const handlerSubmit = (e) => {
         e.preventDefault();
-        axios.post(`http://${process.env.REACT_APP_JKS_IP}:8080/login`,
+        axios.post(`http://localhost:8080/login`,
           {
             "userId": email,
             "userPw": pw,
@@ -77,9 +80,9 @@ const LoginPage = () => {
     return (
         <Frame>
             <div id="login-wrap">
-                <h2 id="login-title">로그인</h2>
+                <h2 id="login-title">{t('page:login')}</h2>
                 <div id="logo-box">
-                    <Link to="/"><span>LOGO</span></Link>
+                    <Link to="/"><img src={process.env.PUBLIC_URL+'/KADA.png'}/></Link>
                 </div>
                 <form onSubmit={handlerSubmit}>
                     <div id="login-input" >

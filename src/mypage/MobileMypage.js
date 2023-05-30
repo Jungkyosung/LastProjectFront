@@ -8,7 +8,7 @@ import FlipCameraIosIcon from '@mui/icons-material/FlipCameraIos';
 import { useState } from 'react';
 import ProfileModifier from './ProfileModifier';
 import NicknameModifier from './NicknameModifier';
-
+import AddIcon from '@mui/icons-material/Add';
 
 
 const MobileMypage = () => {
@@ -68,27 +68,37 @@ const MobileMypage = () => {
                 <p>nickName</p>
                 <span className="modifier" onClick={modal2Open}><EditNoteIcon />닉네임 변경</span>
             </div>
-            <div>
-                <div>현재 작성한 글이 없습니다.</div>
-                <div>1번 글 어쩌구 저쩌구</div>
-                <div>2번 글 어쩌구 저쩌구</div>
-                <div>3번 글 어쩌구 저쩌구</div>
-                <div>4번 글 어쩌구 저쩌구</div>
-            </div>
-            <div>
-                <div>현재 작성한 글이 없습니다.</div>
-                <div>1번 글 어쩌구 저쩌구</div>
-                <div>2번 글 어쩌구 저쩌구</div>
-                <div>3번 글 어쩌구 저쩌구</div>
-                <div>4번 글 어쩌구 저쩌구</div>
-            </div>
-            <div>
-                <div>현재 작성한 글이 없습니다.</div>
-                <div>1번 글 어쩌구 저쩌구</div>
-                <div>2번 글 어쩌구 저쩌구</div>
-                <div>3번 글 어쩌구 저쩌구</div>
-                <div>4번 글 어쩌구 저쩌구</div>
-            </div>
+            <div id="mobile-profile-recent-list">최근 작성글 목록</div>
+                <div id="mobile-profile-board-wrap">
+                    <div className="mobile-profile-board-list">
+                        <div className="mobile-profile-board-title"><div>여행코스</div><AddIcon/></div>
+                        <div className='mobile-profile-board-cont'>1번 글 어쩌구 저쩌구 아주 길어진다고 하면 어떻게 될까요????</div>
+                        <div className='mobile-profile-board-cont'>2번 글 어쩌구 저쩌구</div>
+                        <div className='mobile-profile-board-cont'>3번 글 어쩌구 저쩌구</div>
+                        <div className='mobile-profile-board-cont'>4번 글 어쩌구 저쩌구</div>
+                    </div>
+                    <div className="mobile-profile-board-list">
+                        <div className="mobile-profile-board-title"><div>어디까지</div><AddIcon/></div>
+                        <div className='mobile-profile-board-cont'>1번 글 어쩌구 저쩌구</div>
+                        <div className='mobile-profile-board-cont'>2번 글 어쩌구 저쩌구</div>
+                        <div className='mobile-profile-board-cont'>3번 글 어쩌구 저쩌구</div>
+                        <div className='mobile-profile-board-cont'>4번 글 어쩌구 저쩌구</div>
+                    </div>
+                    <div className="mobile-profile-board-list">
+                        <div className="mobile-profile-board-title"><div>여행친구</div><AddIcon/></div>
+                        <div className='mobile-profile-board-cont'>1번 글 어쩌구 저쩌구</div>
+                        <div className='mobile-profile-board-cont'>2번 글 어쩌구 저쩌구</div>
+                        <div className='mobile-profile-board-cont'>3번 글 어쩌구 저쩌구</div>
+                        <div className='mobile-profile-board-cont'>4번 글 어쩌구 저쩌구</div>
+                    </div>
+                    <div className="mobile-profile-board-list">
+                        <div className="mobile-profile-board-title"><div>이상과현실</div><AddIcon/></div>
+                        <div className='mobile-profile-board-cont'>1번 글 어쩌구 저쩌구</div>
+                        <div className='mobile-profile-board-cont'>2번 글 어쩌구 저쩌구</div>
+                        <div className='mobile-profile-board-cont'>3번 글 어쩌구 저쩌구</div>
+                        <div className='mobile-profile-board-cont'>4번 글 어쩌구 저쩌구</div>
+                    </div>
+                </div>
             {modal1 && <ProfileModifier modal1={modal1} setModal1={setModal1}/>}
             {modal2 && <NicknameModifier modal2={modal2} setModal2={setModal2}/>}
         </>

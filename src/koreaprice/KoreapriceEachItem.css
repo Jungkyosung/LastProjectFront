@@ -1,5 +1,13 @@
 .koreaprice-item-wrap {
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.koreaprice-item-wrap:hover {
+  opacity: 0.8;
+  cursor: pointer;
 }
 
 .koreaprice-item-pic {
@@ -10,6 +18,7 @@
   align-items: center;
   overflow: hidden;
   margin: 5px;
+  border-radius: 10px;
 }
 
 .koreaprice-item-pic > img{

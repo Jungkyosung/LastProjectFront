@@ -13,7 +13,7 @@ const Footer = () => {
     const handlerTranslate = () => {
         const token = sessionStorage.getItem('token');
 
-        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/translate/${tempText}`,
+        axios.get(`http://localhost:8080/translate/${tempText}`,
             {
                 headers: { 'Authorization': `Bearer ${token}` }
             })

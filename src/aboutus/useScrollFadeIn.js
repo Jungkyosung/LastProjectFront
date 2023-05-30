@@ -1,6 +1,7 @@
 import { useRef, useEffect, useCallback } from 'react';
 
 // 스크롤하면 페이드인 하는 애니메이션
+// 원문 https://shylog.com/react-custom-hooks-scroll-animation-fadein/
 // useScrollFadeIn 이라는 커스텀훅 선언(스크롤에 따라 페이드인 애니메이션을 적용할 로직(directio,duration,delay 라는 세가지 매개변수를 받으며 기본값은 up,1,0))
 const useScrollFadeIn = (direction = 'up', duration = 1, delay = 0) => {
 

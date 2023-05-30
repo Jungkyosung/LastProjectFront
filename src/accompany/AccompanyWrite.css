@@ -32,6 +32,31 @@
     padding-bottom: 30px;
 }
 
+#accompany-write-area-ul > .active {
+    color: rgb(0, 140, 255);
+}
+
+#accompany-write-area-ul > li > button {
+    background: inherit;
+    border:none;
+    box-shadow:none;
+    border-radius:0;
+    padding:0;
+    overflow:visible;
+    cursor:pointer;
+    width: 60px;
+    text-align: center;
+    padding-bottom: 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#accompany-write-area-ul > li > button:hover {
+    color: rgb(0, 140, 255);
+    font-weight: bold;
+    cursor: pointer;
+}
+
 #accompany-write-area-ul > li:hover{
     color: rgb(0, 140, 255);
     font-weight: bold;
@@ -52,13 +77,21 @@
 }
 
 #accompany-img{
-    width:600px;
+    /* width:600px;
     height: 600px;
     border-radius: 10px;
     overflow: hidden;
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 20px; */
+    /* margin-top:10px; */
+    /* margin: 200; */
+    /* width: 800px; */
+    display:flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 50px;
+    /* border: 1px solid blue; */
 }
 
 #accompany-img > img{
@@ -77,7 +110,7 @@
 }
 
 #accompany-title-write > div{
-    width: 400px;
+    width: 700px;
     margin-bottom: 20px;
 }
 
@@ -86,7 +119,7 @@
 }
 
 #accompany-content-write > div{
-    width: 400px;
+    width: 700px;
     margin-bottom: 20px;
 }
 
@@ -130,8 +163,9 @@
     }
 
     #accompany-img {
-        width : 80%;
-        height: 300px;
+        /* width : 80%; */
+        width:600px;
+        height: 200px;
     }
 
     #accompany-upload-btn{
@@ -146,4 +180,3 @@
         width: 270px;
     }
 }
-

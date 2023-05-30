@@ -14,7 +14,7 @@ function LNButton(props) {
 
 
     const handleLikeChange = (e) => {
-        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealrealwithlike`)
+        axios.get(`http://localhost:8080/api/listidealrealwithlike`)
             .then(response => {
                 setData(response.data);
                 console.log(response);
@@ -26,7 +26,7 @@ function LNButton(props) {
     }
 
     const handleListChange = (e) => {
-        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal`)
+        axios.get(`http://localhost:8080/api/listidealreal`)
             .then(response => {
                 setData(response.data);
                 console.log(response);

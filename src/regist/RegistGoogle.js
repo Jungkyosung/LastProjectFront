@@ -1,6 +1,6 @@
 import { Button, TextField, Autocomplete } from "@mui/material";
 import Frame from "../main/Frame";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
@@ -22,8 +22,8 @@ const RegistGoogle = () => {
   }
 
   //[국가 핸들러]
-  const handlerChangeNation = (newValue) => {  
-    const selectNation = nationsObj.filter( obj => 
+  const handlerChangeNation = (newValue) => {
+    const selectNation = nationsObj.filter(obj =>
       obj.nation == newValue
     )
     console.log(selectNation);
@@ -34,29 +34,29 @@ const RegistGoogle = () => {
   //[제출 핸들러]
   const handlerSubmit = (e) => {
     e.preventDefault();
-    axios.post(`http://${process.env.REACT_APP_JKS_IP}:8080/api/regist`,
+    axios.post(`http://localhost:8080/api/regist`,
       {
         "userId": email,
         "userPw": tempPwKey,
         "userName": name,
         "userNickname": nickName,
-        "countryIdx" : nationIdx
-    })
-    .then((response)=>{
-      console.log(response);
-      //회원가입 후 로그인 페이지로 리다이렉트
-      navigate("/login");
-    })
-    .catch((error)=>{
-      console.log(error);
-    });
+        "countryIdx": nationIdx
+      })
+      .then((response) => {
+        console.log(response);
+        //회원가입 후 로그인 페이지로 리다이렉트
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     console.log("버튼누름");
   }
   return (
     <Frame>
       <h2>회원가입</h2>
-      <div>
-        <span>LOGO</span>
+      <div id="logo-box">
+        <Link to="/"><img src={process.env.PUBLIC_URL + '/KADA.png'} /></Link>
       </div>
       <div>
         <h2>추가 정보 입력</h2>
@@ -66,9 +66,9 @@ const RegistGoogle = () => {
             disablePortal
             options={nationsArr}
             sx={{ width: 380 }}
-            onInputChange={(e,newValue) => handlerChangeNation(newValue)}
-            renderInput={(params) => 
-            <TextField {...params} label='Country' />} />
+            onInputChange={(e, newValue) => handlerChangeNation(newValue)}
+            renderInput={(params) =>
+              <TextField {...params} label='Country' />} />
           <Button type="submit" variant="contained">REGIST</Button>
         </form>
       </div>
@@ -88,12 +88,12 @@ const RegistGoogle = () => {
 export default RegistGoogle;
 
 const nationsArr = [
-    'korea'
+  'korea'
 ]
 
 const nationsObj = [
   {
-    'nation' : 'korea',
-    'nationIdx' : 1
+    'nation': 'korea',
+    'nationIdx': 1
   }
 ]

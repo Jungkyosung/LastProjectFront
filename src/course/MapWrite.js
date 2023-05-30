@@ -85,7 +85,7 @@ const MapWrite = () => {
     }
 
     console.log(data);
-    axios.post(`http://${process.env.REACT_APP_JKS_IP}:8080/api/course`, data , {headers : header})
+    axios.post(`http://localhost:8080/api/course`, data , {headers : header})
       .then(response => {
         console.log(response);
         if (response.data === "정상처리") {

@@ -48,7 +48,7 @@ const MapList = () => {
 
     //시작하면 리스트 가져오는 함수
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/course`, 
+        axios.get(`http://localhost:8080/api/course`, 
         // { headers: header }
         )
             .then(response => {

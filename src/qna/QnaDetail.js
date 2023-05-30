@@ -35,7 +35,7 @@ const QnaDetail = () => {
     const [contents, setContents] = useState('');
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_JYS_IP}:8080/api/qna/${qnaIdx}`, {headers : header})
+        axios.get(`http://localhost:8080/api/qna/${qnaIdx}`, {headers : header})
             .then(response => {
                 console.log(response.data)
                 setQna(response.data.selectQnaInfo);
@@ -51,7 +51,7 @@ const QnaDetail = () => {
     const handlerClickList = () => navigate('/qnalist');
 
     const handlerClickDelete = () => {
-        axios.delete(`http://${process.env.REACT_APP_JYS_IP}:8080/api/qna/${qnaIdx}`, {headers : header}
+        axios.delete(`http://localhost:8080/api/qna/${qnaIdx}`, {headers : header}
         )
             .then(response => {
                 alert('정상적으로 삭제되었습니다.');
@@ -72,7 +72,7 @@ const QnaDetail = () => {
     const handlerSubmit = e => {
         e.preventDefault();
 
-        axios.post(`http://${process.env.REACT_APP_JYS_IP}:8080/api/qna/comments/write/${qnaIdx}`, 
+        axios.post(`http://localhost:8080/api/qna/comments/write/${qnaIdx}`, 
             { "qnaCommentContent": contents }, {headers : header})
             .then(response => {
                 console.log(response);

@@ -48,7 +48,7 @@ function IdealrealDetail() {
         //     return
         // }
 
-        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal/detail/${idealrealIdx}`
+        axios.get(`http://localhost:8080/api/listidealreal/detail/${idealrealIdx}`
             ,{ headers: header }
         )
             .then(response => {
@@ -73,7 +73,7 @@ function IdealrealDetail() {
 
 
     const handlerClickDelete = () => {
-        axios.delete(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal/${idealrealIdx}`,
+        axios.delete(`http://localhost:8080/api/listidealreal/${idealrealIdx}`,
             {headers:header}
         )
             .then(response => {
@@ -87,8 +87,8 @@ function IdealrealDetail() {
             })
     };
     // 이미지를 가져오는 주소를 설정
-    const idealImg = `http://${process.env.REACT_APP_KTG_IP}:8080/api/getimage/${idealrealIdealImg}`;
-    const realImg = `http://${process.env.REACT_APP_KTG_IP}:8080/api/getimage/${idealrealRealImg}`;
+    const idealImg = `http://localhost:8080/api/getimage/${idealrealIdealImg}`;
+    const realImg = `http://localhost:8080/api/getimage/${idealrealRealImg}`;
 
 
     return (

@@ -34,7 +34,7 @@ const QnaUpdate = () => {
     const [qna, setQna] = useState({});
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_JYS_IP}:8080/api/qna/${qnaIdx}`, {headers: header})
+        axios.get(`http://localhost:8080/api/qna/${qnaIdx}`, {headers: header})
             .then(response => {
                 console.log(response.data);
                 setQna(response.data);
@@ -47,7 +47,7 @@ const QnaUpdate = () => {
     }, [])
 
     const handlerClickUpdate = () => {
-        axios.put(`http://${process.env.REACT_APP_JYS_IP}:8080/api/qna/update/${qnaIdx}`,
+        axios.put(`http://localhost:8080/api/qna/update/${qnaIdx}`,
             { "qnaTitle": title, "qnaContent": content }, {headers: header})
             .then(response => {
                 console.log(response)

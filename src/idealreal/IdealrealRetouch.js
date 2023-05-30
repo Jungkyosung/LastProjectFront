@@ -47,7 +47,7 @@ function IdealrealRetouch() {
 
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal/detail/${idealrealIdx}`, {headers: header}
+        axios.get(`http://localhost:8080/api/listidealreal/detail/${idealrealIdx}`, {headers: header}
             // { headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` } }
         )
             .then(response => {
@@ -93,7 +93,7 @@ function IdealrealRetouch() {
         e.preventDefault();
         axios({
             method: 'PUT',
-            url: `http://${process.env.REACT_APP_KTG_IP}:8080/reupload/${idealrealIdx}`,
+            url: `http://localhost:8080/rereupload/${idealrealIdx}`,
             headers: { 'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${jwtToken}` },
             data: formData
         })
@@ -174,8 +174,8 @@ function IdealrealRetouch() {
     };
 
 
-    const idealImg = `http://${process.env.REACT_APP_KTG_IP}:8080/api/getimage/${idealrealIdealImg}`;
-    const realImg = `http://${process.env.REACT_APP_KTG_IP}:8080/api/getimage/${idealrealRealImg}`;
+    const idealImg = `http://localhost:8080/api/getimage/${idealrealIdealImg}`;
+    const realImg = `http://localhost:8080/api/getimage/${idealrealRealImg}`;
 
 
     return (
