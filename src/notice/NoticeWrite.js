@@ -51,7 +51,7 @@ const NoticeWrite = () => {
             .then(response => {
                 console.log(response)
                 alert("정상처리 되었습니다");
-                navigate('/noticeList')
+                navigate('/noticelist')
             })
             .catch(error => {
                 console.log(error);

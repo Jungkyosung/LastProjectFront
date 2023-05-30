@@ -12,7 +12,7 @@ const KoreaIssue = () => {
 
 
     // const [loading, setLoading] = useState(false);
-    const [responseData, setResponseData] = useState([]);
+    const [koreaIssueData, setKoreaIssueData] = useState([]);
     const [loading, setLoading] = useState(true);
 
     // API 데이터 가지고 오기
@@ -32,7 +32,7 @@ const KoreaIssue = () => {
                         arrIssueItem[i] = { ...issueItems[i], index: i }
                     }
                     console.log(arrIssueItem);
-                    setResponseData(arrIssueItem);
+                    setKoreaIssueData(arrIssueItem);
                     setLoading(false);
                 })
                 .catch((error) => {
@@ -46,7 +46,7 @@ const KoreaIssue = () => {
 
     // 컴포넌트 마운트 시 API 데이터 가지고 오기
     useEffect(() => {
-        loadItem(1, 9);
+        loadItem(2, 9);
     }, []);
 
 
@@ -56,7 +56,7 @@ const KoreaIssue = () => {
                 <h2 className={styles.title}>한국 이슈</h2>
                 {loading ? <CircularProgress color="secondary" /> : null}
                 <ul className={styles.issueLists}> {
-                    responseData.map((apiData, index) => (
+                    koreaIssueData.map((apiData, index) => (
                         <li key={index}>
                             <Link to=
                                 {`/koreaissue/${apiData.index}`}

@@ -40,7 +40,7 @@ function App() {
         <Route path="/koreanews" Component={KoreaNews} exact={true} />
         <Route path="/koreaissue" Component={KoreaIssue} exact={true} />
         <Route path="/koreaissue/:index" Component={KoreaIssueDetail} exact={true} />
-        <Route path="/noticeList" Component={Notice} exact={true} />
+        <Route path="/noticelist" Component={Notice} exact={true} />
         <Route path="/notice/:noticeIdx" Component={NoticeDetail} exact={true} />
         <Route path="/notice/write" Component={NoticeWrite} exact={true} />
         <Route path="/notice/update/:noticeIdx" Component={NoticeUpdate} exact={true} />

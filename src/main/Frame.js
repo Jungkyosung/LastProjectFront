@@ -5,7 +5,6 @@ import Footer from "../platform/Footer";
 
 
 const Frame = ({children, isLogin, setIsLogin}) => {
-
     return (
         <>
             <Reset />

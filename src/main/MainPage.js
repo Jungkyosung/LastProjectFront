@@ -2,21 +2,26 @@ import React, { useEffect, useState } from 'react';
 import Frame from './Frame';
 import useScrollFadeIn from './useScrollFadeIn';
 import styles from './MainPage.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import AccompanySwiper from './AccompanySwiper';
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import EmergencyShareIcon from '@mui/icons-material/EmergencyShare';
+import MonochromePhotosIcon from '@mui/icons-material/MonochromePhotos';
 
 const MainPage = () => {
   // useScrollFadeIn 훅을 사용하여 애니메이션 효과를 적용
-  const koreaIssueAnimation = useScrollFadeIn('up', 2, 0);
-  const accompanyAnimation = useScrollFadeIn('up', 3, 0);
-  const noticeAnimation = useScrollFadeIn('up', 3, 0);
+  const koreaIssueAnimation = useScrollFadeIn('up', 1, 0);
+  const accompanyAnimation = useScrollFadeIn('up', 0.5, 0);
+  const nowAnimation = useScrollFadeIn('up', 1, 0);
+  const courseAnimation = useScrollFadeIn('up', 1, 0.5);
+  const noticeAnimation = useScrollFadeIn('up', 1, 0.5);
 
   const [koreaIssueData, setKoreaIssueData] = useState([]);
 
-  // API 데이터 가지고 오기
-  // const [pages, setPages] = useState(1);
+  const navigate = useNavigate();
 
   const loadItem = async (pageNo, numOfRows) => {
     try {
@@ -50,6 +55,22 @@ const MainPage = () => {
     loadItem(2, 9);
   }, []);
 
+  const handlerWeather = () => {
+    navigate(`/weather`);
+  }
+
+  const handlerExperience = () => {
+    navigate(`/koreaprice`);
+  }
+
+  const handlerTried = () => {
+    navigate(`/tried`);
+  }
+
+  const handlerIdealreal = () => {
+    navigate(`/idealreal`);
+  }
+
   return (
     <Frame>
       <div className={styles.main_page}>
@@ -64,7 +85,17 @@ const MainPage = () => {
             <div className={styles.main_koreaissue_li}>
               {
                 koreaIssueData.length > 1 &&
-                <Link to="/">
+                <Link to={`/koreaissue/${koreaIssueData[0].index}`}
+                  state={
+                    {
+                      title: koreaIssueData[0].title,
+                      content: koreaIssueData[0].content,
+                      index: koreaIssueData[0].index,
+                      thum_url: koreaIssueData[0].thum_url,
+                      broadcast_date: koreaIssueData[0].broadcast_date
+                    }
+                  }
+                >
                   <div>
                     <img src={koreaIssueData[0].thum_url} />
                   </div>
@@ -77,7 +108,17 @@ const MainPage = () => {
             <div className={styles.main_koreaissue_li}>
               {
                 koreaIssueData.length > 1 &&
-                <Link to="/">
+                <Link to={`/koreaissue/${koreaIssueData[1].index}`}
+                  state={
+                    {
+                      title: koreaIssueData[1].title,
+                      content: koreaIssueData[1].content,
+                      index: koreaIssueData[1].index,
+                      thum_url: koreaIssueData[1].thum_url,
+                      broadcast_date: koreaIssueData[1].broadcast_date
+                    }
+                  }
+                >
                   <div>
                     <img src={koreaIssueData[1].thum_url} />
                   </div>
@@ -87,7 +128,17 @@ const MainPage = () => {
               }
               {
                 koreaIssueData.length > 1 &&
-                <Link to="/">
+                <Link to={`/koreaissue/${koreaIssueData[2].index}`}
+                  state={
+                    {
+                      title: koreaIssueData[2].title,
+                      content: koreaIssueData[2].content,
+                      index: koreaIssueData[2].index,
+                      thum_url: koreaIssueData[2].thum_url,
+                      broadcast_date: koreaIssueData[2].broadcast_date
+                    }
+                  }
+                >
                   <div>
                     <img src={koreaIssueData[2].thum_url} />
                   </div>
@@ -99,42 +150,102 @@ const MainPage = () => {
             <div className={styles.main_koreaissue_li}>
               {
                 koreaIssueData.length > 1 &&
-                <Link to="/">
+                <Link to={`/koreaissue/${koreaIssueData[3].index}`}
+                  state={
+                    {
+                      title: koreaIssueData[3].title,
+                      content: koreaIssueData[3].content,
+                      index: koreaIssueData[3].index,
+                      thum_url: koreaIssueData[3].thum_url,
+                      broadcast_date: koreaIssueData[3].broadcast_date
+                    }
+                  }
+                >
                   <h3>{koreaIssueData[3].title}</h3>
                   <p><AccessTimeIcon style={{ fontSize: "21px", verticalAlign: "Text-top", marginRight: "5px" }} />{koreaIssueData[3].broadcast_date.substr(0, 10)}</p>
                 </Link>
               }
               {
                 koreaIssueData.length > 1 &&
-                <Link to="/">
+                <Link to={`/koreaissue/${koreaIssueData[4].index}`}
+                  state={
+                    {
+                      title: koreaIssueData[4].title,
+                      content: koreaIssueData[4].content,
+                      index: koreaIssueData[4].index,
+                      thum_url: koreaIssueData[4].thum_url,
+                      broadcast_date: koreaIssueData[4].broadcast_date
+                    }
+                  }
+                >
                   <h3>{koreaIssueData[4].title}</h3>
                   <p><AccessTimeIcon style={{ fontSize: "21px", verticalAlign: "Text-top", marginRight: "5px" }} />{koreaIssueData[4].broadcast_date.substr(0, 10)}</p>
                 </Link>
               }
               {
                 koreaIssueData.length > 1 &&
-                <Link to="/">
+                <Link to={`/koreaissue/${koreaIssueData[5].index}`}
+                  state={
+                    {
+                      title: koreaIssueData[5].title,
+                      content: koreaIssueData[5].content,
+                      index: koreaIssueData[5].index,
+                      thum_url: koreaIssueData[5].thum_url,
+                      broadcast_date: koreaIssueData[5].broadcast_date
+                    }
+                  }
+                >
                   <h3>{koreaIssueData[5].title}</h3>
                   <p><AccessTimeIcon style={{ fontSize: "21px", verticalAlign: "Text-top", marginRight: "5px" }} />{koreaIssueData[5].broadcast_date.substr(0, 10)}</p>
                 </Link>
               }
               {
                 koreaIssueData.length > 1 &&
-                <Link to="/">
+                <Link to={`/koreaissue/${koreaIssueData[6].index}`}
+                  state={
+                    {
+                      title: koreaIssueData[6].title,
+                      content: koreaIssueData[6].content,
+                      index: koreaIssueData[6].index,
+                      thum_url: koreaIssueData[6].thum_url,
+                      broadcast_date: koreaIssueData[6].broadcast_date
+                    }
+                  }
+                >
                   <h3>{koreaIssueData[6].title}</h3>
                   <p><AccessTimeIcon style={{ fontSize: "21px", verticalAlign: "Text-top", marginRight: "5px" }} />{koreaIssueData[6].broadcast_date.substr(0, 10)}</p>
                 </Link>
               }
               {
                 koreaIssueData.length > 1 &&
-                <Link to="/">
+                <Link to={`/koreaissue/${koreaIssueData[7].index}`}
+                  state={
+                    {
+                      title: koreaIssueData[7].title,
+                      content: koreaIssueData[7].content,
+                      index: koreaIssueData[7].index,
+                      thum_url: koreaIssueData[7].thum_url,
+                      broadcast_date: koreaIssueData[7].broadcast_date
+                    }
+                  }
+                >
                   <h3>{koreaIssueData[7].title}</h3>
                   <p><AccessTimeIcon style={{ fontSize: "21px", verticalAlign: "Text-top", marginRight: "5px" }} />{koreaIssueData[7].broadcast_date.substr(0, 10)}</p>
                 </Link>
               }
               {
                 koreaIssueData.length > 1 &&
-                <Link to="/">
+                <Link to={`/koreaissue/${koreaIssueData[8].index}`}
+                  state={
+                    {
+                      title: koreaIssueData[8].title,
+                      content: koreaIssueData[8].content,
+                      index: koreaIssueData[8].index,
+                      thum_url: koreaIssueData[8].thum_url,
+                      broadcast_date: koreaIssueData[8].broadcast_date
+                    }
+                  }
+                >
                   <h3>{koreaIssueData[8].title}</h3>
                   <p><AccessTimeIcon style={{ fontSize: "21px", verticalAlign: "Text-top", marginRight: "5px" }} />{koreaIssueData[8].broadcast_date.substr(0, 10)}</p>
                 </Link>
@@ -143,23 +254,98 @@ const MainPage = () => {
           </div>
         </div>
         <div className={styles.main_accompany} ref={accompanyAnimation.ref} style={accompanyAnimation.style}>
-          <p>동행찾기</p>
-        <div className={styles.main_accompany_ul}>
-          <AccompanySwiper />
-          {/* <li className={styles.main_accompany_li}>1번박스</li>
-          <li className={styles.main_accompany_li}>2번박스</li>
-          <li className={styles.main_accompany_li}>3번박스</li>
-          <li className={styles.main_accompany_li}>4번박스</li> */}
+          <h2 className={styles.accompanyMain_section_title}>
+            Travel
+            <em className={styles.style_font}>
+              Partner
+            </em>
+          </h2>
+          <div className={styles.main_accompany_ul}>
+            <AccompanySwiper />
+          </div>
+        </div>
+        <div className={styles.main_now} ref={nowAnimation.ref} style={nowAnimation.style}>
+          <h2 className={styles.nowMain_section_title}>
+            Korea
+            <em className={styles.style_font}>
+              Now
+            </em>
+          </h2>
+          <div className={styles.main_now_ul}>
+            <li className={styles.main_now_li} onClick={handlerWeather}>
+              <img src={process.env.PUBLIC_URL + "/images/wether.jpg"} />
+              <strong>K WEATHER</strong>
+              <div className={styles.bg}>
+                <WbSunnyIcon className={styles.icon} />
+                <em>K WEATHER</em>
+                <p>see the weather across the country</p>
+              </div>
+            </li>
+            <li className={styles.main_now_li} onClick={handlerExperience}>
+              <img src={process.env.PUBLIC_URL + "/images/experience.jpg"} />
+              <strong>PRICE EXPERIENCE</strong>
+              <div className={styles.bg}>
+                <CurrencyExchangeIcon className={styles.icon} />
+                <em>PRICE EXPERIENCE</em>
+                <p>experience the prices of Korea</p>
+              </div>
+            </li>
+            <li className={styles.main_now_li} onClick={handlerTried}>
+              <img src={process.env.PUBLIC_URL + "/images/tried.jpg"} />
+              <strong>KOREA TRIED</strong>
+              <div className={styles.bg}>
+                <EmergencyShareIcon className={styles.icon} />
+                <em>KOREA TRIED</em>
+                <p>We can share how far we've gone</p>
+              </div>
+            </li>
+            <li className={styles.main_now_li} onClick={handlerIdealreal}>
+              <img src={process.env.PUBLIC_URL + "/images/real.jpg"} />
+              <strong>IDEAL &amp; REAL</strong>
+              <div className={styles.bg}>
+                <MonochromePhotosIcon className={styles.icon} />
+                <em>IDEAL &amp; REAL</em>
+                <p>We share ideals and reality</p>
+              </div>
+            </li>
+          </div>
+        </div>
+        <div className={styles.main_course} ref={courseAnimation.ref} style={courseAnimation.style}>
+          <h2 className={styles.courseMain_section_title}>
+            Travel
+            <em className={styles.style_font}>
+              Course
+            </em>
+          </h2>
+          <span className={styles.course_text}>Check out the tourist route</span>
+          <div className={styles.btn_box}>
+            <Link to="/course" className={`${styles.btn_more}`}>more</Link>
+          </div>
+        </div>
+        <div className={styles.main_notice} ref={noticeAnimation.ref} style={noticeAnimation.style}>
+          {/* <p>공지사항</p> */}
+          <ul className={styles.main_notice_ul}>
+            <li className={styles.main_notice_li}>
+              <div className={styles.txt_bx}>
+                <div className={styles.tit}>NOTICE</div>
+                <p className={styles.text}>Check the announcement!</p>
+                <div className={styles.btn_box}>
+                  <Link to="/qnalist" className={`${styles.btn_more}`}>more</Link>
+                </div>
+              </div>
+            </li>
+            <li className={styles.main_notice_li}>
+              <div className={styles.txt_bx}>
+                <div className={styles.tit}>Q&amp;A</div>
+                <p className={styles.text}>Please leave any questions about KADA.</p>
+                <div className={styles.btn_box}>
+                  <Link to="/qnalist" className={`${styles.btn_more}`}>more</Link>
+                </div>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
-      <div className={styles.main_notice} ref={noticeAnimation.ref} style={noticeAnimation.style}>
-        <p>공지사항</p>
-        <ul className={styles.main_notice_ul}>
-          <li className={styles.main_notice_li}>1번박스</li>
-          <li className={styles.main_notice_li}>2번박스</li>
-        </ul>
-      </div>
-    </div>
     </Frame >
   );
 };
