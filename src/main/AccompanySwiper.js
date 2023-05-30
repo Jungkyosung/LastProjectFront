@@ -114,7 +114,7 @@ const AccompanySwiper = () => {
                                     <img src={`http://localhost:8080/api/getImage/${accompany.accompanyImage}`} />
                                 </div>
                                 <div className={styles.accompany_each_content}>
-                                    {accompany.accompanyTitle}빛이나는마이웨이 빛이나는 마이웨이빛이나는dksmsdkja;tkljdsa;
+                                    {accompany.accompanyTitle}
                                 </div>
                                 <div className={styles.accompany_each_title}>
                                     <span className={styles.accompany_each_area}>
