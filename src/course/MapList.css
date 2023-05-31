@@ -31,6 +31,8 @@
 }
 
 #travelcourse-list-write{
+  display: flex;
+  justify-content: space-between;
   width: 90%;
   text-align: end;
   margin-bottom: 30px;

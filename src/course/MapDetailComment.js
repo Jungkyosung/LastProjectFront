@@ -41,7 +41,7 @@ const MapDetailComment = (props) => {
 
   //댓글목록 조회
   const fetchDataCommentList = () =>{
-    axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/course/comment/${travelcourseIdx}`, { headers: header })
+    axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/course/comment/${travelcourseIdx}`)
     .then(response => {
         console.log(response);
         setCommentList(response.data);
@@ -65,8 +65,12 @@ const MapDetailComment = (props) => {
         fetchDataCommentList();
         //댓글 input 내용 초기화
         setComment('');
+        
     })
-    .catch(error => console.log(error));
+    .catch(error => {
+      console.log(error)
+      alert("로그인 후 사용하실 수 있습니다.")
+    });
   }
 
 

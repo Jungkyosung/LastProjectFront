@@ -9,6 +9,7 @@ import Frame from "../main/Frame";
 import styles from "./IdealReal.module.css"
 import Button from '@mui/joy/Button';
 import jwt_decode from 'jwt-decode';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 function Idealreal() {
 
@@ -135,7 +136,7 @@ function Idealreal() {
         <Frame>
             <div className={styles.containerWrap}>
                 <h2 className={styles.realTitle}>이상과 현실</h2>
-                <LNButton setData={setData} />
+                <LNButton setData={setData} page={page} setPage={setPage}/>
 
                 <div className={styles.wrapper}>
                     {/* <div style={styles.contentContainer}> */}
@@ -163,7 +164,7 @@ function Idealreal() {
                                                     {/* {console.log(idealreal.idealrealIdealImg)} */}
                                                     <div className={styles.topBox}>
                                                         <em className={styles.flexTitle}>{idealreal.idealrealTitle}</em>
-                                                        <span className={styles.flexLike}>{idealreal.likeCount}</span>
+                                                        <span className={styles.flexLike}>LIKE {idealreal.likeCount}</span>
                                                     </div>
                                                     <div className={styles.imgBox}>
                                                         <img

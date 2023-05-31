@@ -11,12 +11,14 @@ function LNButton(props) {
     const [idealreal, setIdealreal] = useState([]);
     const [ likeCount, setLikeCount ] = useState(0);
     const { idealrealIdx } = useParams();
-
+    const page = props.page;
+    const setPage = props.setPage;
 
     const handleLikeChange = (e) => {
-        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealrealwithlike`)
+        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealrealwithlike/${page}`)
             .then(response => {
                 setData(response.data);
+                setPage(1);
                 console.log(response);
             })
             .catch(error => {
@@ -26,9 +28,10 @@ function LNButton(props) {
     }
 
     const handleListChange = (e) => {
-        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal`)
+        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal/${page}`)
             .then(response => {
                 setData(response.data);
+                setPage(1);
                 console.log(response);
             })
             .catch(error => {

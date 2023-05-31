@@ -44,7 +44,9 @@ function Thumb(props) {
       .catch(error => console.log(error));
 
     //이 사람이 좋아요를 눌른 놈인지 아닌지
-    axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal/detail/likecheck/${idealrealIdx}/${loginUserId}`, {headers:header})
+      let tempLoginUserId = loginUserId.replace(".", "-");
+
+    axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal/detail/likecheck/${idealrealIdx}/${tempLoginUserId}`, {headers:header})
       .then(response => {
         console.log(response);
         setLikeCheck(response.data);
@@ -84,6 +86,7 @@ function Thumb(props) {
           console.log(error);
           return;
         });
+
     } else if (likeCheck == 1) {
       setLikeCount(prev => prev - 1)
       axios.delete(`http://${process.env.REACT_APP_KTG_IP}:8080/api/${idealrealIdx}/unlike`,

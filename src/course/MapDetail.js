@@ -100,7 +100,7 @@ function MapDetail(props) {
     }
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/course/img/${travelcourseIdx}`, { headers: header })
+        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/course/img/${travelcourseIdx}`)
             .then(response => {
                 console.log(response);
                 setCourseImg(response.data);

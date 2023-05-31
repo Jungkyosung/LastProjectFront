@@ -76,7 +76,7 @@ const MapList = () => {
                 setPages(pages + 1);
             }
         }
-    },700);
+    }, 700);
 
     //page바뀌면 스크롤 핸들러 작동 
     useEffect(() => {
@@ -88,13 +88,13 @@ const MapList = () => {
 
     }, [pages, totalPages]);
 
-    const fetchData = () =>{
+    const fetchData = () => {
         const params = {
             pages: pages,
             search: search
         }
 
-        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/course`, { params, headers: header }
+        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/course`, { params }
         )
             .then(response => {
                 console.log(response);
@@ -142,7 +142,7 @@ const MapList = () => {
             search: search
         }
 
-        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/course/totalpages`, { params , headers: header }
+        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/course/totalpages`, { params, headers: header }
         )
             .then(response => {
                 console.log(response);
@@ -153,10 +153,10 @@ const MapList = () => {
             })
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchData();
         fetchDataPageCount();
-    },[pages])
+    }, [pages])
 
 
     const handlerChangeSearch = (e) => {
@@ -181,12 +181,15 @@ const MapList = () => {
             </div>
             <div id='travelcourse-list-wrap'>
                 <div id="travelcourse-list-title">여행코스</div>
-                <Input placeholder="Search" variant="outlined" color="primary" onChange={handlerChangeSearch} value={search} onKeyDown={e => { if (e.key === "Enter") { handlerSubmitSearch(e); } }} />
-                <SearchIcon onClick={()=>handlerSubmitSearch()} />
+
                 <div id="travelcourse-list-write">
                     <Link to="/course/mapwrite">
                         <Button variant="contained">WRITE</Button>
                     </Link>
+                    <div>
+                        <Input placeholder="Search" variant="outlined" color="primary" onChange={handlerChangeSearch} value={search} onKeyDown={e => { if (e.key === "Enter") { handlerSubmitSearch(e); } }} />
+                        <SearchIcon onClick={() => handlerSubmitSearch()} />
+                    </div>
                 </div>
                 <div id="travelcourse-list-lists">
                     {filterDatas && filterDatas.map((course, index) => (
@@ -213,7 +216,7 @@ const MapList = () => {
                                     startDate={course.travelcourseStartDate.substr(0, 10)}
                                     endDate={course.travelcourseEndDate.substr(0, 10)}
                                     title={course.travelcourseTitle}
-                                    travelcourseIdx = {course.travelcourseIdx}
+                                    travelcourseIdx={course.travelcourseIdx}
                                     days={course.travelcourseDetailList}
                                     modalStateClose={() => modalStateClose(index)}
                                 />

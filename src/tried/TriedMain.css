@@ -13,6 +13,12 @@
     align-items: center;
 }
 
+#tried-worldcup {
+    position: fixed;
+    left: 8%;
+    bottom:10%;
+}
+
 #tried-write-btn{
     display: flex;
     flex-direction: row-reverse;
@@ -31,9 +37,24 @@
     max-width: 1150px;
 }
 
+@media (min-width: 100px){
+    .triedMain{
+        width: 90%;
+    }
+
+    #tried-worldcup {
+        left: 89px;
+    }
+}
+
+
 @media (min-width: 600px){
     .triedMain{
         width: 90%;
+    }
+
+    #tried-worldcup {
+        left: 15%;
     }
 }
 
@@ -42,10 +63,20 @@
     .triedMain{
         width: 65%;
     }
+
+    #tried-worldcup {
+        left: 15%;
+    }
 }
+
 
 @media (min-width: 1800px){
     .triedMain{
         width: 60%;
+    }
+
+    #tried-worldcup {
+        /* left: 8%; */
+        left: 13%;
     }
 }

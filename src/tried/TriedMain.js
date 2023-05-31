@@ -7,6 +7,7 @@ import './TriedMain.css';
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import { throttle } from "lodash";
+import PlaygroundSpeedDial from "./PlaygroundSpeedDial";
 
 const TriedMain = () => {
 
@@ -154,7 +155,7 @@ const TriedMain = () => {
         <Frame>
 
             <div id="travelcourse-list-img">
-                <img src="https://i.pinimg.com/564x/67/1b/ba/671bba36fccbc46d70f7e2631b781c61.jpg" />
+                <img src="https://a.cdn-hotels.com/gdcs/production140/d1583/119ec73c-cbf4-431e-b128-eadb32999939.jpg" />
             </div>
             <div id="tried-wrap">
                 <TriedCategory
@@ -163,6 +164,9 @@ const TriedMain = () => {
                     order={order} setOrder={setOrder}
                     year={year} setYear={setYear}
                 />
+                <div id="tried-worldcup">
+                    <PlaygroundSpeedDial  />
+                </div>
                 <div id="tried-write-btn">
                     <Button type='button' variant="contained" onClick={handlerWrite}>글쓰기</Button>
                 </div>

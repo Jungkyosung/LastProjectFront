@@ -29,6 +29,7 @@ function IdealrealDetail() {
     const [idealrealTitle, setIdealrealTitle] = useState('');
     const [idealrealContent, setIdealrealContent] = useState('');
     const [userId, setUserId] = useState('');
+    const [userNickname, setUserNickname] = useState('');
     const [idealrealCreatedTime, setIdealrealCreatedTime] = useState('');
     const [idealrealCnt, setIdealrealCnt] = useState('');
     const [idealrealIdealImg, setIdealrealIdealImg] = useState([]);
@@ -56,6 +57,7 @@ function IdealrealDetail() {
                 setIdealrealTitle(response.data.idealrealTitle);
                 setIdealrealContent(response.data.idealrealContent);
                 setUserId(response.data.userId);
+                setUserNickname(response.data.userNickname);
                 setIdealrealCreatedTime(response.data.idealrealCreatedTime);
                 setIdealrealCnt(response.data.idealrealCnt);
                 setIdealrealIdealImg(response.data.idealrealIdealImg);
@@ -97,7 +99,7 @@ function IdealrealDetail() {
                 <h2 className={styles.realTitle}>이상과 현실</h2>
                 <div className={styles.content}>
                     <h3 className={styles.subTitle}>{idealrealTitle}</h3>
-                    <span className={styles.userId}>{userId}</span>
+                    <span className={styles.userId}>{userNickname}</span>
                     <div className={styles.timeCnt}>
                         <span className={styles.time}>{idealrealCreatedTime}</span>
                         <span>조회수 {idealrealCnt}</span>

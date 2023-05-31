@@ -43,6 +43,10 @@ import TriedDetail from './tried/TriedDetail';
 import TriedUpdate from './tried/TriedUpdate';
 import AccompanyUpdate from './accompany/AccompanyUpdate';
 import Example from './mypage/example';
+import Game1 from './worldcup/Game1';
+import Game2 from './worldcup/Game2';
+import Game3 from './worldcup/Game3';
+import Winpage from './worldcup/Winpage';
 
 
 function App() {
@@ -90,6 +94,10 @@ function App() {
         <Route path="/idealreal/detail/:idealrealIdx" element={<IdealrealDetail/>} />
         <Route path="/idealreal/write"                element={<IdealrealWrite />} />
         <Route path="/idealrealretouch/:idealrealIdx" element={<IdealrealRetouch/>}/>
+        <Route path="/worldcup/1"                     element={<Game1/>}           />
+        <Route path="/worldcup/2"                     element={<Game2/>}           />
+        <Route path="/worldcup/3"                     element={<Game3/>}           />
+        <Route path="/winpage/:rawinfoIdx/:triedCategoryIdx" element={<Winpage/>}  />
         <Route path="/example"                        element={<Example/>}         />
         <Route path="/admin"                          element={<Admin/>}           />
         <Route path="/*"                              element={<NotFound/>}        />

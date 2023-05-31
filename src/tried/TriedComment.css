@@ -15,6 +15,10 @@
   width: 13%;
 }
 
+.triedDetail-comnt-userinfo > button{
+margin-left:0;
+}
+
 .triedDetail-comnt-userimg{
   display: flex;
   justify-content: center;
