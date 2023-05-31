@@ -3,6 +3,7 @@ import { Input } from "@mui/material";
 import Swal from "sweetalert2";
 import jwt_decode from 'jwt-decode';
 import axios from "axios";
+import ReportPop from "../report/ReportPop";
 
 const MapDetailCommentEach = (props) => {
 
@@ -133,9 +134,11 @@ const MapDetailCommentEach = (props) => {
   return (
     <>
       <div className="map-comment-each">
-        <div className="map-comment-profile-pic">
-          <img src={`http://${process.env.REACT_APP_JKS_IP}:8080/api/getimage/${comment.userImg}`} />
-        </div>
+        <ReportPop reportedUser={comment.userId}>
+          <div className="map-comment-profile-pic">
+            <img src={`http://${process.env.REACT_APP_JKS_IP}:8080/api/getimage/${comment.userImg}`} />
+          </div>
+        </ReportPop>
         <div className="map-comment-content-wrap">
           <div className="map-comment-content-head">
             <span className="map-comment-content-nick">{comment.userNickname}</span>
@@ -147,16 +150,16 @@ const MapDetailCommentEach = (props) => {
                 <Input placeholder="댓글 수정" value={updateComment} onChange={(e) => setUpdateComment(e.target.value)} />
               </div>
               <div className="map-comment-content-foot">
-                <div onClick={handlerCommentUpdateConfirm}>수정완료</div>
-                <div onClick={handlerCommentUpdateCancel}>취소</div>
+                <div className="map-comment-content-modify" onClick={handlerCommentUpdateConfirm}>수정완료</div>
+                <div className="map-comment-content-delete" onClick={handlerCommentUpdateCancel}>취소</div>
               </div>
             </>
             :
             <>
               <div className="map-comment-content-body">{comment.travelcourseComment}</div>
               <div className="map-comment-content-foot">
-                {comment.userId == userId ? <div onClick={handlerCommentUpdate}>수정</div> : ""}
-                {comment.userId == userId ? <div onClick={handlerCommentDelete}>삭제</div> : ""}
+                {comment.userId == userId ? <div className="map-comment-content-modify" onClick={handlerCommentUpdate}>수정</div> : ""}
+                {comment.userId == userId ? <div className="map-comment-content-delete" onClick={handlerCommentDelete}>삭제</div> : ""}
               </div>
             </>
           }

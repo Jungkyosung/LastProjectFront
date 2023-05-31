@@ -12,6 +12,7 @@ import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded';
 import axios from "axios";
 import i18n from "i18next";
 import { useTranslation } from 'react-i18next';
+import BuildIcon from '@mui/icons-material/Build';
 
 const SubMenu = (props) => {
 
@@ -93,6 +94,10 @@ const SubMenu = (props) => {
         navigate("/mypage");
     }
 
+    const handlerAdminpage = () => {
+        navigate("/admin");
+    }
+
     const handlerLoginpage = () => {
         navigate("/login");
     }
@@ -138,7 +143,10 @@ const SubMenu = (props) => {
                             </>
                             :
                             <>
+                                {   userId == "admin"  ? <p onClick={handlerAdminpage}><BuildIcon/></p>
+                                    :
                                 <p onClick={handlerMypage}><AccountCircleRoundedIcon />{userNickname}</p>
+                                }
                                 <LogoutIcon id="logout-icon" onClick={handlerLogout} />
                             </>
                     }

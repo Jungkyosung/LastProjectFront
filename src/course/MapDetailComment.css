@@ -28,7 +28,10 @@
 
 .map-comment-each{
   display: flex;
-
+}
+.map-comment-each>button{
+  margin-left:0;
+  padding : 0;
 }
 
 .map-comment-profile-pic{
@@ -75,7 +78,29 @@
 }
 
 .map-comment-content-foot{
+  display: flex;
   font-size: 0.7rem;
+}
+
+.map-comment-content-modify{
+  margin-right: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 2px 2px 2px 2px;
+}
+
+.map-comment-content-modify:hover{
+  background-color: rgb(216, 216, 216);
+}
+
+.map-comment-content-delete{
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 2px 2px 2px 2px;
+}
+
+.map-comment-content-delete:hover{
+  background-color: rgb(216, 216, 216);
 }
 
 #mapdetail-comment-write{

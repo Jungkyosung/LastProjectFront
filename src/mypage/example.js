@@ -4,7 +4,7 @@ const Example = () => {
   return (
     <>
       <div className="background">
-        <img src={process.env.PUBLIC_URL + '/background.png'} />
+        <img src={process.env.PUBLIC_URL + '/KADA-back.png'} />
         <div className='shin-img'>
           <img src={process.env.PUBLIC_URL + './신윤복 월하정인.png'}/>
         </div>

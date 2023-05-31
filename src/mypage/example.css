@@ -54,7 +54,7 @@
   position: absolute;
   z-index: 1;
   right: 200px;
-  top: 3300px;
+  top: 4300px;
   animation-name: shin-animation;
   animation-duration: 0.3s;
   transform-origin: bottom;
@@ -75,7 +75,7 @@
   position: absolute;
   z-index: 1;
   left: 200px;
-  top: 3500px;
+  top: 4500px;
   animation-name: shin-animation;
   animation-duration: 0.3s;
   transform-origin: bottom;

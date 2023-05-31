@@ -8,9 +8,10 @@ import TriedThumb from "./TriedThumb";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import TriedComment from "./TriedComment";
-import styles from "../qna/QnaDetail.module.css";
 import Textarea from '@mui/joy/Textarea';
 import jwt_decode from 'jwt-decode';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import FacebookIcon from '@mui/icons-material/Facebook';
 
 const TriedDetail = () => {
 
@@ -45,7 +46,7 @@ const TriedDetail = () => {
             .then(response => {
                 setFilename(response.data.triedImg);
                 setTried(response.data);
-
+                console.log(response.data)
 
             })
             .catch(error =>
@@ -156,7 +157,19 @@ const TriedDetail = () => {
             .catch((error) => {
                 console.log(error);
             })
+    }
 
+    const handlerShareTwitter = () => {
+        let sendText = "KADA " + tried.triedTitle;
+        let sendURL = `http://localhost:3000/tried/detail/${triedIdx}`;
+
+        window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendURL);
+    }
+
+    const handlerShareFacebook = () => {
+        let sendURL = `http://localhost:3000/tried/detail/${triedIdx}`;
+
+        window.open("http://www.facebook.com/sharer/sharer.php?u=" + sendURL);
     }
 
     return (
@@ -170,7 +183,7 @@ const TriedDetail = () => {
                     <div className="tried-title">
 
                         <div className="triedDetail-title">{tried.triedTitle}</div>
-                        <div className="triedDetail-writer">{tried.userId}</div>
+                        <div className="triedDetail-writer">{tried.userNickname}</div>
 
                         <div className="triedDetail-etc">
                             <div>{tried.triedCreatedTime}</div>
@@ -185,6 +198,15 @@ const TriedDetail = () => {
                             <div>{tried.triedContent}</div>
                         </div>
                     </div>
+                    <div>공유하기</div>
+                    <div className="triedDetail-shareIcon">
+                        <div className="triedDetail-shareIcon-twitter" onClick={handlerShareTwitter}>
+                            <TwitterIcon />
+                        </div>
+                        <div className="triedDetail-shareIcon-facebook" onClick={handlerShareFacebook}>
+                            <FacebookIcon />
+                        </div>
+                    </div>
                     <div className="triedDetail-comnt-wrap">
                         댓글
                         {commentList && commentList.map(comment => (
@@ -193,7 +215,7 @@ const TriedDetail = () => {
                             </>
                         ))}
                         <div className="triedDetail-comnt-write">
-                            <div className={styles.comment}>
+                            <div className="triedDetail-comnt-write-area">
                                 <Textarea
                                     style={{ borderRadius: "10px 0 0 10px", width: "90%" }}
                                     sx={{ color: "#333", }}

@@ -4,6 +4,7 @@ import axios from 'axios';
 import Frame from "../main/Frame";
 import CircularProgress from '@mui/material/CircularProgress';
 import './KoreaIssue.css';
+import { throttle } from "lodash";
 
 
 
@@ -19,7 +20,7 @@ const KoreaIssue = () => {
     // API 데이터 가지고 오기
     const [pages, setPages] = useState(1);
 
-    const handlerScroll = () => {
+    const handlerScroll = throttle(() => {
         //현재 스크롤 높이
         const scrolledHeight =
             window.innerHeight + document.documentElement.scrollTop;
@@ -33,7 +34,7 @@ const KoreaIssue = () => {
             //페이지 1씩 증가
             setPages(pages + 1);
         }
-    };
+    },700);
 
 
 const loadItem = async (pageNo, numOfRows) => {

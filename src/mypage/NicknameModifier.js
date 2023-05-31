@@ -107,8 +107,12 @@ const NicknameModifier = (props) => {
                     inputProps={ariaLabel}
                     value={changeNickname}
                     onChange={handlerChange} />
-                <Button className={styles.duplicateCheckbtn} id="duplicateCheck" type='button' variant="contained" onClick={handlerDuplicateCheck}>중복확인</Button>
-                <Button className={styles.nicknameChangebtn} id="nicknameChangeBtn" type='button' variant="contained" onClick={handlerUpdateNickname} disabled={isDuplicate}>닉네임변경</Button>
+                <div className={styles.duplicateCheckbtn}>
+                    <Button  id="duplicateCheck" type='button' variant="contained" onClick={handlerDuplicateCheck}>중복확인</Button>
+                </div>
+                <div className={styles.nicknameChangebtn}>
+                <Button  id="nicknameChangeBtn" type='button' variant="contained" onClick={handlerUpdateNickname} disabled={isDuplicate}>닉네임변경</Button>
+                </div>
             </div>
         </Modal>
     )

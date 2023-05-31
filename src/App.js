@@ -90,7 +90,8 @@ function App() {
         <Route path="/idealreal/detail/:idealrealIdx" element={<IdealrealDetail/>} />
         <Route path="/idealreal/write"                element={<IdealrealWrite />} />
         <Route path="/idealrealretouch/:idealrealIdx" element={<IdealrealRetouch/>}/>
-        <Route path="/example" element={<Example/>}/>
+        <Route path="/example"                        element={<Example/>}         />
+        <Route path="/admin"                          element={<Admin/>}           />
         <Route path="/*"                              element={<NotFound/>}        />
       </Routes>
     </>

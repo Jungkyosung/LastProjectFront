@@ -4,9 +4,9 @@ import TriedCategory from "./TriedCategory";
 import TriedList from "./TriedList";
 import Frame from "../main/Frame";
 import './TriedMain.css';
-import { PagesSharp, PropaneSharp } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
+import { throttle } from "lodash";
 
 const TriedMain = () => {
 
@@ -21,13 +21,10 @@ const TriedMain = () => {
         Authorization: `Bearer ${jwtToken}`
     };
 
-    // let totalPage = 0;
-
-
     const [data, setData] = useState([]);
     const [triedCategoryIdx, setTriedCategoryIdx] = useState(1);
     const [order, setOrder] = useState('recent');
-    const [year, setYear] = useState('2023')
+    const [year, setYear] = useState('2023');
     const [pages, setPages] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [isAllPagesLoaded, setIsAllPagesLoaded] = useState(false);
@@ -35,7 +32,7 @@ const TriedMain = () => {
 
     console.log(totalPages);
     //{핸들러}무한스크롤링
-    const handlerScroll = () => {
+    const handlerScroll = throttle(() => {
         //현재 스크롤 높이
         const scrolledHeight =
             window.innerHeight + document.documentElement.scrollTop;
@@ -57,7 +54,7 @@ const TriedMain = () => {
                 setPages(pages + 1);
             }
         }
-    };
+    },700);
 
     //초기데이터
     useEffect(() => {

@@ -18,8 +18,8 @@
 
 #mobile-profile {
     display: grid;
-    margin-left : 15%;
-    margin-right : 20%;
+    margin-left : 17%;
+    margin-right : 17%;
     margin-bottom: 50px;
     grid-template-columns: 1fr 1fr;
     align-items: center;
@@ -28,9 +28,11 @@
 
 
 #mobile-profile> img{
-    width:100px;
+    width: 100px;
+    height: 100px;
     border-style: solid;
     border-radius: 100%;
+    object-fit: cover;
 }
 
 .cursor{
@@ -61,7 +63,19 @@
 }
 
 .mobile-profile-board-list{
+    max-height: 600px;
     margin-bottom: 20px;
+    overflow-y: auto;
+}
+
+.mobile-profile-board-list::-webkit-scrollbar {
+    width: 5px;
+    background-color: rgb(230, 230, 230);
+}
+
+.mobile-profile-board-list::-webkit-scrollbar-thumb {
+    width: 5px;
+    background-color: rgb(197, 197, 197);
 }
 
 .mobile-profile-board-title{
@@ -74,6 +88,15 @@
     border-bottom: 1px dashed gray;
     font-weight: bold;
     font-size: 0.9rem;
+}
+
+.mobile-profile-board-title > svg{
+    cursor: pointer;
+}
+
+.mobile-profile-board-title > svg:hover{
+    border-radius: 10px;
+    background-color: rgb(201, 201, 201);
 }
 
 .mobile-profile-board-cont{

@@ -4,6 +4,7 @@ import jwt_decode from 'jwt-decode';
 import { useState } from 'react';
 import Swal from "sweetalert2";
 import { Input } from "@mui/material";
+import ReportPop from '../report/ReportPop';
 
 const TriedComment = (props) => {
 
@@ -29,7 +30,7 @@ const TriedComment = (props) => {
   const commentTime = new Date(comment.triedCommentTime);
   const timeDifference = Math.abs(presentTime - commentTime);
   const [isUpdate, setIsUpdate] = useState(false);
-  const [ updateComment, setUpdateComment ] = useState('');
+  const [updateComment, setUpdateComment] = useState('');
 
 
   //요 내용은 반복되니까 함수로 빼는게 좋을 듯.
@@ -131,24 +132,31 @@ const TriedComment = (props) => {
     <>
       <div className='triedDetail-comnt-each'>
         <div className='triedDetail-comnt-userinfo'>
-          <div className='triedDetail-comnt-userimg'>
-            <img src={`http://${process.env.REACT_APP_CMJ_IP}:8080/api/getimage/${comment.userImg}`} />
-          </div>
+          <ReportPop reportedUser={comment.userId}>
+            <div className='triedDetail-comnt-userimg'>
+
+              <img src={`http://${process.env.REACT_APP_CMJ_IP}:8080/api/getimage/${comment.userImg}`} />
+            </div>
+          </ReportPop>
           <div className='triedDetail-comnt-usernick'>{comment.userNickname}</div>
         </div>
         <div className='triedDetail-comnt-etc'>
           {isUpdate ?
             <>
-              <Input placeholder="댓글 수정" value={updateComment} onChange={(e) => setUpdateComment(e.target.value)} />
-              <div onClick={handlerCommentUpdateConfirm}>수정완료</div>
-              <div onClick={handlerCommentUpdateCancel}>취소</div>
+              <div className="triedDetail-comnt-cont-modify"><Input placeholder="댓글 수정" value={updateComment} onChange={(e) => setUpdateComment(e.target.value)} /></div>
+              <div className='triedDetail-comnt-control'>
+                <div className='triedDetail-comnt-control-modify' onClick={handlerCommentUpdateConfirm}>수정완료</div>
+                <div className='triedDetail-comnt-control-delete' onClick={handlerCommentUpdateCancel}>취소</div>
+              </div>
             </>
             :
             <>
               <div className='triedDetail-comnt-cont'>{comment.triedCommentContent}</div>
               <div className='triedDetail-comnt-time'>{getTimeDiff(timeDifference)}</div>
-              {comment.userId == userId ? <div onClick={handlerCommentUpdate}>수정</div> : ""}
-              {comment.userId == userId ? <div onClick={handlerCommentDelete}>삭제</div> : ""}
+              <div className='triedDetail-comnt-control'>
+                {comment.userId == userId ? <div className='triedDetail-comnt-control-modify' onClick={handlerCommentUpdate}>수정</div> : ""}
+                {comment.userId == userId ? <div className='triedDetail-comnt-control-delete' onClick={handlerCommentDelete}>삭제</div> : ""}
+              </div>
             </>
           }
         </div>
