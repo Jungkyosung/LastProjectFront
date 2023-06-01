@@ -70,14 +70,14 @@ function Thumb(props) {
 
     let headers = {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${jwtToken}`,
+      'Authorization': `Bearer ${jwtToken}`
     };
 
     if (likeCheck == 0) {
 
       setLikeCount(prev => prev + 1)
       axios.post(`http://${process.env.REACT_APP_KTG_IP}:8080/api/${idealrealIdx}/like`,
-        data, headers)
+        data, {headers:header})
         .then(response => {
           console.log(response);
           setLikeCheck(1);
@@ -90,7 +90,7 @@ function Thumb(props) {
     } else if (likeCheck == 1) {
       setLikeCount(prev => prev - 1)
       axios.delete(`http://${process.env.REACT_APP_KTG_IP}:8080/api/${idealrealIdx}/unlike`,
-        { data }, {headers})
+        { data, headers: header})
         .then(response => {
           console.log(response);
           setLikeCheck(0);

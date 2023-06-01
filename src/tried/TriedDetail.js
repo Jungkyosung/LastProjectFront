@@ -159,6 +159,7 @@ const TriedDetail = () => {
             })
     }
 
+    //{핸들러} 트위터 공유하기
     const handlerShareTwitter = () => {
         let sendText = "KADA " + tried.triedTitle;
         let sendURL = `http://localhost:3000/tried/detail/${triedIdx}`;
@@ -166,6 +167,7 @@ const TriedDetail = () => {
         window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendURL);
     }
 
+    //{핸들러} 페이스북 공유하기
     const handlerShareFacebook = () => {
         let sendURL = `http://localhost:3000/tried/detail/${triedIdx}`;
 
@@ -192,7 +194,7 @@ const TriedDetail = () => {
                         </div>
                         <div className="triedDetail-img">
                             <img src={imageUrl} />
-                            <TriedThumb />
+                            <TriedThumb triedIdx={triedIdx}/>
                         </div>
                         <div className="triedDetail-content">
                             <div>{tried.triedContent}</div>

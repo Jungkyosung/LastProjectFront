@@ -18,7 +18,7 @@ const ReportPop = ({children, reportedUser}) => {
   };
 
   const handleReport = () => {
-    // navigate(`/report`);
+    navigate(`/report`, {state: {reportedUser: reportedUser}});
     console.log(reportedUser);
   }
 

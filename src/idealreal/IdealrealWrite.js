@@ -75,7 +75,7 @@ function IdealrealWrite() {
 
     axios({
       method: 'POST',
-      url: `http://192.168.0.4:8080/upload`,
+      url: `http://${process.env.REACT_APP_KTG_IP}:8080/api/idealreal`,
       headers: { 'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${jwtToken}` },
       data: formData
     })

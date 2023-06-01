@@ -15,6 +15,7 @@ import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import MapDetailComment from './MapDetailComment';
 import Swal from "sweetalert2";
+import MapdetailSwiper from './MapDetailSwiper';
 
 
 function MapDetail(props) {
@@ -205,13 +206,7 @@ function MapDetail(props) {
                             src={profileImg} />
                         <span id="mapdetail-userid">{userNickname}</span>
                         <div id="mapdetail-img-list">
-                            <NavigateBeforeRoundedIcon />
-                            {courseImg && courseImg.map(img => (
-                                <img src={`http://${process.env.REACT_APP_JKS_IP}:8080/api/getimage/${img.travelcourseImg}`} />
-                            ))
-
-                            }
-                            <NavigateNextRoundedIcon />
+                            <MapdetailSwiper img={courseImg} />
                         </div>
                         <MapDetailComment travelcourseIdx={travelcourseIdx} />
                         <span id="mapdetail-date">{startDate}~{endDate}</span>

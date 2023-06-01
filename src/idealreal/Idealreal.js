@@ -169,11 +169,11 @@ function Idealreal() {
                                                     <div className={styles.imgBox}>
                                                         <img
                                                             className={styles.image}
-                                                            src={`http://192.168.0.4:8080/api/getimage/${idealreal.idealrealRealImg}`}
+                                                            src={`http://${process.env.REACT_APP_KTG_IP}:8080/api/getimage/${idealreal.idealrealRealImg}`}
                                                         />
                                                         <img
                                                             className={styles.image}
-                                                            src={`http://192.168.0.4:8080/api/getimage/${idealreal.idealrealIdealImg}`}
+                                                            src={`http://${process.env.REACT_APP_KTG_IP}:8080/api/getimage/${idealreal.idealrealIdealImg}`}
                                                         />
                                                     </div>
                                                 </td>

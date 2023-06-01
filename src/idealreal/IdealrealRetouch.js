@@ -93,7 +93,7 @@ function IdealrealRetouch() {
         e.preventDefault();
         axios({
             method: 'PUT',
-            url: `http://${process.env.REACT_APP_KTG_IP}:8080/reupload/${idealrealIdx}`,
+            url: `http://${process.env.REACT_APP_KTG_IP}:8080/api/idealreal/${idealrealIdx}`,
             headers: { 'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${jwtToken}` },
             data: formData
         })

@@ -1,0 +1,31 @@
+
+
+.swiperImgWrap{
+  width:500px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.swiperImgWrap > img{
+  width: 100%;
+  object-fit: cover;
+}
+
+/* .swiper-button-prev{
+  left : var(--swiper-navigation-sides-offset, 40px);
+}
+
+.swiper-button-prev swiper-button-disabled{
+  left : var(--swiper-navigation-sides-offset, 40px);
+}
+
+.swiper-button-next{
+  right: var(--swiper-navigation-sides-offset, 40px);
+}
+
+.swiper-button-next swiper-button-disabled{
+  right: var(--swiper-navigation-sides-offset, 40px);
+} */

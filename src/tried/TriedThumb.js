@@ -21,22 +21,19 @@ function TriedThumb(props) {
       'Content-Type': 'application/json'
   };
 
-  const [idealrealIdx, setIdealrealIdx] = useState(props.idealrealIdx);
-  const [userId, setUserId] = useState(props.userId);
+  const triedIdx = props.triedIdx;
   const [likeCount, setLikeCount] = useState(0)
   const [likeCheck, setLikeCheck] = useState(0);
 
-  const refLikeInput = useRef();
-
   useEffect(() => {
-    // const token = sessionStorage.getItem('token');
-    // const decodedToken = jwt_decode(token);
-    // console.log(decodedToken);
-    // setUserNickname(decodedToken.userNickname);
 
+    const params = {
+      userId : loginUserId,
+      triedIdx : triedIdx
+    };
 
     //해당 글 좋아요 수 조회
-    axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/${idealrealIdx}/getlike`, {headers:header})
+    axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/tried/rcmd/${triedIdx}`, { params, headers:header})
       .then(response => {
         console.log(response);
         setLikeCount(response.data);
@@ -44,7 +41,7 @@ function TriedThumb(props) {
       .catch(error => console.log(error));
 
     //이 사람이 좋아요를 눌른 놈인지 아닌지
-    axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal/detail/likecheck/${idealrealIdx}/${loginUserId}`, {headers:header})
+    axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/tried/rcmd/user`, {params, headers:header})
       .then(response => {
         console.log(response);
         setLikeCheck(response.data);
@@ -58,24 +55,21 @@ function TriedThumb(props) {
   //좋아요 수 업데이트(추가/삭제) 
   const LikeCountHandler = () => {
 
-    //추후 로그인 토큰 값으로 변경 필요!!!
-    // let loginId = 'jks@jks.com';
-
-    let data = {
+    let params = {
       userId: loginUserId,
-      idealrealIdx: idealrealIdx
+      triedIdx: Number(triedIdx)
     }
 
     let headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${jwtToken}`,
+      // 'Content-Type': 'application/json',
+      'Authorization': `Bearer ${jwtToken}`
     };
 
     if (likeCheck == 0) {
 
       setLikeCount(prev => prev + 1)
-      axios.post(`http://${process.env.REACT_APP_KTG_IP}:8080/api/${idealrealIdx}/like`,
-        data, headers)
+      axios.post(`http://${process.env.REACT_APP_JKS_IP}:8080/api/tried/rcmd/user`,
+        "", {params, headers: headers})
         .then(response => {
           console.log(response);
           setLikeCheck(1);
@@ -86,8 +80,8 @@ function TriedThumb(props) {
         });
     } else if (likeCheck == 1) {
       setLikeCount(prev => prev - 1)
-      axios.delete(`http://${process.env.REACT_APP_KTG_IP}:8080/api/${idealrealIdx}/unlike`,
-        { data }, {headers})
+      axios.delete(`http://${process.env.REACT_APP_JKS_IP}:8080/api/tried/rcmd/user`,
+        { params , headers: headers})
         .then(response => {
           console.log(response);
           setLikeCheck(0);
@@ -111,15 +105,6 @@ function TriedThumb(props) {
         </strong>
         <em style={{ fontSize: "23px", boxSizing:"border-box", paddingBottom:"5px" }}>{likeCount} </em>
       </Button>
-      {/* <div style={{ display: "felx", background: "pink" }}>
-        <em style={{fontSize:"30px"}}>Joasis{likeCount} </em>
-        <strong>
-          {likeCheck == 0 ?
-            <FavoriteBorderIcon onClick={LikeCountHandler} /> :
-            <FavoriteIcon onClick={LikeCountHandler} />
-          }
-        </strong>
-      </div> */}
     </>
   );
 }

@@ -47,6 +47,7 @@ import Game1 from './worldcup/Game1';
 import Game2 from './worldcup/Game2';
 import Game3 from './worldcup/Game3';
 import Winpage from './worldcup/Winpage';
+import { Report } from '@mui/icons-material';
 
 
 function App() {
@@ -100,6 +101,7 @@ function App() {
         <Route path="/winpage/:rawinfoIdx/:triedCategoryIdx" element={<Winpage/>}  />
         <Route path="/example"                        element={<Example/>}         />
         <Route path="/admin"                          element={<Admin/>}           />
+        <Route path="/report"                         element={<Report/>}          />
         <Route path="/*"                              element={<NotFound/>}        />
       </Routes>
     </>
