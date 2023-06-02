@@ -81,6 +81,11 @@
       margin-bottom:21px;
   }
 
+  .wrapper {
+    width:90%;
+    /* border: 1px solid tomato; */
+  }
+
   .box1 {
       grid-template-columns:1fr;
   }

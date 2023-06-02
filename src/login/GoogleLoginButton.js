@@ -18,31 +18,51 @@ const GoogleLoginButton = () => {
             const decodeString = jwtDecode(response.credential);
             console.log(decodeString);
             axios.post(`http://${process.env.REACT_APP_JKS_IP}:8080/api/login/google`, decodeString)
-            .then((response)=> {
-              console.log(response);
-              //만약 1이 왔다면, 
-              if(response.data == 1 ){
-                const Data = {
-                  "userId" : decodeString.email,
-                  "userPw" : tempPwKey
+              .then((response) => {
+                console.log(response);
+                //만약 1이 왔다면, 
+                if (response.data == 1) {
+                  const Data = {
+                    "userId": decodeString.email,
+                    "userPw": tempPwKey
+                  }
+
+                  const params = {
+                    userId: decodeString.email
+                  }
+
+                  //정지 기한 검증
+                  axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/user/suspension`, { params: params })
+                    .then((response) => {
+                      console.log(response.data)
+                      if (response.data > 0) {
+                        alert("사용정지기한이 " + response.data + "일 남아있어 로그인이 불가합니다.")
+                        return
+                      } else {
+                        axios.post(`http://${process.env.REACT_APP_JKS_IP}:8080/login`, Data)
+                          .then((response) => {
+                            sessionStorage.setItem("token", response.data);
+                            console.log(response);
+                            navigate("/");
+                          })
+                          .catch((error) => {
+                            console.log(error);
+                          })
+                      }
+                    })
+                    .catch(error => {
+                      console.log(error)
+                    })
+
+
+                } else if (response.data == 0) {
+                  //만약 0이 왔다면,
+                  navigate("/regist/social/google", { state: decodeString });
                 }
-                axios.post(`http://${process.env.REACT_APP_JKS_IP}:8080/login`, Data)
-                .then((response)=>{
-                  sessionStorage.setItem("token",response.data);
-                  console.log(response);
-                  navigate("/");
-                })
-                .catch((error)=>{
-                  console.log(error);
-                })
-              } else if (response.data == 0 ){
-              //만약 0이 왔다면,
-                navigate("/regist/social/google", {state: decodeString});
-              }
-            })
-            .catch((error)=>{
-              console.log(error);
-            })
+              })
+              .catch((error) => {
+                console.log(error);
+              })
 
           }}
           onFailure={(error) => {

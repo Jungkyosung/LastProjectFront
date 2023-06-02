@@ -4,7 +4,7 @@ import { useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
 
-const ReportPop = ({children, reportedUser}) => {
+const ReportPop = ({children, reportedUser, reportedUserNickname}) => {
 
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -18,7 +18,7 @@ const ReportPop = ({children, reportedUser}) => {
   };
 
   const handleReport = () => {
-    navigate(`/report`, {state: {reportedUser: reportedUser}});
+    navigate(`/reportpage`, {state: {reportedUser: reportedUser, reportedUserNickname: reportedUserNickname}});
     console.log(reportedUser);
   }
 

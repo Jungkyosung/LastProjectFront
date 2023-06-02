@@ -176,3 +176,29 @@
 .contentsWrap .editor tr {
 display: table-row; vertical-align: inherit; border-color: inherit;
 }
+
+@media (max-width:800px){
+  .contentsWrap{
+    margin-top: 20px;
+    margin-bottom : 50px;
+    color: #333;
+  }
+
+  .contentsWrap .title {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .content em {
+    margin-top:40px;
+  }
+
+  .content span {
+
+    margin-bottom:40px;
+  }
+
+  .content {
+    width: 90%;
+  }
+}

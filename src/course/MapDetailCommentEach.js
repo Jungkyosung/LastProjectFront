@@ -134,7 +134,7 @@ const MapDetailCommentEach = (props) => {
   return (
     <>
       <div className="map-comment-each">
-        <ReportPop reportedUser={comment.userId}>
+        <ReportPop reportedUser={comment.userId} reportedUserNickname={comment.userNickname}>
           <div className="map-comment-profile-pic">
             <img src={`http://${process.env.REACT_APP_JKS_IP}:8080/api/getimage/${comment.userImg}`} />
           </div>

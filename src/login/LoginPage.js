@@ -38,7 +38,7 @@ const LoginPage = () => {
         event.preventDefault();
     };
 
-    
+
 
 
     //구글 로그인
@@ -49,32 +49,53 @@ const LoginPage = () => {
 
     const handlerSubmit = (e) => {
         e.preventDefault();
-        axios.post(`http://${process.env.REACT_APP_JKS_IP}:8080/login`,
-          {
-            "userId": email,
-            "userPw": pw,
-        })
-        .then((response)=>{
-          console.log(response);
-          sessionStorage.setItem("token",response.data);
-          //회원가입 후 로그인 페이지로 리다이렉트
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: '로그인 되었습니다.',
-            showConfirmButton: false,
-            timer: 1500
-          })
-          navigate("/");
-        })
-        .catch((error)=>{
-          alert("이메일 또는 비밀번호를 확인해주세요.")
-          console.log(error);
-          
-        });
-        console.log("버튼누름");
-      }
-    
+
+        const params = {
+            userId: email
+        }
+
+        //정지 기한 검증
+        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/user/suspension`, { params: params })
+            .then((response) => {
+                console.log(response.data)
+                if (response.data > 0) {
+                    alert("사용정지기한이 " + response.data + "일 남아있어 로그인이 불가합니다.")
+                    return
+                } else {
+                    axios.post(`http://${process.env.REACT_APP_JKS_IP}:8080/login`,
+                        {
+                            "userId": email,
+                            "userPw": pw,
+                        })
+                        .then((response) => {
+                            console.log(response);
+                            sessionStorage.setItem("token", response.data);
+                            //회원가입 후 로그인 페이지로 리다이렉트
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: '로그인 되었습니다.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                            navigate("/");
+                        })
+                        .catch((error) => {
+                            alert("이메일 또는 비밀번호를 확인해주세요.")
+                            console.log(error);
+
+                        });
+                    console.log("버튼누름");
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
+
+
+    }
+
 
 
     return (
@@ -82,11 +103,11 @@ const LoginPage = () => {
             <div id="login-wrap">
                 <h2 id="login-title">{t('page:login')}</h2>
                 <div id="logo-box">
-                    <Link to="/"><img src={process.env.PUBLIC_URL+'/KADA.png'}/></Link>
+                    <Link to="/"><img src={process.env.PUBLIC_URL + '/KADA.png'} /></Link>
                 </div>
                 <form onSubmit={handlerSubmit}>
                     <div id="login-input" >
-                        <TextField label={'Email(ID)'} variant="standard" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+                        <TextField label={'Email(ID)'} variant="standard" value={email} onChange={(e) => setEmail(e.target.value)} />
                         <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
                             <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
                             <Input
@@ -103,7 +124,7 @@ const LoginPage = () => {
                                         </IconButton>
                                     </InputAdornment>
                                 }
-                                value={pw} onChange={(e)=>setPw(e.target.value)}
+                                value={pw} onChange={(e) => setPw(e.target.value)}
                             />
                         </FormControl>
                         <span id="login-btn">

@@ -34,7 +34,7 @@ const MobileMainMenu = () => {
     return (
         <>
             <div id="mobile-mainmenu-window">
-            <div className={styles.language}>
+                <div className={styles.language}>
                     <LanguageIcon style={{ fontSize: "30px" }} />
                     <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                         <Select
@@ -53,7 +53,7 @@ const MobileMainMenu = () => {
                         </Select>
                     </FormControl>
                 </div>
-                <div id="mobile-mainmenu-logo"><Link to="/" ><img src={process.env.PUBLIC_URL+'/KADA.png'}/></Link></div>
+                <div id="mobile-mainmenu-logo"><Link to="/" ><img src={process.env.PUBLIC_URL + '/KADA.png'} /></Link></div>
                 <p><Link to="/aboutus" >{t('page:aboutUs')}</Link></p>
 
                 <ul>
@@ -74,6 +74,14 @@ const MobileMainMenu = () => {
                     <li><Link to="/accompany" >{t('page:accompany')}</Link></li>
                     <li><Link to="/idealreal" >{t('page:idealreal')}</Link></li>
                 </ul>
+
+                <ul>
+                    <div>{t('page:info')}</div>
+                    <li><Link to="/noticelist" >{t('page:notice')}</Link></li>
+                    <li><Link to="/qnalist" >{t('page:help')}</Link></li>
+                </ul>
+
+
             </div>
         </>
     )

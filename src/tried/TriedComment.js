@@ -132,7 +132,7 @@ const TriedComment = (props) => {
     <>
       <div className='triedDetail-comnt-each'>
         <div className='triedDetail-comnt-userinfo'>
-          <ReportPop reportedUser={comment.userId}>
+          <ReportPop reportedUser={comment.userId} reportedUserNickname={comment.userNickname}>
             <div className='triedDetail-comnt-userimg'>
 
               <img src={`http://${process.env.REACT_APP_CMJ_IP}:8080/api/getimage/${comment.userImg}`} />

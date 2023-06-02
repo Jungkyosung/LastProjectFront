@@ -1,6 +1,5 @@
 import './Mypage.css';
 import { useNavigate } from 'react-router-dom';
-import Swal from "sweetalert2";
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import FlipCameraIosIcon from '@mui/icons-material/FlipCameraIos';
 import { useEffect, useState } from 'react';

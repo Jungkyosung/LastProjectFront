@@ -82,6 +82,7 @@ const SubMenu = (props) => {
                 if (result.isConfirmed) {
                     sessionStorage.clear();
                     navigate("/");
+                    window.location.replace("/");
                 }
             })
     }
@@ -129,7 +130,7 @@ const SubMenu = (props) => {
                 </div>
                 <span id="blank-submenu"></span>
                 <ul id="submenu-ul">
-                    <Link to="/noticeList" ><li className="submenu-li">{t('page:notice')}</li></Link>
+                    <Link to="/noticelist" ><li className="submenu-li">{t('page:notice')}</li></Link>
                     <Link to="/qnalist"><li className="submenu-li">{t('page:help')}</li></Link>
                     {
                         userNickname == null ?

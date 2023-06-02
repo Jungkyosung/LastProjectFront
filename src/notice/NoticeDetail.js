@@ -5,8 +5,19 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import styles from "./NoticeDetail.module.css";
 import Parse from 'html-react-parser';
+import jwt_decode from 'jwt-decode';
 
 const NoticeDetail = () => {
+
+    let nickName = null;
+    let userId = null;
+    let jwtToken = null;
+    if (sessionStorage.getItem('token') != null) {
+        jwtToken = sessionStorage.getItem('token');
+        userId = jwt_decode(jwtToken).sub;
+        nickName = jwt_decode(jwtToken).nickname;
+    }
+
     const navigate = useNavigate();
 
     const { noticeIdx } = useParams();
@@ -62,9 +73,15 @@ const NoticeDetail = () => {
                     </div>
                 </div>
                 <div className={styles.buttonWrap}>
-                    <Link to={`/notice/update/${noticeIdx}`}><Button>수정하기</Button></Link>
+                    { userId=='admin'?
+                        <Link to={`/notice/update/${noticeIdx}`}><Button>수정하기</Button></Link>
+                    :""
+                    }
                     <Button style={{ marginLeft: "20px", marginRight: "20px" }} onClick={handlerClickList}>목록보기</Button>
+                    { userId=='admin'?
                     <Button onClick={handlerClickDelete}>삭제하기</Button>
+                    :""
+                    }
                 </div>
             </div>
         </Frame>

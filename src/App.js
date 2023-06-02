@@ -47,7 +47,7 @@ import Game1 from './worldcup/Game1';
 import Game2 from './worldcup/Game2';
 import Game3 from './worldcup/Game3';
 import Winpage from './worldcup/Winpage';
-import { Report } from '@mui/icons-material';
+import ReportPage  from './report/ReportPage';
 
 
 function App() {
@@ -62,7 +62,7 @@ function App() {
         <Route path="/aboutus"                        element={<AboutUs/>}         />
         <Route path="/notice/:noticeIdx"              element={<NoticeDetail/>}    />
         <Route path="/notice/write"                   element={<NoticeWrite/>}     />
-        <Route path="/noticeList"                     element={<Notice/>}          />
+        <Route path="/noticelist"                     element={<Notice/>}          />
         <Route path="/notice/update/:noticeIdx"       element={<NoticeUpdate/>}    />
         <Route path="/qnalist"                        element={<QnaList/>}         />
         <Route path="/qna/:qnaIdx"                    element={<QnaDetail/>}       />
@@ -101,7 +101,7 @@ function App() {
         <Route path="/winpage/:rawinfoIdx/:triedCategoryIdx" element={<Winpage/>}  />
         <Route path="/example"                        element={<Example/>}         />
         <Route path="/admin"                          element={<Admin/>}           />
-        <Route path="/report"                         element={<Report/>}          />
+        <Route path="/reportpage"                         element={<ReportPage/>}          />
         <Route path="/*"                              element={<NotFound/>}        />
       </Routes>
     </>

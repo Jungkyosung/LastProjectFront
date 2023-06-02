@@ -139,13 +139,6 @@ function Idealreal() {
                 <LNButton setData={setData} page={page} setPage={setPage}/>
 
                 <div className={styles.wrapper}>
-                    {/* <div style={styles.contentContainer}> */}
-                    {/* 작성한 사람의 이름과 내용 */}
-                    {/* <div className={styles.nameText}>이상과 현실</div> */}
-                    {/* </div> */}
-                    {/* <br />
-                    <br />
-                    <br /> */}
                     <div className={styles.box1}>
                         {data &&
                             data.map((idealreal, rcmd) => (
@@ -155,13 +148,7 @@ function Idealreal() {
                                     <table>
                                         <tbody>
                                             <tr>
-                                                {/* <Link
-                                                    to={`/listidealreal/detail/${idealreal.idealrealIdx}`}
-                                                > */}
-                                                {/* <td className={styles.idealrealTitle} > */}
                                                 <td style={{ width: "50%" }}>
-                                                    {/* {idealreal.idealrealIdx} */}
-                                                    {/* {console.log(idealreal.idealrealIdealImg)} */}
                                                     <div className={styles.topBox}>
                                                         <em className={styles.flexTitle}>{idealreal.idealrealTitle}</em>
                                                         <span className={styles.flexLike}>LIKE {idealreal.likeCount}</span>
@@ -177,10 +164,6 @@ function Idealreal() {
                                                         />
                                                     </div>
                                                 </td>
-                                                {/* </td> */}
-                                                {/* </Link> */}
-                                                {/* <Thumb /> */}
-
                                             </tr>
                                             {addEmptyRows()}
                                         </tbody>
