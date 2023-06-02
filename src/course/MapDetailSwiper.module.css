@@ -1,8 +1,9 @@
 
 
 .swiperImgWrap{
-  width:500px;
-  height: 400px;
+  margin-top:30px;
+  width:1500px;
+  height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,6 +14,8 @@
   width: 100%;
   object-fit: cover;
 }
+
+
 
 /* .swiper-button-prev{
   left : var(--swiper-navigation-sides-offset, 40px);

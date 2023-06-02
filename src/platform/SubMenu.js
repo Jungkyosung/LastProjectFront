@@ -49,6 +49,10 @@ const SubMenu = (props) => {
     //
     useEffect(() => {
 
+        if(userId==null){
+            return
+        }
+
         const params = {
             userId: userId
         }
@@ -122,7 +126,7 @@ const SubMenu = (props) => {
                 </Link>
                 <div className="mobile-submenu">
 
-                    {userNickname == null ?
+                    {userNickname == '' ?
                         <AccountCircleRoundedIcon onClick={handlerLoginpage} />
                         :
                         <AccountCircleRoundedIcon onClick={handlerMobileMypage} />
@@ -133,7 +137,7 @@ const SubMenu = (props) => {
                     <Link to="/noticelist" ><li className="submenu-li">{t('page:notice')}</li></Link>
                     <Link to="/qnalist"><li className="submenu-li">{t('page:help')}</li></Link>
                     {
-                        userNickname == null ?
+                        userNickname == '' ?
                             <>
                                 <Link to="/regist">
                                     <li className="submenu-li">{t('page:regist')}</li>

@@ -70,11 +70,9 @@ const TriedMain = () => {
     // 페이지 수 가져오는 axios 요청
     const totalPageRequest = async () => {
 
-        console.log(">>>>>>>>>>>>>>>>")
-
         try {
             const response = await
-                axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/totalpage/${triedCategoryIdx}/${order}/${year}-01-01/${year}-12-31/${pages}`, { headers: header });
+                axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/totalpage/${triedCategoryIdx}/${order}/${year}-01-01/${year}-12-31/${pages}`, );
             setTotalPages(() => (response.data));
             console.log('총 페이지수', response.data)
         } catch (error) {
@@ -87,7 +85,7 @@ const TriedMain = () => {
         setPages(1);
         try {
             const response = await
-                axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/${triedCategoryIdx}/${order}/${year}-01-01/${year}-12-31/1`, { headers: header });
+                axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/${triedCategoryIdx}/${order}/${year}-01-01/${year}-12-31/1`, );
             let updateData = [];
             for (let i = 0; i < response.data.length; i++) {
                 updateData.push(response.data[i])
@@ -109,7 +107,7 @@ const TriedMain = () => {
 
         try {
             const response = await
-                axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/${triedCategoryIdx}/${order}/${year}-01-01/${year}-12-31/${pages}`, { headers: header });
+                axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/${triedCategoryIdx}/${order}/${year}-01-01/${year}-12-31/${pages}`, );
             let updateData = [];
             if (pages == 1) {
                 updateData = [];

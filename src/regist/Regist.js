@@ -38,18 +38,18 @@ const Regist = () => {
         msgPwConfirm: '',
         msgPwMatchConfirm: '',
         msgIdDuplicate: '',
-        msgNicknameDuplicate:''
+        msgNicknameDuplicate: ''
     });
 
     //유효성 검사 상태체크
     const [isValid, setIsValid] = useState({
-        isId: false,
+        // isId: false,
         isEmail: false,
         isPassword: false,
         isPasswordConfirm: false,
-        isRegistButton: false,
-        isIdDuplicate: false,
-        isNicknameDuplicate: false
+        isRegistButton: false
+        // isIdDuplicate: false,
+        // isNicknameDuplicate: false
     });
 
 
@@ -60,15 +60,26 @@ const Regist = () => {
         const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
         const emailCurrent = e.target.value;
         setEmail(emailCurrent);
+        // let tempIsValid = {...isValid};
 
         if (!emailRegex.test(emailCurrent)) {
             setConfirmMsg({ ...confirmMsg, msgEmailConfirm: '이메일 형식이 틀렸습니다. 다시 확인해주세요.' });
+            // tempIsValid = {...tempIsValid, isEmail: false};
             setIsValid({ ...isValid, isEmail: false });
         } else {
             setConfirmMsg({ ...confirmMsg, msgEmailConfirm: ' ' });
             setIsValid({ ...isValid, isEmail: true });
+            // tempIsValid = {...tempIsValid, isEmail: true};
         }
-    })
+
+        // tempIsValid = {...tempIsValid, isEmail: e.target.value.trim() !== ''};
+        // setIsValid(tempIsValid);
+
+        setIsValid(prevState => ({
+            ...prevState,
+            [emailCurrent]: e.target.value.trim() !== '' // 입력 값이 비어있지 않으면 true, 비어있으면 false
+        }));
+    });
 
     //닉네임 검증(중복검사 필요)
     const onChangeNickname = useCallback(e => {
@@ -76,18 +87,30 @@ const Regist = () => {
         const nicknameCurrent = e.target.value;
         setNickName(nicknameCurrent);
 
+        // let tempIsValid = {...isValid};
+
         if (!userNicknameRegex.test(nicknameCurrent)) {
             setConfirmMsg({ ...confirmMsg, msgNicknameConfirm: '숫자와 영문을 포함한 5글자 이상의 문자를 입력해주세요.(특수문자 제외)' });
             setIsValid({ ...isValid, isNickname: false });
+            // tempIsValid = {...tempIsValid, isNickname: false};
         } else {
             setConfirmMsg({ ...confirmMsg, msgNicknameConfirm: ' ' });
             setIsValid({ ...isValid, isNickname: true });
+            // tempIsValid = {...tempIsValid, isNickname: true};
         }
+
+        // tempIsValid = {...tempIsValid, isNickname: e.target.value.trim() !== ''};
+        // setIsValid(tempIsValid);
+        setIsValid(prevState => ({
+            ...prevState,
+            [nicknameCurrent]: e.target.value.trim() !== '' // 입력 값이 비어있지 않으면 true, 비어있으면 false
+        }));
     })
 
     //이름 검증
     const onChangeName = useCallback(e => {
-        const nameRegex = /[가-힣]/;
+        // const nameRegex = /[가-힣]/;
+        const nameRegex = /^(?=.*[a-zA-Z)(?=.*[가-힣])/;
         const nameCurrent = e.target.value;
         setName(nameCurrent);
 
@@ -98,6 +121,11 @@ const Regist = () => {
             setConfirmMsg({ ...confirmMsg, msgNameConfirm: ' ' });
             setIsValid({ ...isValid, isName: true });
         }
+
+        setIsValid(prevState => ({
+            ...prevState,
+            [nameCurrent]: e.target.value.trim() !== '' // 입력 값이 비어있지 않으면 true, 비어있으면 false
+        }));
     })
 
     //비밀번호 검증
@@ -113,6 +141,11 @@ const Regist = () => {
             setConfirmMsg({ ...confirmMsg, msgPwConfirm: ' ' });
             setIsValid({ ...isValid, isPassword: true });
         }
+
+        setIsValid(prevState => ({
+            ...prevState,
+            [passwordCurrent]: e.target.value.trim() !== '' // 입력 값이 비어있지 않으면 true, 비어있으면 false
+        }));
     })
 
     //비밀번호 확인 검증
@@ -121,19 +154,22 @@ const Regist = () => {
         setPwConfirm(passwordConfirmCurrent);
 
         if (pw === passwordConfirmCurrent) {
-            setConfirmMsg({ ...confirmMsg, msgPwMatchConfirm: ' ' });
+            setConfirmMsg({ ...confirmMsg, msgPwMatchConfirm: '비밀번호가 일치합니다.' });
             setIsValid({ ...isValid, isPasswordConfirm: true });
         } else {
             setConfirmMsg({ ...confirmMsg, msgPwMatchConfirm: '비밀번호가 일치하지 않아요. 다시 확인해주세요.' });
             setIsValid({ ...isValid, isPasswordConfirm: false });
         }
+
+        setIsValid(prevState => ({
+            ...prevState,
+            [passwordConfirmCurrent]: e.target.value.trim() !== '' // 입력 값이 비어있지 않으면 true, 비어있으면 false
+        }));
     })
-
-
 
     const handlerSubmit = (e) => {
         e.preventDefault();
-        axios.post(`http://${process.env.REACT_APP_JKS_IP}:8080/api/regist`,
+        axios.post(`http://192.168.0.39:8080/api/regist`,
             {
                 "userId": email,
                 "userPw": pw,
@@ -160,15 +196,18 @@ const Regist = () => {
     }
 
     const idDuplicateCheck = () => {
-        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/idduplicatecheck`,
+        axios.get(`http://192.168.0.39:8080/api/idduplicatecheck`,
             {
-                params:{"userId": email}
+                params: { "userId": email }
             })
             .then((response) => {
-                if(response.data == "중복아이디가 있습니다."){
-                    setConfirmMsg({ ...confirmMsg, msgIdDuplicate: '중복아이디가 있습니다.' })
+                if (response.data == "중복아이디가 있습니다.") {
+                    setConfirmMsg({ ...confirmMsg, msgIdDuplicate: '중복아이디가 있습니다.' });
+                    isValid.isEmail = false;
+
                 } else {
-                    setConfirmMsg({ ...confirmMsg, msgIdDuplicate: '중복아이디가 없습니다.' })
+                    setConfirmMsg({ ...confirmMsg, msgIdDuplicate: '중복아이디가 없습니다.' });
+                    isValid.isEmail = true;
                 }
                 console.log(response);
             })
@@ -179,25 +218,27 @@ const Regist = () => {
     }
 
     const nicknameDuplicateCheck = () => {
-        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/nicknameduplicatecheck`,
-        {
-            params:{"userNickname": nickName}
-        })
-        .then((response) => {
-            if(response.data == "중복닉네임이 있습니다."){
-                setConfirmMsg({ ...confirmMsg, msgNicknameDuplicate: '중복닉네임이 있습니다.' })
-            } else {
-                setConfirmMsg({ ...confirmMsg, msgNicknameDuplicate: '중복닉네임이 없습니다.' })
-            }
-            console.log(response);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-    console.log("버튼누름");
+        axios.get(`http://192.168.0.39:8080/api/nicknameduplicatecheck`,
+            {
+                params: { "userNickname": nickName }
+            })
+            .then((response) => {
+                if (response.data == "중복닉네임이 있습니다.") {
+                    setConfirmMsg({ ...confirmMsg, msgNicknameDuplicate: '중복닉네임이 있습니다.' });
+                    isValid.isNickname = false;
+                } else {
+                    setConfirmMsg({ ...confirmMsg, msgNicknameDuplicate: '중복닉네임이 없습니다.' });
+                    isValid.isNickname = true;
+                }
+                console.log(response);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        console.log("버튼누름");
     }
 
-    const lastConfrimState = (isValid.isId && isValid.isEmail && isValid.isName && isValid.isPassword && isValid.isPasswordConfirm && isValid.isIdDuplicate && isValid.isNicknameDuplicate);
+    const lastConfrimState = (isValid.isEmail && isValid.isName && isValid.isPassword && isValid.isPasswordConfirm && nationIdx);
 
 
     const [showPassword, setShowPassword] = useState(false);
@@ -212,32 +253,42 @@ const Regist = () => {
         setGoogleLoginModal(true);
     }
 
-
-
-
     return (
         <Frame>
             <div id="regist-wrap">
                 <h2 id="regist-title">{t('page:regist')}</h2>
                 <div id="logo-box">
-                    <Link to="/"><img src={process.env.PUBLIC_URL+'/KADA.png'}/></Link>
+                    <Link to="/"><img src={process.env.PUBLIC_URL + '/KADA.png'} /></Link>
                 </div>
                 <div id="regist-input">
                     <form onSubmit={handlerSubmit}>
 
                         <TextField label={'Email'} variant="standard"
-                            value={email} onChange={onChangeEmail} onBlur={idDuplicateCheck}/>
-                        <CheckCircleOutlineIcon /><CheckCircleIcon />
+                            value={email} onChange={onChangeEmail} onBlur={idDuplicateCheck} />
+                        {/* <CheckCircleOutlineIcon /><CheckCircleIcon /> */}
                         {/* <Button type="button" variant="contained" onClick={idDuplicateCheck}>ID중복확인</Button> */}
-                        {confirmMsg.msgIdDuplicate}
+                        <div className={isValid.isEmail == true ? "green" : "red"}>
+                            {confirmMsg.msgIdDuplicate}
+                        </div>
+                        <div className={isValid.isEmail == true ? "green" : "red"}>
+                            {!isValid.isEmail && confirmMsg.msgEmailConfirm}
+                        </div>
                         <TextField label={'NickName'} variant="standard"
                             value={nickName} onChange={onChangeNickname} onBlur={nicknameDuplicateCheck} />
-                        <CheckCircleOutlineIcon /><CheckCircleIcon />
+                        {/* <CheckCircleOutlineIcon /><CheckCircleIcon /> */}
                         {/* <Button type="button" variant="contained" onClick={nicknameDuplicateCheck}>닉네임중복확인</Button> */}
-                        {confirmMsg.msgNicknameDuplicate}
+                        <div className={isValid.isNickname == true ? "green" : "red"}>
+                            {confirmMsg.msgNicknameDuplicate}
+                        </div>
+                        <div className={isValid.isNickname == true ? "green" : "red"}>
+                            {!isValid.isNickname && confirmMsg.msgNicknameConfirm}
+                        </div>
 
                         <TextField label={'Name'} variant="standard"
                             value={name} onChange={onChangeName} />
+                        <div className={isValid.isName == true ? "green" : "red"}>
+                            {!isValid.isName && confirmMsg.msgNameConfirm}
+                        </div>
 
                         <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
                             <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
@@ -258,6 +309,9 @@ const Regist = () => {
                                 value={pw} onChange={onChangePw}
                             />
                         </FormControl>
+                        <div className={isValid.isPassword == true ? "green" : "red"}>
+                            {!isValid.isPassword && confirmMsg.msgPwConfirm}
+                        </div>
 
                         <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
                             <InputLabel htmlFor="standard-adornment-password">Password Confirm</InputLabel>
@@ -278,6 +332,9 @@ const Regist = () => {
                                 value={pwConfirm} onChange={onChangePwConfirm}
                             />
                         </FormControl>
+                        <div className={isValid.isPasswordConfirm == true ? "green" : "red"}>
+                            {confirmMsg.msgPwMatchConfirm}
+                        </div>
 
                         <Autocomplete
                             disablePortal
@@ -288,7 +345,7 @@ const Regist = () => {
                             renderInput={(params) => <TextField {...params} label='Country'
                             />} />
                         <span id="regist-btn">
-                            {lastConfrimState ? <Button type="submit" variant="contained">REGIST</Button> : <Button type="submit" variant="contained">REGIST</Button>}
+                            {lastConfrimState ? <Button type="submit" variant="contained">REGIST</Button> : <Button type="submit" variant="contained" disabled>REGIST</Button>}
                         </span>
                     </form>
                 </div>

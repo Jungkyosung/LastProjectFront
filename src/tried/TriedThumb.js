@@ -55,6 +55,11 @@ function TriedThumb(props) {
   //좋아요 수 업데이트(추가/삭제) 
   const LikeCountHandler = () => {
 
+    if(loginUserId == null ){
+      alert('로그인 후 사용하실 수 있습니다.');
+      return
+    }
+
     let params = {
       userId: loginUserId,
       triedIdx: Number(triedIdx)
@@ -76,6 +81,7 @@ function TriedThumb(props) {
         })
         .catch(error => {
           console.log(error);
+          
           return;
         });
     } else if (likeCheck == 1) {

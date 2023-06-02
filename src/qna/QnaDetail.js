@@ -35,7 +35,7 @@ const QnaDetail = () => {
     const [contents, setContents] = useState('');
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_JYS_IP}:8080/api/qna/${qnaIdx}`, {headers : header})
+        axios.get(`http://${process.env.REACT_APP_JYS_IP}:8080/api/qna/${qnaIdx}`)
             .then(response => {
                 console.log(response.data)
                 setQna(response.data.selectQnaInfo);
@@ -81,7 +81,7 @@ const QnaDetail = () => {
             })
             .catch(error => {
                 console.log(error);
-                alert(`오류가 발생했습니다 (${error.message})`);
+                alert(`로그인 후 사용할 수 있습니다.`);
             });
     };
 
@@ -127,9 +127,9 @@ const QnaDetail = () => {
                     </ul>
                 </div>
                 <div className={styles.buttonWrap}>
-                    <Link to={`/qna/update/${qnaIdx}`}><Button sx={{ color: "white", background: "#5E8FCA", ":hover": { background: "#2d6ebd" } }}>수정하기</Button></Link>
+                    { qna.userId == userId ? <Link to={`/qna/update/${qnaIdx}`}><Button sx={{ color: "white", background: "#5E8FCA", ":hover": { background: "#2d6ebd" } }}>수정하기</Button></Link> : ""}
                     <Button sx={{ color: "white", background: "#5E8FCA", ":hover": { background: "#2d6ebd" } }} style={{ marginLeft: "20px", marginRight: "20px" }} onClick={handlerClickList}>목록보기</Button>
-                    <Button sx={{ color: "white", background: "#5E8FCA", ":hover": { background: "#2d6ebd" } }} onClick={handlerClickDelete}>삭제하기</Button>
+                    { qna.userId == userId ? <Button sx={{ color: "white", background: "#5E8FCA", ":hover": { background: "#2d6ebd" } }} onClick={handlerClickDelete}>삭제하기</Button> : ""}
                 </div>
             </div>
         </Frame>

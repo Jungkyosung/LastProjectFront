@@ -107,10 +107,11 @@ const MapWrite = () => {
       alert("코스가 비어있는 DAY가 있어요. DAY를 삭제하거나 코스를 추가해주세요.")
       return
     }
-
+    
     console.log(data);
     axios.post(`http://${process.env.REACT_APP_JKS_IP}:8080/api/course`, formData, 
     {headers: { 'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${jwtToken}` }})
+    //, 'Authorization': `Bearer ${jwtToken}` 
       .then(response => {
         console.log(response);
         if (response.data === "정상처리") {

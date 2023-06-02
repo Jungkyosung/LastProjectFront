@@ -11,13 +11,13 @@
   margin-right:53%;
   font-size: 35px;
   font-weight:600;
-  margin-top: 96px;
-  margin-bottom:42px;
+  margin-top: 20px;
+  margin-bottom:20px;
 }
 
 .contentsWrap .content {
   /* background: aquamarine; */
-  width: 60%;
+  width: 90%;
 }
 
 .contentsWrap .search {
@@ -38,9 +38,9 @@
 .contentsWrap .table table tr th {
   background: rgba(94, 143, 202, 0.3);
   font-weight: bold;
-  font-size:20px;
-  height:45px;
-  line-height: 45px;
+  font-size:14px;
+  height:35px;
+  line-height: 35px;
 }
 
 .contentsWrap .table .noData {
@@ -66,12 +66,41 @@
 
 .contentsWrap .table table .qnaData td {
   text-align: center;
-  height:60px;
-  line-height: 60px;
+  height:30px;
+  line-height: 30px;
   border-top:1px solid rgba(94, 143, 202, 0.2);
-  font-size:16px;
+  font-size:12px;
 }
 .contentsWrap .table table .qnaData td:nth-child(2){
   text-align: start;
   text-indent: 30px;
+}
+
+@media (min-width:800px){
+  .contentsWrap .content {
+    /* background: aquamarine; */
+    width: 60%;
+  }
+
+  .contentsWrap .title {
+    margin-top: 96px;
+    margin-bottom:42px;
+  }
+
+  .contentsWrap .table table tr th {
+    background: rgba(94, 143, 202, 0.3);
+    font-weight: bold;
+    font-size:20px;
+    height:45px;
+    line-height: 45px;
+  }
+
+  .contentsWrap .table table .qnaData td {
+
+    height:60px;
+    line-height: 60px;
+    font-size:16px;
+  }
+  
+  
 }

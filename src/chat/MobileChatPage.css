@@ -8,7 +8,7 @@
 }
 
 #mobilechat-wrap {
-    margin-top: 50px;
+    margin-top: 0px;
     margin-bottom: 50px;
 }
 
@@ -107,7 +107,7 @@
 .chatroombox-wrap {
     display: flex;
     align-items: center;
-    width: 300px;
+    width: 250px;
 }
 
 .chatroombox-title {

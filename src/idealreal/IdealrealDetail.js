@@ -52,7 +52,7 @@ function IdealrealDetail() {
         // }
 
         axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal/detail/${idealrealIdx}`
-            , { headers: header }
+            , 
         )
             .then(response => {
                 console.log(response);

@@ -53,7 +53,7 @@ const Accompany = () => {
       search: '',
       accompanyRegion: region
     };
-    axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/accompanylistbypage`, { params, headers : header})
+    axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/accompanylistbypage`, { params})
       .then(response => {
         console.log(response.data);
         setDatas(response.data);
@@ -62,7 +62,7 @@ const Accompany = () => {
         console.log(error);
       })
 
-    axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/accompanypagecount`, { params, headers : header })
+    axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/accompanypagecount`, { params })
       .then(response => {
         console.log(response.data);
         setPageCount(response.data);
@@ -111,7 +111,7 @@ const Accompany = () => {
       search: search,
       accompanyRegion: accompanyRegion
     };
-    axios.get(`http://localhost:8080/api/accompanylistbypage`, { params, headers : header })
+    axios.get(`http://localhost:8080/api/accompanylistbypage`, { params })
       .then(response => {
         console.log(response.data);
         setDatas(response.data);
@@ -120,7 +120,7 @@ const Accompany = () => {
         console.log(error);
       })
 
-    axios.get(`http://localhost:8080/api/accompanypagecount`, { params, headers : header })
+    axios.get(`http://localhost:8080/api/accompanypagecount`, { params })
       .then(response => {
         console.log(response.data);
         setPageCount(response.data);
@@ -140,7 +140,7 @@ const Accompany = () => {
       accompanyRegion: accompanyRegion
     }
     try {
-      const response = await axios.get(`http://localhost:8080/api/accompanylistbypage`, { params, headers : header });
+      const response = await axios.get(`http://localhost:8080/api/accompanylistbypage`, { params });
       console.log(response.data);
       setDatas(response.data);
       // navigate(`/accompany`);
@@ -149,7 +149,7 @@ const Accompany = () => {
     }
 
     try {
-      const response = await axios.get(`http://localhost:8080/api/accompanypagecount`, { params, headers : header });
+      const response = await axios.get(`http://localhost:8080/api/accompanypagecount`, { params });
       console.log(response.data);
       setPageCount(response.data);
       // navigate(`/accompany`);
@@ -202,28 +202,6 @@ const Accompany = () => {
             ))
           }
         </div>
-        {/* <div id="accompany-list-each">
-          <div onClick={handlerOpenDetail}>
-            <AccompanyEach />
-          </div>
-          <AccompanyEach />
-
-          <AccompanyEach />
-          <AccompanyEach />
-          <AccompanyEach />
-          <AccompanyEach />
-          <AccompanyEach />
-          <AccompanyEach />
-          <AccompanyEach />
-          <AccompanyEach />
-          <AccompanyEach />
-          <AccompanyEach />
-          <AccompanyEach />
-          <AccompanyEach />
-          <AccompanyEach />
-          <AccompanyEach />
-          <AccompanyEach />
-        </div> */}
         <Pagination count={pageCount} color="primary" page={pages} onChange={handlerChange} />
       </div>
     </Frame>

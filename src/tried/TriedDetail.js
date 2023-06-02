@@ -42,7 +42,7 @@ const TriedDetail = () => {
 
         //글정보 가져오기
         axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/detail/${triedIdx}`,
-            { headers: header })
+            )
             .then(response => {
                 setFilename(response.data.triedImg);
                 setTried(response.data);
@@ -64,7 +64,7 @@ const TriedDetail = () => {
     const fetchCommentData = () => {
         //댓글정보 가져오기
         axios.get(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/comment/${triedIdx}`,
-            { headers: header })
+            )
             .then(response => {
                 setCommentList(response.data);
                 console.log(response.data);
@@ -156,6 +156,7 @@ const TriedDetail = () => {
             })
             .catch((error) => {
                 console.log(error);
+                alert('로그인 후 사용하실 수 있습니다.');
             })
     }
 
@@ -241,8 +242,8 @@ const TriedDetail = () => {
                     }
                     <div>
                         <Button type='button' variant="contained" onClick={handlerClickList}>목록</Button>
-                        <Button type='button' variant="contained" onClick={() => handlerClickUpdate(imageUrl)}>수정</Button>
-                        <Button type='button' variant="contained" onClick={handlerClickDelete}>삭제</Button>
+                        {userId == tried.userId ? <Button type='button' variant="contained" onClick={() => handlerClickUpdate(imageUrl)}>수정</Button> : ""}
+                        {userId == tried.userId ? <Button type='button' variant="contained" onClick={handlerClickDelete}>삭제</Button> : ""}
                     </div>
                     <div onClick={handlerMoveToAfterCont}>다음글<ArrowForwardIcon /></div>
                 </div>

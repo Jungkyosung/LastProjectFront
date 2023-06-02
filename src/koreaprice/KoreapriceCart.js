@@ -68,26 +68,30 @@ const KoreapriceCart = (props) => {
           <span className='koreaprice-cart-coltitle-3'>단가</span>
           <span className='koreaprice-cart-coltitle-4'>금액</span>
         </div>
-        {nameAndPrice[0].price != 0 ? (
-          <div className='koreaprice-cart-col-products-wrap'>
-            {nameAndPrice.map((nameAndPrice, index) => (
-              <div className='koreaprice-cart-col-products'>
-                <span className='koreaprice-cart-1'>{nameAndPrice.name}</span>
-                <span className='koreaprice-cart-2'>{nameAndPrice.count}</span>
-                <AddIcon onClick={() => plusOne(nameAndPrice.count, index)} />
-                <RemoveIcon onClick={() => minusOne(nameAndPrice.count, index)} />
-                <span className='koreaprice-cart-3'>{nameAndPrice.capacity}</span>
-                <span className='koreaprice-cart-4'>{소수점표시(nameAndPrice.price)}</span>
-                <span className='koreaprice-cart-5'>{소수점표시(nameAndPrice.price * nameAndPrice.count)}</span>
-                <span className='koreaprice-cart-6'>
-                  <DisabledByDefaultIcon onClick={() => clickDelete(index)} />
-                </span>
-              </div>
-            ))}
 
-          </div>
-        ) : (
-          "")}
+        <div className='koreaprice-cart-col-products-wrap'>
+          {nameAndPrice[0].price != 0 ? <>
+            {
+              nameAndPrice.map((nameAndPrice, index) => (
+                <div className='koreaprice-cart-col-products'>
+                  <span className='koreaprice-cart-1'>{nameAndPrice.name}</span>
+                  <span className='koreaprice-cart-2'>{nameAndPrice.count}</span>
+                  <AddIcon onClick={() => plusOne(nameAndPrice.count, index)} />
+                  <RemoveIcon onClick={() => minusOne(nameAndPrice.count, index)} />
+                  <span className='koreaprice-cart-3'>{nameAndPrice.capacity}</span>
+                  <span className='koreaprice-cart-4'>{소수점표시(nameAndPrice.price)}</span>
+                  <span className='koreaprice-cart-5'>{소수점표시(nameAndPrice.price * nameAndPrice.count)}</span>
+                  <span className='koreaprice-cart-6'>
+                    <DisabledByDefaultIcon onClick={() => clickDelete(index)} />
+                  </span>
+                </div>
+              ))
+            }
+          </>
+            : (
+              "")}
+        </div>
+
       </div>
       <div id="koreaprice-cart-mobile">
         <div id="koreaprice-cart-coltitle">
@@ -97,8 +101,9 @@ const KoreapriceCart = (props) => {
           <span className='koreaprice-cart-coltitle-3'>단가</span>
           <span className='koreaprice-cart-coltitle-4'>금액</span>
         </div>
-        {nameAndPrice[0].price != 0 ? (
-          <div className='koreaprice-cart-col-products-wrap'>
+
+        <div className='koreaprice-cart-col-products-wrap'>
+          {nameAndPrice[0].price != 0 ? (<>
             {nameAndPrice.map((nameAndPrice, index) => (
               <div className='koreaprice-cart-col-products'>
                 <span className='koreaprice-cart-1'>{nameAndPrice.name}</span>
@@ -113,10 +118,11 @@ const KoreapriceCart = (props) => {
                 </span>
               </div>
             ))}
+          </>
+          ) : (
+            "")}
+        </div>
 
-          </div>
-        ) : (
-          "")}
       </div>
 
     </>

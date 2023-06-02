@@ -33,6 +33,17 @@
     width: 100%;
 }
 
+#regist-input > form > .green {
+    color: green;
+    font-size: 0.8rem;
+}
+
+#regist-input > form > .red {
+    color: red;
+    font-size: 0.8rem;
+}
+
+
 #regist-btn {
     margin-left: calc(270px/2 - 100px/2);
 }

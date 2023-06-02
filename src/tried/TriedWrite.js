@@ -1,5 +1,5 @@
 import './TriedWrite.css';
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Frame from '../main/Frame';
@@ -25,6 +25,13 @@ const TriedWrite = () => {
         'Authorization': `Bearer ${jwtToken}`,
         'Content-Type': 'application/json'
     };
+
+    useEffect(()=>{
+        if(userId == null){
+            alert('로그인 후 사용하실 수 있습니다.');
+            navigate('/tried');
+        }
+    },[])
 
     const [triedTitle, setTriedTitle] = useState('');
     const [triedContent, setTriedContent] = useState('');

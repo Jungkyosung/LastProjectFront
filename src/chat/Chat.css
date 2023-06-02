@@ -124,6 +124,10 @@
   cursor: pointer;
 }
 
+#CloseIcon > path{
+  display: none;
+}
+
 #CloseIcon:hover {
   cursor: pointer;
   background-color: rgb(122, 112, 253);
@@ -170,4 +174,10 @@
 #chat::-webkit-scrollbar-thumb{
   width: 5px;
   background-color: rgb(197, 197, 197);
+}
+
+@media (min-width:800px){
+  #CloseIcon > path{
+    display: block;
+  }
 }

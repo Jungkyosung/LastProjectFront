@@ -25,6 +25,13 @@ const QnaWrite = () => {
         'Content-Type': 'application/json'
     };
 
+    useEffect(()=>{
+        if (userId == null){
+            alert('로그인 후 사용하실 수 있습니다.');
+            navigate('/qnalist');
+        }
+    },[])
+
 
     const navigate = useNavigate();
 
@@ -36,9 +43,10 @@ const QnaWrite = () => {
     };
 
     const handleSubmit = (e) => {
+
         e.preventDefault();
         axios.post(`http://${process.env.REACT_APP_JYS_IP}:8080/api/qna/write`,
-            { "qnaTitle": title, "qnaContent": content }, {haeders : header}
+            { "qnaTitle": title, "qnaContent": content, "userId": userId }, {haeders : header}
         )
             .then(response => {
                 console.log(response)

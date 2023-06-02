@@ -3,8 +3,19 @@ import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
 
 const ReportPop = ({children, reportedUser, reportedUserNickname}) => {
+
+  let nickName = null;
+  let loginUserId = null;
+  let jwtToken = null;
+  if (sessionStorage.getItem('token') != null) {
+      jwtToken = sessionStorage.getItem('token');
+      loginUserId = jwt_decode(jwtToken).sub;
+      nickName = jwt_decode(jwtToken).nickname;
+  }
+
 
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -18,6 +29,12 @@ const ReportPop = ({children, reportedUser, reportedUserNickname}) => {
   };
 
   const handleReport = () => {
+
+    if ( loginUserId == null ){
+      alert('로그인 후 사용하실 수 있습니다.')
+      return
+    }
+
     navigate(`/reportpage`, {state: {reportedUser: reportedUser, reportedUserNickname: reportedUserNickname}});
     console.log(reportedUser);
   }

@@ -89,7 +89,7 @@ const MapdetailSwiper = (props) => {
         // when window width is >= 576px
         375: {
           slidesPerView: 1,
-          spaceBetween: 10,
+          spaceBetween: 40,
           speed: 1000,
         }
         // ,
@@ -115,13 +115,13 @@ const MapdetailSwiper = (props) => {
         clickable: true,
       }}
       navigation={{ clickable: true }}
-      // autoplay={{ delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: Boolean }}
+      autoplay={{ delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: Boolean }}
       // autoplay={{
       //     delay: 0,
       //     stopOnLastSlide: false,
       //     disableOnInteraction: false
       // }}
-      speed={500}
+      speed={3000}
       loop={false}
       // observer={true}
       // observeParents={true}

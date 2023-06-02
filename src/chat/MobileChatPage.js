@@ -5,52 +5,40 @@ import Chatroom from './Chatroom';
 import ChattingWindow from './ChattingWindow';
 import { useRef, useState } from "react";
 import jwt_decode from 'jwt-decode';
+import CloseIcon from '@mui/icons-material/Close';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-
-const MobileChatPage = () => {
+const MobileChatPage = (props) => {
 
     let nickName = null;
     let jwtToken = null;
+    let userImg = null;
     if (sessionStorage.getItem('token') != null) {
         jwtToken = sessionStorage.getItem('token');
+        userImg = jwt_decode(jwtToken).userImg;
         nickName = jwt_decode(jwtToken).nickname;
     }
+
+    console.log(jwt_decode(jwtToken));
 
     const header = {
         'Authorization': `Bearer ${jwtToken}`,
         'Content-Type': 'application/json'
     };
 
+    // const handlerJoinChat = props.handlerJoinChat;
+    const handlerChatModal = props.handlerChatModal;
 
     const [isChatroom, setIsChatroom] = useState(true);
+    const [ visible, setVisible] = useState(true);
 
-    //상위컴포넌트에 올려서 버튼 누르면 true로 바꿔줘야됨.
-    const [isGlobal, setIsGlobal] = useState(true);          //글로벌 채팅이면 true
-    const [isAccompany, setIsAccompany] = useState(false);     //동행 채팅이면 true
+    //굳이 parent에서 관리할 필요 없을 듯
+    const [isGlobalAccompany, setIsGlobalAccompany] = useState(false);
 
     const [userId, setUserId] = useState(jwt_decode(sessionStorage.getItem('token')).sub);
-
     const [chatHistory, setChatHistory] = useState([]);
-
     const [동행글Idx, set동행글Idx] = useState(0);
-
     const stompClient = useRef(null);   //stomp를 바라보게 해둠. 하위컴포넌트로 props로 전달 함.
-
-    //{핸들러: 글로벌채팅으로 ON}
-    const handlerGlobalChat = () => {
-        setIsGlobal(true);
-        setIsAccompany(false);
-        console.log("accompany", isAccompany);
-        console.log("global", isGlobal);
-    }
-
-    //{핸들러: 동행채팅으로 ON}
-    const handlerAccompanyChat = () => {
-        setIsAccompany(true);
-        setIsGlobal(false);
-        console.log("accompany", isAccompany);
-        console.log("global", isGlobal);
-    }
 
     //{콜백함수: 구독 메시지 수신시}
     const onMessageReceived = payload => {
@@ -69,15 +57,33 @@ const MobileChatPage = () => {
         }
     };
 
-    //뒤로 가기
+    //뒤로 가기(연결끊기)
     const handlerArrowBack = () => {
-        setIsChatroom(true);
+        stompClient.current.disconnect(function () {
+            // alert("see you");
+            setIsChatroom(true);
+            setChatHistory([]);
+        });
     }
 
+    const handlerOutBtn = () => {
+        setVisible(false);
 
-    const handler동행글Idx = (e) => {
-        set동행글Idx(e.target.value);
-        console.log(e.target.value);
+        setTimeout(() => {
+            if (isChatroom) {
+                handlerChatModal();
+                return
+            } else {
+                handlerArrowBack();
+                handlerChatModal();
+            }
+        },200)
+    }
+
+    //{핸들러} 동행글Idx 설정
+    const handler동행글Idx = (idx) => {
+        set동행글Idx(idx);
+        console.log(idx);
     }
 
     return (
@@ -85,35 +91,38 @@ const MobileChatPage = () => {
 
 
             <div id="mobilechat-wrap">
-                <div id="chatTitle">
+                {/* <div id="chatTitle">
                     <em>Chat Room</em>
                 </div>
 
                 <button type="button" onClick={handlerGlobalChat}>글로벌채팅방</button>
-                <button type="button" onClick={handlerAccompanyChat}>동행채팅방</button>
+                <button type="button" onClick={handlerAccompanyChat}>동행채팅방</button> */}
+                <div id="chatParentTitle">
+                    {!(isChatroom) ? <ArrowBackIcon id="ArrowBackIcon" onClick={handlerArrowBack} /> :
+                        <span id="ArrowBackIconTemp"></span>}
+                    <em>MESSENGER</em>
+                    <CloseIcon id="CloseIcon" onClick={() => handlerOutBtn()} />
+                </div>
+
                 {isChatroom ? <Chatroom
                     stompClient={stompClient}
                     userId={userId}
-                    isGlobal={isGlobal}
-                    isAccompany={isAccompany}
-                    header={header}
                     nickName={nickName}
-                    동행글Idx={동행글Idx}
+                    userImg={userImg}
+                    setIsGlobalAccompany={setIsGlobalAccompany}
+                    header={header}
                     handler동행글Idx={handler동행글Idx}
-                    chatHistory={chatHistory}
-                    setChatHistory={setChatHistory}
                     onMessageReceived={onMessageReceived}
-                    isChatroom={isChatroom}
-                    setIsChatroom={setIsChatroom} />
+                    setIsChatroom={setIsChatroom}
+                     />
                     : <ChattingWindow
                         stompClient={stompClient}
                         userId={userId}
-                        isGlobal={isGlobal}
-                        isAccompany={isAccompany}
+                        isGlobalAccompany={isGlobalAccompany}
                         header={header}
                         nickName={nickName}
+                        userImg={userImg}
                         동행글Idx={동행글Idx}
-                        handler동행글Idx={handler동행글Idx}
                         chatHistory={chatHistory}
                         setChatHistory={setChatHistory}
                         onMessageReceived={onMessageReceived}

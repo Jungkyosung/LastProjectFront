@@ -36,7 +36,7 @@ function Thumb(props) {
 
 
     //해당 글 좋아요 수 조회
-    axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/${idealrealIdx}/getlike`, {headers:header})
+    axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/${idealrealIdx}/getlike`, )
       .then(response => {
         console.log(response);
         setLikeCount(response.data);
@@ -44,8 +44,10 @@ function Thumb(props) {
       .catch(error => console.log(error));
 
     //이 사람이 좋아요를 눌른 놈인지 아닌지
-      let tempLoginUserId = loginUserId.replace(".", "-");
-
+    let tempLoginUserId = "";
+    if( loginUserId != null ){
+      tempLoginUserId = loginUserId.replace(".", "-");
+    }
     axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal/detail/likecheck/${idealrealIdx}/${tempLoginUserId}`, {headers:header})
       .then(response => {
         console.log(response);
@@ -62,6 +64,10 @@ function Thumb(props) {
 
     //추후 로그인 토큰 값으로 변경 필요!!!
     // let loginId = 'jks@jks.com';
+    if (loginUserId==null){
+      alert('로그인 후 사용하실 수 있습니다.');
+      return
+    }
 
     let data = {
       userId: loginUserId,

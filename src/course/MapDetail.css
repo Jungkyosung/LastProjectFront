@@ -68,8 +68,8 @@
 
 #mapdetail-userpic {
   position: absolute;
-  /* top: 60px;
-  left: 35px; */
+  top: 50px;
+  left: 10px;
   width: 30px;
   height: 30px;
   border-radius: 100%;
@@ -79,24 +79,26 @@
 }
 
 #mapdetail-userid {
-  /* position: absolute; */
-  /* top: 70px;
-  left: 1px; */
-  color: aliceblue;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  color: rgb(0, 0, 0);
   /* font-weight: bold; */
   font-family: 'Gowun Dodum', sans-serif;
 }
 
 #mapdetail-img-list {
-  width: 70%;
-  height: 40vw;
+  width: 100%;
+  height: 70vw;
   overflow: hidden;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
-#mapdetail-img-list>img {
-  width: 100%;
+#mapdetail-img-list>div {
+  width: 70%;
+
   object-fit: cover;
 }
 
@@ -110,9 +112,9 @@
 }
 
 #mapdetail-course-list-wrap {
-  margin-top: 20px;
+  margin-top: 5px;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
   width: 95%;
 }
@@ -122,8 +124,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 250px;
-  height: 150px;
+  width: 280px;
+  height: 220px;
 
   border-radius: 20px;
   overflow: hidden;
@@ -237,9 +239,9 @@
 
   #mapdetail-userid {
     position: absolute;
-    top: 70px;
-    left: 220px;
-    color: aliceblue;
+    top: 50px;
+    left: 50px;
+    color: rgb(3, 3, 3);
     /* font-weight: bold; */
     font-family: 'Gowun Dodum', sans-serif;
   }

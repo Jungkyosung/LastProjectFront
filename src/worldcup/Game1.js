@@ -5,14 +5,17 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Frame from "../main/Frame";
+import jwt_decode from 'jwt-decode';
 // import Winpage from "./Winpage";
 
 
 const Game1 = () => {
 
   let jwtToken = null;
+  let loginUserId = null;
   if (sessionStorage.getItem("token") != null) {
     jwtToken = sessionStorage.getItem("token");
+    loginUserId = jwt_decode(jwtToken).sub;
   }
 
   const header = {
@@ -31,6 +34,12 @@ const Game1 = () => {
   const [tournament, setTournament] = useState([]);
 
   useEffect(() => {
+
+    if(loginUserId == null ){
+      alert('로그인 후 사용하실 수 있습니다.');
+      navigate("/tried");
+      return
+    }
 
     axios.get(`http://localhost:8080/api/rawinfo/${triedCategoryIdx}`, { headers: header })
       .then((response) => {

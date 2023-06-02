@@ -58,7 +58,7 @@ function ChatParent(props) {
     //뒤로 가기(연결끊기)
     const handlerArrowBack = () => {
         stompClient.current.disconnect(function () {
-            alert("see you");
+            // alert("see you");
             setIsChatroom(true);
             setChatHistory([]);
         });

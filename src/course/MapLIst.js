@@ -142,7 +142,7 @@ const MapList = () => {
             search: search
         }
 
-        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/course/totalpages`, { params, headers: header }
+        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/course/totalpages`, { params }
         )
             .then(response => {
                 console.log(response);

@@ -309,7 +309,7 @@ const AccompanyUpdate = () => {
         </div>
         <div id="accompany-title-write">
           <div>Member</div>
-          <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+          {/* <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
             <Select
               labelId="demo-simple-select-standard-label"
               id="demo-simple-select-standard"
@@ -324,7 +324,7 @@ const AccompanyUpdate = () => {
               <MenuItem value={10}>Eng</MenuItem>
               <MenuItem value={20}>Jap</MenuItem>
             </Select>
-          </FormControl>
+          </FormControl> */}
           <Input placeholder="Placeholder" inputProps={ariaLabel} value={accompanyNumbers} onChange={handleChangeNumbers} />
         </div>
         <div id="accompany-write-btn">

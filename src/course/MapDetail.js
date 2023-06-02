@@ -42,6 +42,7 @@ function MapDetail(props) {
     const [markerNumber, setMarkerNumber] = useState(1);
 
     let googleMapURL = `https://maps.googleapis.com/maps/api/staticmap?&size=296x250&maptype=roadmap&${mapMarkers}&key=${googleMapKey}`;
+    let googleMapURLmobile = `https://maps.googleapis.com/maps/api/staticmap?&size=280x180&maptype=roadmap&${mapMarkers}&key=${googleMapKey}`;
 
     const modal = props.modal;
     const setModal = props.setModal;
@@ -215,7 +216,8 @@ function MapDetail(props) {
                     <div className="camera-black-line"></div>
                     <div id="mapdetail-course-list-wrap">
                         <div id="mapdetail-map">
-                            <img src={googleMapURL} />
+                            {/* <img src={googleMapURL} /> */}
+                            <img src={googleMapURLmobile} />
                             <div id="mapdetail-map-googlemap" >
                                 <img style={{ width: "15px" }} src="https://play-lh.googleusercontent.com/Kf8WTct65hFJxBUDm5E-EpYsiDoLQiGGbnuyP6HBNax43YShXti9THPon1YKB6zPYpA" />
                                 <span id="mapdetail-map-googlemap-btn" onClick={handlerMoveToGoogleMap}>구글맵에서 보기</span>

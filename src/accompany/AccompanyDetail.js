@@ -43,7 +43,7 @@ const AccompanyDetail = () => {
             setUserId(jwt_decode(jwtToken).sub);
         }
 
-        axios.get(`http://localhost:8080/api/accompany/${accompanyIdx}`, {headers : header})
+        axios.get(`http://localhost:8080/api/accompany/${accompanyIdx}`,)
             .then(response => {
                 console.log(response.data)
                 setFilename(response.data.accompanyImage);
@@ -99,6 +99,13 @@ const AccompanyDetail = () => {
     };
 
     const handlerJoinChat = (accompanyIdx) => {
+
+        if(userId == '') {
+            alert('로그인 후 사용하실 수 있습니다.');
+            return
+        }
+
+
         let 채팅UUID = '';
         //chatController로직
         axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/chatroom/${accompanyIdx}`, { headers: header })

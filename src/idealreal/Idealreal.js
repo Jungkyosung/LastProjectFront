@@ -42,14 +42,14 @@ function Idealreal() {
     const lengthDifference = 10 - data.length;
 
     useEffect(() => {
-        if (!sessionStorage.getItem('token')) {
-            alert("로그인이 필요합니다.")
-            navigate(`/login`);
-            return
-        }
+        // if (!sessionStorage.getItem('token')) {
+        //     alert("로그인이 필요합니다.")
+        //     navigate(`/login`);
+        //     return
+        // }
 
         //1페이지 리스트 조회
-        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal/${page}`, {headers:header})
+        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal/${page}`, )
             .then(response => {
                 console.log(response.data)
                 setData(response.data);
@@ -59,7 +59,7 @@ function Idealreal() {
             })
 
         //페이지수 조회
-        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealrealpagecount`, {headers:header})
+        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealrealpagecount`, )
             .then(response => {
                 console.log(response.data)
                 // let pageCount = response.data;
@@ -78,7 +78,7 @@ function Idealreal() {
 
     useEffect(() => {
         //1페이지 리스트 조회
-        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal/${page}`,{headers:header})
+        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealreal/${page}`,)
             .then(response => {
                 console.log(response.data)
                 setData(response.data);
@@ -88,7 +88,7 @@ function Idealreal() {
             })
 
         //페이지수 조회
-        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealrealpagecount`,{headers:header})
+        axios.get(`http://${process.env.REACT_APP_KTG_IP}:8080/api/listidealrealpagecount`,)
             .then(response => {
                 console.log(response.data)
                 // let pageCount = response.data;
