@@ -7,7 +7,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import styles from "./AccompanyWrite.module.css";
 import { useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import jwt_decode from 'jwt-decode';
 
@@ -28,6 +28,13 @@ const AccompanyWrite = () => {
         'Authorization': `Bearer ${jwtToken}`,
         'Content-Type': 'application/json'
     };
+
+    useEffect(()=>{
+        if(userId == null){
+            alert('로그인 후 사용하실 수 있습니다.');
+            navigate('/accompany');
+        }
+    },[])
 
     let today = new Date();
 

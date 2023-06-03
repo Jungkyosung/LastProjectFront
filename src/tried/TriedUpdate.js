@@ -154,7 +154,7 @@ const TriedUpdate = () => {
         e.preventDefault();
         if (window.confirm("글을 작성하시겠습니까?")) {
 
-            axios.put(`http://${process.env.REACT_APP_CMJ_IP}:8080/reupload/${triedIdx}`, formData,
+            axios.put(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried/${triedIdx}`, formData,
                 {
                     headers: {
                         'Content-Type': 'multipart/form-data',

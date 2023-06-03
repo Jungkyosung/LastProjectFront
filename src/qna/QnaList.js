@@ -167,7 +167,7 @@ const QnaList = () => {
                                                     <Link to={`/qna/${n.qnaIdx}`} style={{ color: "black" }}>{n.qnaTitle}</Link>
                                                 </td>
                                                 <td style={{ color: "black" }}>{n.qnaCreatedTime}</td>
-                                                <td style={{ color: "black" }}>{n.userId}</td>
+                                                <td style={{ color: "black" }}>{n.userNickname}</td>
                                             </tr>
                                         ))
 

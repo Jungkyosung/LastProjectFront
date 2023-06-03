@@ -35,14 +35,12 @@ function IdealrealWrite() {
   const [imageFiles, setImageFiles] = useState([])                          //업로드이미지파일
 
   //[컴포넌트 마운트시 로그인 여부 체크]
-  useEffect(() => {
-    if (!sessionStorage.getItem('token')) {
-      alert("로그인 했어?")
-      navigate("/login")
-      return
+  useEffect(()=>{
+    if(userId == null){
+        alert('로그인 후 사용하실 수 있습니다.');
+        navigate('/idealreal');
     }
-
-  }, [])
+},[])
 
 
   //{핸들러} 제목변경

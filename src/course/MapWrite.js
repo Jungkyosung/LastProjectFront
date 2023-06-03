@@ -1,6 +1,6 @@
 import './MapWrite.css';
 import styles from './MapWrite.module.css';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Add } from "@mui/icons-material";
 import { Button, Input } from "@mui/material";
 import CourseWrite from "./CourseWrite";
@@ -19,7 +19,6 @@ const MapWrite = () => {
   let today = new Date();
 
 
-
   //0------------토큰확인----------------
   let nickName = null;
   let userId = null;
@@ -34,6 +33,13 @@ const MapWrite = () => {
     'Authorization': `Bearer ${jwtToken}`,
     'Content-Type': 'application/json'
   };
+
+  useEffect(()=>{
+    if(userId == null){
+        alert('로그인 후 사용하실 수 있습니다.');
+        navigate('/corse');
+    }
+},[])
   //0-------------------------------------
 
 
