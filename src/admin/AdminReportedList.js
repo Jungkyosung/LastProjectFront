@@ -474,7 +474,6 @@ const AdminReportedList = (props) => {
         </div>
       </div>
       <div className={Style.suspension}>
-        정지처리(컴포넌트)
         <div className={Style.suspensionBody}>
           정지처리
           <div className={Style.suspensionChoice}>

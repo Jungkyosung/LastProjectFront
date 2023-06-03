@@ -73,7 +73,7 @@ const QnaDetail = () => {
         e.preventDefault();
 
         axios.post(`http://${process.env.REACT_APP_JYS_IP}:8080/api/qna/comments/write/${qnaIdx}`, 
-            { "qnaCommentContent": contents }, {headers : header})
+            { "qnaCommentContent": contents , "userId" : userId}, {headers : header})
             .then(response => {
                 console.log(response);
                 alert('코맨트가 정상적으로 등록되었습니다');
@@ -117,7 +117,7 @@ const QnaDetail = () => {
                             comment.map((cmt) => (
                                 <li key={cmt.qnaCommentIdx}>
                                     <div className={styles.name}>
-                                        <strong>{cmt.userId}</strong>
+                                        <strong>{cmt.userNickname}</strong>
                                         <span>{cmt.qnaCommentTime}</span>
                                     </div>
                                     <p>{cmt.qnaCommentContent}</p>

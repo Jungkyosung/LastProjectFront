@@ -4,13 +4,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, FreeMode, Navigation, Pagination } from "swiper";
 // Import Swiper styles
 import "swiper/css";
-import "swiper/css/navigation";
+// import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/free-mode";
 import "swiper/css/autoplay"
 import Style from './MapDetailSwiper.module.css';
 
-// import "./swiperStyle.css";
+import "./swiperMapStyle.css";
 // import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -89,7 +89,7 @@ const MapdetailSwiper = (props) => {
         // when window width is >= 576px
         375: {
           slidesPerView: 1,
-          spaceBetween: 40,
+          // spaceBetween: 40,
           speed: 1000,
         }
         // ,
@@ -114,7 +114,7 @@ const MapdetailSwiper = (props) => {
       pagination={{
         clickable: true,
       }}
-      navigation={{ clickable: true }}
+      // navigation={{ clickable: true }}
       autoplay={{ delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: Boolean }}
       // autoplay={{
       //     delay: 0,
@@ -125,8 +125,8 @@ const MapdetailSwiper = (props) => {
       loop={false}
       // observer={true}
       // observeParents={true}
-      modules={[Pagination, Navigation, FreeMode, Autoplay]}
-      className="mySwiper"
+      modules={[Pagination, FreeMode, Autoplay]}
+      className={Style.mySwiper}
     >
       {
         img.map((img) => (

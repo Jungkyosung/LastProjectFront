@@ -100,7 +100,7 @@ const TriedWrite = () => {
         console.log(formData);
         e.preventDefault();
         if (window.confirm("글을 작성하시겠습니까?")) {
-            axios.post(`http://${process.env.REACT_APP_CMJ_IP}:8080/upload`, formData, {
+            axios.post(`http://${process.env.REACT_APP_CMJ_IP}:8080/api/tried`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${sessionStorage.getItem('token')}` }
             })
                 .then(response => {

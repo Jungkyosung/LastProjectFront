@@ -1,8 +1,8 @@
 #mapdetail-comment-container{
-  display: none;
-  /* display: flex;
+  /* display: none; */
+  display: flex;
   flex-direction: column;
-  background-color: white; */
+  background-color: white;
   border-radius: 10px;
 }
 

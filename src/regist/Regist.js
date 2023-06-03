@@ -45,9 +45,10 @@ const Regist = () => {
     const [isValid, setIsValid] = useState({
         // isId: false,
         isEmail: false,
+        isNickname: false,
         isPassword: false,
         isPasswordConfirm: false,
-        isRegistButton: false
+        isRegistButton: false,
         // isIdDuplicate: false,
         // isNicknameDuplicate: false
     });
@@ -169,7 +170,7 @@ const Regist = () => {
 
     const handlerSubmit = (e) => {
         e.preventDefault();
-        axios.post(`http://192.168.0.39:8080/api/regist`,
+        axios.post(`http://${process.env.REACT_APP_JKS_IP}:8080/api/regist`,
             {
                 "userId": email,
                 "userPw": pw,
@@ -196,7 +197,7 @@ const Regist = () => {
     }
 
     const idDuplicateCheck = () => {
-        axios.get(`http://192.168.0.39:8080/api/idduplicatecheck`,
+        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/idduplicatecheck`,
             {
                 params: { "userId": email }
             })
@@ -218,7 +219,7 @@ const Regist = () => {
     }
 
     const nicknameDuplicateCheck = () => {
-        axios.get(`http://192.168.0.39:8080/api/nicknameduplicatecheck`,
+        axios.get(`http://${process.env.REACT_APP_JKS_IP}:8080/api/nicknameduplicatecheck`,
             {
                 params: { "userNickname": nickName }
             })
@@ -238,7 +239,7 @@ const Regist = () => {
         console.log("버튼누름");
     }
 
-    const lastConfrimState = (isValid.isEmail && isValid.isName && isValid.isPassword && isValid.isPasswordConfirm && nationIdx);
+    const lastConfrimState = (isValid.isEmail && isValid.isNickname && isValid.isName && isValid.isPassword && isValid.isPasswordConfirm && nationIdx);
 
 
     const [showPassword, setShowPassword] = useState(false);
