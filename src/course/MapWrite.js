@@ -94,7 +94,7 @@ const MapWrite = () => {
       'data',
       new Blob([JSON.stringify(data)], { type: 'application/json' })
     );
-  
+
     Object.values(imageFiles).forEach(
       file => Object.values(file.files).forEach(
         f => formData.append(file.name, f)));
@@ -107,11 +107,11 @@ const MapWrite = () => {
       alert("코스가 비어있는 DAY가 있어요. DAY를 삭제하거나 코스를 추가해주세요.")
       return
     }
-    
+
     console.log(data);
-    axios.post(`http://${process.env.REACT_APP_JKS_IP}:8080/api/course`, formData, 
-    {headers: { 'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${jwtToken}` }})
-    //, 'Authorization': `Bearer ${jwtToken}` 
+    axios.post(`http://${process.env.REACT_APP_JKS_IP}:8080/api/course`, formData,
+      { headers: { 'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${jwtToken}` } })
+      //, 'Authorization': `Bearer ${jwtToken}` 
       .then(response => {
         console.log(response);
         if (response.data === "정상처리") {
@@ -266,12 +266,12 @@ const MapWrite = () => {
 
       let imageArr;
 
-      if(imageFile.length == 0){
+      if (imageFile.length == 0) {
         imageArr = e.target.files;
         setImageFile([...e.target.files]);
-      } else{
+      } else {
         imageArr = [...imageFile, ...e.target.files];
-        setImageFile((prevFiles)=>[...prevFiles, ...e.target.files]);
+        setImageFile((prevFiles) => [...prevFiles, ...e.target.files]);
       }
       console.log(imageFile);
       console.log(imageFiles);
@@ -304,132 +304,139 @@ const MapWrite = () => {
 
     const file = e.target.files[0];
 
-    if( imageFiles.length == 0 ){
+    if (imageFiles.length == 0) {
       setImageFiles([{ name, files }]);
     } else {
       // unchangedImageFiles = imageFiles[0].files.filter(file => file.name !== name);
       unchangedImageFiles = imageFiles[0].files;
       console.log(unchangedImageFiles)
-      
-      unchangedImageFiles = {...unchangedImageFiles, [counter] : file};
-    
+
+      unchangedImageFiles = { ...unchangedImageFiles, [counter]: file };
+
       //unchangedImageFiles[0].files.append(files);
       setCounter(prev => prev + 1);
-      setImageFiles([{name, files: unchangedImageFiles}]);
+      setImageFiles([{ name, files: unchangedImageFiles }]);
     }
-    
+
     console.log(imageFiles);
     console.log(unchangedImageFiles);
     //이미지 파일 이름, 파일명 재설정
     //같은 이름에 
-    
+
   }
 
-    return (
-      <Frame>
-        <div id="map-write-wrap">
-          <h1>여행코스등록</h1>
-          <div id="course-date-duration">
-            <span className='course-date-duration-label'>START</span>
-            <span id="course-date-picker">
-              {/* <DateRangePicker defaultValue={[today, tomorrow]} disableFuture /> */}
-              <DatePicker value={startDate} onChange={(e) => handlerStartDate(e)} disableFuture />
-            </span>
-            <span className='course-date-duration-label'>END</span>
-            <span id="course-date-picker">
-              {/* <DateRangePicker defaultValue={[today, tomorrow]} disableFuture /> */}
-              <DatePicker value={endDate} onChange={(e) => handlerEndDate(e)} disableFuture />
-            </span>
+  return (
+    <Frame>
+      <div id="map-write-wrap">
+        <h1>여행코스등록</h1>
+        <div id="course-date-duration">
+          <span className='course-date-duration-label'>START</span>
+          <span id="course-date-picker">
+            {/* <DateRangePicker defaultValue={[today, tomorrow]} disableFuture /> */}
+            <DatePicker value={startDate} onChange={(e) => handlerStartDate(e)} disableFuture />
+          </span>
+          <span className='course-date-duration-label'>END</span>
+          <span id="course-date-picker">
+            {/* <DateRangePicker defaultValue={[today, tomorrow]} disableFuture /> */}
+            <DatePicker value={endDate} onChange={(e) => handlerEndDate(e)} disableFuture />
+          </span>
+        </div>
+        <MapObject
+          lat={lat}
+          setLat={setLat}
+          lng={lng}
+          setLng={setLng}
+          setPlaceName={setPlaceName} />
+        <Button variant="contained" endIcon={<Add />} onClick={장소저장}>
+          장소 저장
+        </Button>
+        <form id='map-write-form' name='frm' onSubmit={(e) => handlerSubmit(e)}>
+          <h2 id="map-write-title">제목</h2>
+          <div id="map-write-title-input">
+            <Input placeholder="Write title" name='title' value={title}
+              onChange={(e) => setTitle(e.target.value)} />
           </div>
-          <MapObject
+
+          <CourseWrite
             lat={lat}
             setLat={setLat}
             lng={lng}
             setLng={setLng}
-            setPlaceName={setPlaceName} />
-          <Button variant="contained" endIcon={<Add />} onClick={장소저장}>
-            장소 저장
-          </Button>
-          <form id='map-write-form' name='frm' onSubmit={(e) => handlerSubmit(e)}>
-            <h2 id="map-write-title">제목</h2>
-            <div id="map-write-title-input">
-              <Input placeholder="Write title" name='title' value={title}
-                onChange={(e) => setTitle(e.target.value)} />
-            </div>
-
-            <CourseWrite
-              lat={lat}
-              setLat={setLat}
-              lng={lng}
-              setLng={setLng}
-              placeName={placeName}
-              setPlaceName={setPlaceName}
-              choiceDay={choiceDay}
-              arrCourseDay={arrCourseDay}
-              코스소개작성={코스소개작성}
-              데이선택핸들러={데이선택핸들러}
-              장소삭제={장소삭제}
-              일정삭제={일정삭제}
-              일정올리기={일정올리기}
-              일정내리기={일정내리기} />
-            <div id="course-plus-btn" onClick={handlerAddDay}>
-              <Button variant="contained" endIcon={<Add />}>
-                일정추가
-              </Button>
-            </div>
-            <p>이미지</p>
-
-            {uploadImg.length !== 0
-              ?
-              <div className={styles.imgWrap}>
-                {uploadImg.map((img, id) => (
-                  <>
-                    <div key={id} className={styles.imgWidth}>
-                      <img src={img} style={{ width: "50%", height: 175, objectFit: "cover", borderRadius: "100%", marginBottom: 40 }} />
-                      <label htmlFor="fileSlt" className={styles.label}>Select File</label>
-                      <input
-                        id="fileSlt"
-                        type='file'
-                        name='courseImg'
-                        onChange={handlerChangeFile}
-                        className={styles.input}
-                        
-                      />
-                      <div id={styles.warnMsg}>파일크기 제한 : 1MB 이하</div>
-                    </div>
-                  </>
-                ))}
-              </div>
-              :
-              <div className={styles.tempImgWrap}>
-                {/* {userImg != null ? <img src={userImg} style={{ width: "50%", height: 175, objectFit: "cover", borderRadius: "100%", marginBottom: 40 }} /> : <div className={styles.tempImg}></div>} */}
-                <label htmlFor="fileSlt" className={styles.label}>Select File</label>
-                <input
-                  id="fileSlt"
-                  className={styles.input}
-                  type='file'
-                  name='courseImg'
-                  onChange={handlerChangeFile}
-                />
-                <div id={styles.warnMsg}>파일크기 제한 : 1MB 이하</div>
-              </div>
-              }
-            <Button variant="contained">
-              IMG UPLOAD
+            placeName={placeName}
+            setPlaceName={setPlaceName}
+            choiceDay={choiceDay}
+            arrCourseDay={arrCourseDay}
+            코스소개작성={코스소개작성}
+            데이선택핸들러={데이선택핸들러}
+            장소삭제={장소삭제}
+            일정삭제={일정삭제}
+            일정올리기={일정올리기}
+            일정내리기={일정내리기} />
+          <div id="course-plus-btn" onClick={handlerAddDay}>
+            <Button variant="contained" endIcon={<Add />}>
+              일정추가
             </Button>
-            <hr></hr>
-            <div id="map-write-bottom-btn">
-              <Button type='submit' id='submit' variant="contained">
-                등록
-              </Button>
-              <Button variant="contained" onClick={() => navigate(`/course`)}>
-                목록
-              </Button>
-            </div>
-          </form>
-        </div>
-      </Frame>
-    );
-  }
+          </div>
+          <p className={styles.imgTitle}>이미지</p>
 
-  export default MapWrite;
+          {uploadImg.length !== 0
+            ?
+            <div className={styles.imgWrap}>
+              {uploadImg.map((img, id) => (
+                <>
+                  <div key={id} className={styles.imgWidth}>
+                    <img className={styles.imgs} src={img} />
+                    {/* <label htmlFor="fileSlt" className={styles.label}>Select File</label> */}
+                    <input
+                      id="fileSlt"
+                      type='file'
+                      name='courseImg'
+                      onChange={handlerChangeFile}
+                      className={styles.input}
+
+                    />
+                    {/* <div id={styles.warnMsg}>파일크기 제한 : 1MB 이하</div> */}
+                  </div>
+                </>
+              ))}
+            </div>
+            :
+            <div className={styles.tempImgWrap}>
+              {/* {userImg != null ? <img src={userImg} style={{ width: "50%", height: 175, objectFit: "cover", borderRadius: "100%", marginBottom: 40 }} /> : <div className={styles.tempImg}></div>} */}
+              {/* <label htmlFor="fileSlt" className={styles.label}>Select File</label> */}
+              <input
+                id="fileSlt"
+                className={styles.input}
+                type='file'
+                name='courseImg'
+                onChange={handlerChangeFile}
+              />
+              
+            </div>
+          }
+          <div id={styles.warnMsg}>파일크기 제한 : 1MB 이하</div>
+          <label id="fileSltLabel" htmlFor="fileSlt" className={styles.label}>
+            {/* <Button variant="contained"> */}
+              <div className={styles.imgLabelBtn}>
+              이미지 업로드
+              </div>
+              
+            {/* </Button> */}
+          </label>
+          
+          <hr></hr>
+          <div id="map-write-bottom-btn">
+            <Button type='submit' id='submit' variant="contained">
+              등록
+            </Button>
+            <Button variant="contained" onClick={() => navigate(`/course`)}>
+              목록
+            </Button>
+          </div>
+        </form>
+      </div>
+    </Frame>
+  );
+}
+
+export default MapWrite;
