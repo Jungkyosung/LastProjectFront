@@ -40,6 +40,7 @@ const NicknameModifier = (props) => {
                     setIsDuplicate(false);
                 } else {
                     setIsDuplicate(true);
+                    alert('중복닉네임이 있습니다.')
                 }
 
             })

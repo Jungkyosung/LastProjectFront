@@ -120,6 +120,7 @@ const AccompanyDetail = () => {
             { params: param, headers: header})
             .then((response) => {
                 console.log(response.data);
+                alert('채팅방이 채팅목록에 추가되었습니다.');
             })
             .catch((error) => {
                 console.log(error);
@@ -167,7 +168,7 @@ const AccompanyDetail = () => {
                     </div>
                 </div>
                 <div id="accomapny-detail-btn">
-                    <Button  sx={{  color: "white", background:"#5E8FCA", ":hover": { background: "#2d6ebd"}}}variant="contained" onClick={handlerToList}><ListIcon /><span>LIST</span></Button>
+                    <Button  sx={{  color: "white", background:"#5E8FCA", ":hover": { background: "#2d6ebd"}}}variant="contained" onClick={handlerToList}><ListIcon /><span>목록보기</span></Button>
                     {!(datas.userId == userId) ?
                         <Button  sx={{  color: "white", background:"#5E8FCA", ":hover": { background: "#2d6ebd"}}}variant="contained" onClick={()=> handlerJoinChat(datas.accompanyIdx) } ><MessageIcon /><span>채팅연결</span></Button>
                         :

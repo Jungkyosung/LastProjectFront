@@ -79,6 +79,13 @@
 
 }
 
+#map-each-course-title > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+}
+
 #map-each-course-wrap {
   display: flex;
   flex-direction: row;

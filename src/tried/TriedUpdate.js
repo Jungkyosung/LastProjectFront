@@ -4,6 +4,15 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import Frame from "../main/Frame";
 import jwt_decode from 'jwt-decode';
 import Imgfunc from "../imgfunc/Imgfunc";
+import { Button } from "@mui/joy";
+import Input from '@mui/material/Input';
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import "./CkHeight.css";
+import styles from "./TriedUpdate.module.css";
+
+const ariaLabel = { 'aria-label': 'description' };
+
 
 const TriedUpdate = () => {
 
@@ -179,38 +188,91 @@ const TriedUpdate = () => {
     return (
         <Frame>
             <div id="travelcourse-list-img">
-                <img src="https://i.pinimg.com/564x/67/1b/ba/671bba36fccbc46d70f7e2631b781c61.jpg" />
+                <img src="https://a.cdn-hotels.com/gdcs/production140/d1583/119ec73c-cbf4-431e-b128-eadb32999939.jpg" />
             </div>
-            <div className="triedDetail-container">
-                <form onSubmit={handlerSubmit} action="" method="POST" id="frm" name="frm">
-                    <h2>게시판 수정</h2>
+            <div className={styles.triedDetail_container}>
+                <form onSubmit={handlerSubmit} action="" method="POST" id="frm" name="frm" className={styles.frm}>
+                    {/* <h2>게시판 수정</h2>
                     <div value={triedIdx}>글번호: {tried.triedIdx}</div>
                     <div value={userId}>작성자: {tried.userId}</div>
-                    <div value={triedCreatedTime}>작성일: {tried.triedCreatedTime}</div>
-                    <div>
+                    <div value={triedCreatedTime}>작성일: {tried.triedCreatedTime}</div> */}
+                    {/* <div>
                         <div> 제목 </div>
                         <input type="text" name="triedTitle" value={triedTitle || ''}
                             onChange={handlerTitleChange} />
+                    </div> */}
+                    <div className={styles.tried_title_write}>
+                        <div>TITLE</div>
+                        <Input placeholder="Placeholder" name="triedTitle"  inputProps={ariaLabel} value={triedTitle || ''} onChange={handlerTitleChange} />
                     </div>
-                    <div className="update-img">
+                    {/* <div className={styles.update_img}>
                         {uploadImg.length == 0 && <img src={`http://${process.env.REACT_APP_CMJ_IP}:8080/api/getimage/${filename}`} style={{ width: '500px' }} />}
-                    </div>
-                    <div className="update-img">
+                    </div> */}
+                    {/* <div className="update-img">
                         {uploadImg.map((file, index) => (
                             <img key={index}
                                 src={file}
                                 style={{ width: '500px' }} />
                         ))}
                         <input type="file" name="updateImg" multiple onChange={handleFileChange} />
+                    </div> */}
+                    <div className={styles.tried_img}>
+                    {
+                        <>
+                            <div className={styles.imgWidth}>
+                                {uploadImg.length == 0 && <img src={`http://${process.env.REACT_APP_CMJ_IP}:8080/api/getimage/${filename}`} className={styles.imgHi} />
+                                }
+                                <label htmlFor="fileSlt" className={styles.label}>Select Fddile</label>
+                                <input
+                                    id="fileSlt"
+                                    className={styles.input}
+                                    type='file'
+                                    name='uploadImg'
+                                    onChange={handleFileChange}
+                                />
+                            </div>
+                        </>
+                        // :
+                        // <>
+                        // <img src={imageUrl} style={{ width: "100%", height: 250, objectFit: "scale-down" }} />
+                        //     <label htmlFor="fileSlt" className={styles.imgSelect}>Select Fidddle</label>
+                        //     <input
+                        //         id="fileSlt"
+                        //         type='file'
+                        //         name='accompanyImg'
+                        //         onChange={handlerChangeFile}
+                        //         className={styles.input}
+                        //     />
+                        // </>
+                    }
                     </div>
-                    <div>
-                        <div> 내용 </div>
-                        <input type="btn" name="triedContent" value={triedContent || ''}
-                            onChange={handlerContentChange} />
+                    <div className={styles.tried_content_write}>
+                        <div>CONTENTS</div>
+                        {/* <input type="btn" name="triedContent" value={triedContent || ''}
+                            onChange={handlerContentChange} /> */}
+                        <div className={styles.editor}>
+                            <CKEditor
+                                editor={ClassicEditor}
+                                data={triedContent || ''}
+                                onReady={editor => {
+                                }}
+                                onChange={(event, editor) => {
+                                    const data = editor.getData();
+                                    // console.log({ event, editor, data });
+                                    setTriedContent(data);
+                                }}
+
+                            />
+                        </div>
                     </div>
-                    <input type="button" id="list" className="btn" value="목록"
+                    <div className={styles.tried_write_btn}>
+                        <Button ariant="contained" type="button" id="list" className={styles.btn} value="목록"
+                            onClick={handlerClickList}>List</Button>
+                        <Button ariant="contained" type="submit" id="update" className={styles.btn} value="수정" >Modify</Button>
+                    </div>
+                    {/* <input type="button" id="list" className="btn" value="목록"
                         onClick={handlerClickList} />
-                    <input type="submit" id="update" className="btn" value="수정" />
+                    <input type="submit" id="update" className="btn" value="수정" /> */}
                 </form>
             </div>
         </Frame>

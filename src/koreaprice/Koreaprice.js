@@ -15,6 +15,33 @@ import chicken from "./img/chicken.jpg";
 import pork from "./img/pork.jpg";
 import beef from "./img/beef.jpg";
 import cheese from "./img/cheese.jpg";
+import carrot from "./img/carrot.jpg";
+import chilipepperpaste from "./img/chilipepperpaste.jpg";
+import cucumber from "./img/cucumber.jpg";
+import flour from "./img/cucumber.jpg";
+import mackerel from "./img/mackerel.jpg";
+import mayonnaise from "./img/mayonnaise.jpg";
+import onion from "./img/onion.jpg";
+import potato from "./img/potato.jpg";
+import ramen from "./img/ramen.jpg";
+import seaweed from "./img/seaweed.jpg";
+import soysauce from "./img/soysauce.jpg";
+import squid from "./img/squid.jpg";
+import strawberry from "./img/strawberry.jpg";
+import sugar from "./img/sugar.jpg";
+import sweetpotato from "./img/sweetpotato.jpg";
+import tofu from "./img/tofu.jpg";
+import tomato from "./img/tomato.jpg";
+import spam from "./img/spam.jpg";
+import beer from "./img/beer.jpg";
+import water from "./img/water.jpg";
+import soju from "./img/soju.jpg";
+import orangejuice from "./img/orangejuice.jpg";
+import milk from "./img/milk.jpg";
+import cola from "./img/cola.jpg";
+import shampoo from "./img/shampoo.jpg";
+import toothpaste from "./img/toothpaste.jpg";
+import toiletpaper from "./img/toiletpaper.jpg";
 
 const Koreaprice = () => {
 
@@ -38,6 +65,33 @@ const Koreaprice = () => {
     pork,
     beef,
     cheese,
+    potato,
+    sweetpotato,
+    carrot,
+    onion,
+    cucumber,
+    tomato,
+    strawberry,
+    mackerel,
+    seaweed,
+    squid,
+    soysauce,
+    chilipepperpaste,
+    tofu,
+    ramen,
+    mayonnaise,
+    flour,
+    sugar,
+    spam,
+    beer,
+    water,
+    soju,
+    orangejuice,
+    milk,
+    cola,
+    shampoo,
+    toothpaste,
+    toiletpaper
   ];
   
   //상품 리스트 변수

@@ -12,6 +12,7 @@ import Textarea from '@mui/joy/Textarea';
 import jwt_decode from 'jwt-decode';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import Parser from "html-react-parser";
 
 const TriedDetail = () => {
 
@@ -178,7 +179,7 @@ const TriedDetail = () => {
     return (
         <Frame>
             <div id="travelcourse-list-img">
-                <img src="https://i.pinimg.com/564x/67/1b/ba/671bba36fccbc46d70f7e2631b781c61.jpg" />
+                <img src="https://a.cdn-hotels.com/gdcs/production140/d1583/119ec73c-cbf4-431e-b128-eadb32999939.jpg" />
             </div>
             <div className="triedDetail-container">
                 <form action="" method="POST" id="frm" name="frm">
@@ -198,7 +199,7 @@ const TriedDetail = () => {
                             <TriedThumb triedIdx={triedIdx}/>
                         </div>
                         <div className="triedDetail-content">
-                            <div>{tried.triedContent}</div>
+                            <div>{tried.triedContent == null ? "" : Parser(tried.triedContent)}</div>
                         </div>
                     </div>
                     <div>공유하기</div>

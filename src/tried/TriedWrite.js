@@ -6,6 +6,10 @@ import Frame from '../main/Frame';
 import Input from '@mui/material/Input';
 import { Button } from "@mui/material";
 import jwt_decode from 'jwt-decode';
+import styles from './TriedWrite.module.css';
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import "./CkHeight.css";
 
 const ariaLabel = { 'aria-label': 'description' };
 
@@ -26,12 +30,12 @@ const TriedWrite = () => {
         'Content-Type': 'application/json'
     };
 
-    useEffect(()=>{
-        if(userId == null){
+    useEffect(() => {
+        if (userId == null) {
             alert('로그인 후 사용하실 수 있습니다.');
             navigate('/tried');
         }
-    },[])
+    }, [])
 
     const [triedTitle, setTriedTitle] = useState('');
     const [triedContent, setTriedContent] = useState('');
@@ -118,25 +122,25 @@ const TriedWrite = () => {
     return (
         <Frame>
             <div id="travelcourse-list-img">
-                <img src="https://i.pinimg.com/564x/67/1b/ba/671bba36fccbc46d70f7e2631b781c61.jpg" />
+                <img src="https://a.cdn-hotels.com/gdcs/production140/d1583/119ec73c-cbf4-431e-b128-eadb32999939.jpg" />
             </div>
-            <div className="write-container">
-                <h2>글쓰기 페이지</h2>
+            <div className={styles.write_container}>
+                <h2 className={styles.realTitle}>어디까지</h2>
                 <form
-                    id="frm" name="frm" onSubmit={handlerSubmit}>
-                    <div className="write-detail">
+                    id="frm" name="frm" className={styles.frm} onSubmit={handlerSubmit}>
+                    <div className={styles.write_detail}>
                         <>
-                            <div className='write-detail-title'>
+                            <div className={styles.write_detail_title}>
                                 <Input placeholder="제목"
                                     inputProps={ariaLabel}
                                     value={triedTitle}
                                     onChange={handlerChangeTitle} />
                             </div>
                             {/* <input type="text" id="title" name="title"
-                                    value={triedTitle}
-                                    onChange={handlerChangeTitle}
-                                /> */}
-                            <div className='write-detail-select'>
+                                value={triedTitle}
+                                onChange={handlerChangeTitle}
+                            /> */}
+                            <div className={styles.write_detail_select}>
                                 <select
                                     value={triedCategoryIdx}
                                     onChange={handlerClick}>
@@ -146,35 +150,74 @@ const TriedWrite = () => {
                                     <option value="3" id="3">문화</option>
                                 </select>
                             </div>
-                            {
-                                triedImg.length !== 0
-                                    ?
-                                    <>
-                                        {triedImg.map((image, id) => (
-                                            <div className="tried-write-img" key={id}>
-                                                <img src={image} />
-                                            </div>
-                                        ))}
-                                    </>
-                                    :
-                                    <>
-                                        <input type='file' name='triedImg'
-                                            ref={inputFile} onChange={handlerChangeFile}
-                                            style={{ width: '50%', height: 300, background: 'red' }}
-                                        />
-                                    </>
-                            }
+                            <div className={styles.tried_img}>
+                                {
+                                    triedImg.length !== 0
+                                        ?
+                                        <>
+                                            {triedImg.map((image, id) => (
+                                                <div className={styles.tried_write_img} key={id}>
+                                                    <img src={image} className={styles.imgHi} />
+                                                    <label htmlFor="fileSlt" className={styles.label}>Select File</label>
+                                                    <input
+                                                        id="fileSlt"
+                                                        className={styles.input}
+                                                        type='file'
+                                                        name='triedImg'
+                                                        ref={inputFile}
+                                                        onChange={handlerChangeFile}
+                                                    />
+                                                </div>
+                                            ))}
+                                        </>
+                                        :
+                                        <>
+                                            {/* <input type='file' name='triedImg'
+                                ref={inputFile} onChange={handlerChangeFile}
+                                style={{ width: '50%', height: 300, background: 'red' }}
+                            /> */}
+                                            <label htmlFor="fileSlt" className={styles.imgSelect}>Select File</label>
+                                            <input
+                                                id="fileSlt"
+                                                type='file'
+                                                name='triedImg'
+                                                ref={inputFile}
+                                                onChange={handlerChangeFile}
+                                                className={styles.input}
+                                            />
+                                        </>
+                                }
+                            </div>
                         </>
-                        <div className='tried-write-content'>
-                            <textarea
-                                id="content" name="content" placeholder='내용을 작성해주세요'
-                                value={triedContent} onChange={handlerChangeContent} />
+                        <div className={styles.tried_write_content}>
+                            <div className={styles.editor}>
+                                <CKEditor
+                                    editor={ClassicEditor}
+                                    data=""
+                                    onReady={editor => {
+                                        // You can store the "editor" and use when it is needed.
+                                        console.log('Editor is ready to use!', editor);
+                                    }}
+                                    onChange={(event, editor) => {
+                                        const data = editor.getData();
+                                        console.log({ event, editor, data });
+                                        setTriedContent(data);
+                                    }}
+                                // onBlur={ ( event, editor ) => {
+                                //     console.log( 'Blur.', editor );
+                                // } }
+                                // onFocus={ ( event, editor ) => {
+                                //     console.log( 'Focus.', editor );
+                                // } }
+                                />
+                            </div>
                         </div>
                     </div>
                     <Button id="submit" type='submit' variant="contained">완료</Button>
                 </form>
-            </div>
-        </Frame>
+            </div >
+        </Frame >
+
     );
 };
 

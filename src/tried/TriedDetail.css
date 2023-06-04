@@ -144,6 +144,10 @@
   .triedDetail-btns {
     width: 60%;
   }
+
+  .tried-title {
+    width: 100%;
+  }
 }
 
 @media (min-width: 1000px){
@@ -154,5 +158,10 @@
   .triedDetail-btns {
     width: 50%;
   }
+
+  .tried-title {
+    width: 100%;
+  }
+  
 
 }

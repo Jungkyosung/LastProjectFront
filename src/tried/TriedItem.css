@@ -41,6 +41,12 @@
     font-weight: bold;
     margin-bottom: 10px;
     text-align: center;
+    width: 240px;
+    margin-left:auto;
+    margin-right:auto;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    white-space: nowrap; 
 }
 
 .triedTitle > a > .img > img{
